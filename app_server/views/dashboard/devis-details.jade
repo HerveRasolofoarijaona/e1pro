@@ -1,0 +1,191 @@
+//
+   Created by nokamojd on 31/07/2016.
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    style.
+        h2 {
+            color: red;
+        }
+        .button {
+            width: 100%;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .btn1{
+            background-color: #4CAF50; /* Vert */
+            }
+        .btn2{
+            background-color: #e60000; /* Rouge */
+        }
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 2px solid #001a33;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {background-color:#f5f5f5;}
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-xs.hidden-sm
+            +side-menu
+        div.page-nav
+            h2.dash-title Devis
+            div.dash-content.clearfix.hidden-sm.hidden-xs
+                div
+                    div.right-content.col-md-5
+                            
+                            div.item-box
+                                h2 D&eacutetails sur le Devis
+                                hr/
+                                -if (devis.status_devis.is_accepted)
+                                    div(class="alert alert-success")
+                                        strong Devis accept&eacute!
+                                -else if(!devis.status_devis.is_accepted && !devis.status_devis.en_attente && !devis.status_devis.negocier)
+                                    div(class="alert alert-warning")
+                                        strong Devis refus&eacute!
+                                table
+                                    tr
+                                        td
+                                            h3.dash-title Auteur du devis:
+                                        td
+                                            h4.dash-title
+                                                = devis.devis_author.last_name + ' ' +devis.devis_author.first_name
+                                    tr
+                                        td
+                                            h3.dash-title Devis &eacutemis le:
+                                        td
+                                            h4.dash-title
+                                                +formatDate(devis.created_at)
+                                    tr 
+                                        td
+                                            h3.dash-title Titre de la demande:
+                                        td
+                                            h4.dash-title
+                                                = devis.mission_title
+                                    tr
+                                        td
+                                            h3.dash-title Motif:
+                                        td
+                                            h4.dash-title
+                                                = devis.motif
+                                    tr
+                                        td
+                                            h3.dash-title Date de d&eacutebut/fin:
+                                        td
+                                            h4.dash-title
+                                                = 'Du '+devis.date_debut + ' au ' +devis.date_fin
+                                    tr
+                                        td
+                                            h3.dash-title Prix unitaire (quantit&eacute):
+                                        td
+                                            h4.dash-title
+                                                = devis.tarif_unit + ' euros par ' + devis.unit + ' (x' + devis.quantity + ' )'
+                                    tr
+                                        td
+                                            h3.dash-title Commentaire:
+                                        td
+                                            h4.dash-title 
+                                                = devis.commentaire
+                                    -if (!devis.status_devis.is_accepted && !devis.status_devis.en_attente && !devis.status_devis.negocier)
+                                        tr
+                                    -else if (!devis.status_devis.is_accepted)
+                                            tr
+                                                td
+                                                    form.form-default(method="POST" action="")
+                                                        input(type="hidden" name="_method" value="PUT")
+                                                        input(type="hidden" name="accepted" value="true")
+                                                        input(type="hidden" name="negocier" value="false")
+                                                        input(type="hidden" name="attente" value="false")
+                                                        button(type="submit" class="button btn1") Accepter
+                                                td
+                                                    table
+                                                        td
+                                                            form.form-default(method="POST" action="")
+                                                                input(type="hidden" name="_method" value="PUT")
+                                                                input(type="hidden" name="accepted" value="false")
+                                                                input(type="hidden" name="negocier" value="true")
+                                                                input(type="hidden" name="attente" value="true")
+                                                                button(type="submit" class="button btn1") N&eacutegocier
+                                                        td
+                                                            form.form-default(method="POST" action="")
+                                                                input(type="hidden" name="_method" value="PUT")
+                                                                input(type="hidden" name="accepted" value="false")
+                                                                input(type="hidden" name="negocier" value="false")
+                                                                input(type="hidden" name="attente" value="false")
+                                                                button(type="submit" class="button btn2") Refuser
+                    div.right-content.col-md-5
+                        div.item-box
+                            h2 Informations sur la n&eacutegociation
+                                hr/
+                                -if (devis.status_devis.is_accepted)
+                                    div(class="alert alert-success")
+                                        strong Devis accept&eacute!
+                                -else if(!devis.status_devis.is_accepted && !devis.status_devis.en_attente && !devis.status_devis.negocier)
+                                    div(class="alert alert-warning")
+                                        strong Devis refus&eacute!
+                                table
+                                    tr
+                                        td
+                                            h3.dash-title Motif
+                                        td
+                                            h4.dash-title
+                                                p
+                                                    if(devis.negociation.motif_datedb)
+                                                        label() Prix
+                                                p
+                                                    if(devis.negociation.motif_duree)
+                                                        label() Date de d&eacutebut
+                                                p
+                                                    if(devis.negociation.motif_prix)
+                                                        label() Dur&eacutee
+                                    tr
+                                        td
+                                            h3.dash-title Date de d&eacutebut
+                                        td
+                                            h4.dash-title
+                                                input(type="text" name="get_dt_db" disabled value=devis.negociation.new_date_db)
+                                    tr
+                                        td
+                                            h3.dash-title Date de fin
+                                        td
+                                            h4.dash-title
+                                                input(type="text" name="get_dt_fn" disabled value=devis.negociation.new_date_fn)
+                                    tr
+                                        td
+                                            h3.dash-title prix (en euros)
+                                        td
+                                            h4.dash-title
+                                                input(type="text" name="get_prix" disabled value=devis.negociation.new_price)
+
+                                unless user.user_role != "57b2e3f36a0c14cc080d2f64" && user.user_role != "57b2eab1601665dc05e659af"
+                                    table
+                                        tr
+                                            td
+                                                //fonction pour controller les boutons => chat.js
+                                                form(class="approuved")
+                                                    input(type="hidden" name="devis_id" value=devis._id)
+                                                    button(type="submit" class="button btn1") Approuver
+                                            td
+                                                form(class="not_approuved")
+                                                    input(type="hidden" name="devis_id" value=devis._id)
+                                                    button(type="submit" class="button btn2") Refuser

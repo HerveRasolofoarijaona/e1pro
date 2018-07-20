@@ -1,0 +1,135 @@
+//
+   Created by nokamojd on 28/09/2016.
+include includes/sharedFunctions
+extends layout
+block content
+    // SMALL SCREENS
+    +middle-menu-mb
+    div.clearfix
+        div.hidden-lg.hidden-md.hidden-lg
+            button.accordion APPLIQUER FILTRES
+            div.panel
+                // h3 Filtres
+                div.filter-form
+                    form.form-default(action="" method="post")
+                        input(type="text" class="location")
+                        select(name="select")
+                            option(value="") Tous les domaines
+                            -for(var i = 0; i < fields.length; i++)
+                                option(value=fields[i]._id)= fields[i].field_name
+        div.middle-content.hidden-lg.hidden-md
+            div.catalog-box
+                div.tab-content#mbcatalog
+                    div#mboffers
+                        if(data.length === 0)
+                            h2 Aucun résultat pour
+                                | "
+                                = query
+                                | "
+                        else
+                            h2 Résultats de recherche pour &nbsp;
+                                | "
+                                = query
+                                | "
+                            ul.catalog-items
+                                -for(var i = 0; i < data.length; i++)
+                                    div.mb-item-box
+                                        li.catalog-user
+                                            a(href="consultants/consultant-details")
+                                                img.img-circle.pull-left(src=data[i].profile_pic_path style="width:64px; height:64px")
+                                            a.item-title(href="consultants/consultant-details")
+                                                = data[i].first_name
+                                                //.first_name
+                                                //| &nbsp;
+                                                = data[i].last_name
+                                                //.last_name.substring(0, 1)
+                                                | .
+                                            | &nbsp; - &nbsp;
+                                            span=data[i].qualification
+                                            //.qualification
+                                            if(data[i].is_certified)
+                                                //.is_certified)
+                                                span.certified.pull-right <i class="fa fa-check-circle-o"></i>
+                                            | &nbsp;
+                                            div.item-meta
+                                                small
+                                                    | &nbsp;<i class="fa fa-map-marker"> </i> &nbsp;
+                                                    = data[i].personal_details.address.location
+                                                    //.personal_details.address.location
+                                                div.item-excerpt
+                                                    ul.skill-labels
+                                                        -var skill = data[i].user_skills.length
+                                                        //.user_skills.length
+                                                        -for (var j = 0; j < skill/2; ++j)
+                                                            li
+                                                                a(href="#")=data[i].user_skills[j].user_skill
+                                                                //.user_skills[j].user_skill
+                                                        li(style="display:inline")
+                                                            a(href="#") ...
+                                                small.rates.pull-right &nbsp;
+                                                    //+outputRating(consultant.rating)
+    // LARGE SCREENS
+    +middle-menu
+    div.container
+        div.middle-content.col-md-8.hidden-sm.hidden-xs
+            div.catalog-box
+                div.tab-content#catalog
+                    div#offers
+                        if(data.length === 0)
+                            h2 Aucun résultat pour
+                                | "
+                                = query
+                                | "
+                        else
+                            h2 Résultats de recherche pour &nbsp;
+                                | "
+                                = query
+                                | "
+                            ul.catalog-items
+                                -for(var i = 0; i < data.length; i++)
+                                    div.item-box
+                                        li.catalog-user
+                                            a(href="consultants/consultant-details")
+                                                img.img-circle.img-responsive.pull-left(src=data[i].profile_pic_path style="width:64px; height:64px")
+                                            if(data[i].is_certified)
+                                                //.is_certified
+                                                span.certified.pull-right <i class="fa fa-check-circle-o"></i>
+                                            | &nbsp;
+                                            a.item-title(href="consultants/consultant-details")
+                                                = data[i].first_name
+                                                //.first_name.toUpperCase(0, 1)
+                                                | &nbsp;
+                                                = data[i].last_name
+                                                //.last_name.substring(0, 1).toUpperCase()
+                                                | .
+                                            | &nbsp; - &nbsp;
+                                            span=data[i].qualification
+                                            //.qualification
+                                            div.item-meta
+                                                small
+                                                    |  &nbsp; <i class="fa fa-map-marker"> </i> &nbsp;
+                                                    = data[i].personal_details.address.location
+                                                    //.personal_details.address.location
+                                                div.item-excerpt
+                                                    ul.skill-labels
+                                                        -var skill = data[i].user_skills.length
+                                                        //.user_skills.length
+                                                        -for (var j = 0; j < skill/2; ++j)
+                                                            li
+                                                                a(href="#")=data[i].user_skills[j].user_skill
+                                                                //.user_skills[j].user_skill
+                                                        li
+                                                            a(href="#") ...
+                                                    small.rates.pull-right &nbsp;
+                                                        //+outputRating(consultant.rating)
+
+        div.middle-sidebar.col-md-4.col-lg-4.hidden-xs.hidden-sm
+            div.item-box.sidebar-sticky
+                h3 Filtres
+                div.filter-form
+                    form.form-default(action="" method="post")
+                        input(type="text" class="location")
+                        select(name="select")
+                            option(value="") Tous les domaines
+                            -for(var i = 0; i < fields.length; i++)
+                                option(value=fields[i]._id)= fields[i].field_name

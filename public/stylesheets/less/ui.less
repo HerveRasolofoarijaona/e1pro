@@ -1,0 +1,156 @@
+/**** FORM ELEMENTS STYLE *****/
+
+.top-search-form{
+  select{
+    background-color: @blue;
+    padding: 5px;
+    color: #ffffff;
+    border: none;
+    margin-right: .5em;
+  }
+  input[type=search]{
+    width: 70%;
+    border: 1px solid @light-gray-bg;
+    padding: 5.1px;
+    height: 17.5px;
+    //margin-top: 2px;
+    margin-right: .5em;
+  }
+  input[type=submit]{
+    //margin-left: .5em;
+    width: 30px;
+    height: auto;
+    background: url(../images/icons/search-icon.png) no-repeat center center;
+    background-size: auto;
+    padding: 10px;
+    border:none;
+    color: #fff;
+    &:hover{
+      //background-color: @darker-blue;
+    }
+  }
+}
+
+.form-default{
+  /* WebKit browsers */
+  input:focus::-webkit-input-placeholder { color:transparent; }
+  /* Mozilla Firefox 4 to 18 */
+  input:focus:-moz-placeholder { color:transparent; }
+  /* Mozilla Firefox 19+ */
+  input:focus::-moz-placeholder { color:transparent; }
+  /* Internet Explorer 10+ */
+  input:focus:-ms-input-placeholder { color:transparent; }
+
+  input[type=text],input[type=submit],input[type=email],input[type=password], input[type=number], input[type=tel], select{
+    width: 100%;
+    //left: 5%;
+    //right: 5%;
+    height: 42px;
+    font-size: 15px;
+    padding: 8px;
+    color: @dark-gray;
+    margin: 6px;
+    border: 1px solid @darker-gray-bg;
+    &:focus{
+      .transition(.3s);
+      border: 1px solid @blue;
+    }
+  }
+  input[type=submit]{
+    background-color: @blue;
+    text-transform: uppercase;
+   // margin:18px 0 18px 8px;
+    border:none;
+    color: #fff;
+    &:hover{
+      .transition(1s);
+      background-color: @darker-blue;
+    }
+  }
+  textarea{
+    width: 100%;
+    resize: vertical;
+    font-size: 15px;
+    padding: 8px;
+    color: @dark-gray;
+    margin: 6px;
+    border: 1px solid @darker-gray-bg;
+    &:focus{
+      .transition(.3s);
+      border: 1px solid @blue;
+    }
+  }
+}
+
+
+.control {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  font-size: 13px;
+  //margin-bottom: px;
+  cursor: pointer;
+}
+.control input {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+.control-indicator {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background: @light-gray-bg;
+}
+.radio-control .control-indicator {
+  border-radius: 50%;
+}
+.control:hover input ~ .control-indicator,
+.control input:focus ~ .control-indicator {
+  background: @darker-gray-bg;
+}
+.control input:checked ~ .control-indicator {
+  background: @green-blue;
+}
+.control:hover input:not([disabled]):checked ~ .control-indicator,
+.control input:checked:focus ~ .control-indicator {
+  background: @green-blue;
+}
+.control input:disabled ~ .control-indicator {
+  background: @light-gray-bg;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.control-indicator:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+.control input:checked ~ .control-indicator:after {
+  display: block;
+}
+.checkbox-control .control-indicator:after {
+  left: 8px;
+  top: 4px;
+  width: 3px;
+  height: 8px;
+  border: solid @light-gray-bg;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.checkbox-control input:disabled ~ .control-indicator:after {
+  border-color: @gray-link;
+}
+.radio-control .control-indicator:after {
+  left: 6px;
+  top: 6px;
+  height: 7px;
+  width: 7px;
+  border-radius: 50%;
+  background: @light-gray-bg;
+}
+.radio-control input:disabled ~ .control-indicator:after {
+  background: @gray-link;
+}

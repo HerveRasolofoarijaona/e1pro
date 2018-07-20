@@ -1,0 +1,26 @@
+extends layout
+include includes/sharedFunctions
+block content
+	div#page-content.page-content(onclick="closeNav()")
+		div.container-fluid
+			div.clearfix.content#content
+				div.heading
+					h2 Nous contacter
+				section.row
+					div.col-md-12
+						form(action='/envoi-mail', name='contactus', id='contactus', method='post')
+							fieldset
+								p
+									label(for='nom') Nom:
+									br
+									input(name='name', type='text', value='', id='name')
+								p
+									label(for='email') Email:
+									br
+									input(name='email', type='text', value='', id='email')
+								p
+									label(for='message') Message:
+									br
+									textarea(name='message', cols='40', rows='10', id='message')
+								p
+									input(name='submit', type='submit', value='Envoyer', id='submit')

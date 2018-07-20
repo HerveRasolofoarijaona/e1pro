@@ -1,0 +1,389 @@
+//
+   Created by nokamojd on 15/07/2016.
+mixin mobile-menu
+    // MOBILE HEADER
+    div.col-xs-1.col-sm-1.hidden-lg.hidden-md.mobile-bars
+        a(onclick="openNav()")
+           i.fa.fa-bars
+    div.col-xs-10.col-sm-10.hidden-md.hidden-lg.mobile-hd
+        a(href="/")
+            img(src="/images/emploi1pro-logo_small.png")
+    div.col-xs-1.col-sm-1.hidden-md.hidden-lg.mobile-search
+        a(onclick="openSearch()")
+           i.fa.fa-search
+    div#mb-sidenav.sidenav.hidden-md.hidden-lg
+       a(href="javascript:void(0)" class="closebtn" onclick="closeNav()") &times;
+       ul(class="main-sidenav-links")
+           if(!user)
+               li
+                   a(href="/signup") Inscription
+               li
+                   a(href="/login") Connexion
+               li
+                   a(href="/help") Aide
+           else
+               li
+                   a(href="#" data-toggle="dropdown")
+                       img(class="img-circle img-responsive" alt="#{user.first_name}" src="#{user.profile_pic_path}" width="34px" heigth="auto" style="display: inline; margin-top: -8px; margin-left:20px")
+               li
+                   a(href="/offers")
+                       i.fa.fa-list
+                       | &nbsp;&nbsp;Catalogue
+               li
+                   a(href="/dashboard")
+                       i.fa.fa-dashboard
+                       | &nbsp;&nbsp;Tableau de bord
+               li
+                   a(href="/dashboard/conversations")
+                       i.fa.fa-envelope
+                       | &nbsp;&nbsp;Conversations
+
+               li
+                   a(href="/u/profile")
+                       i.fa.fa-user
+                       | &nbsp;&nbsp;Profil
+               li
+                   a(href="/settings")
+                       i.fa.fa-gears
+                       | &nbsp;&nbsp;Paramètres
+               li
+                   a(href="/logout")
+                       i.fa.fa-power-off
+                       | &nbsp;&nbsp;Déconnexion
+
+
+    div#mb-sideform.sideform.hidden-md.hidden-lg
+        a(href="javascript:void(0)" class="closebtn" onclick="closeSearch()") &times;
+        form.form-default.mb-search(action="/search" method="post")
+            if(section == 0)
+                select(name="section")
+                    option(value="0" selected) Demandes
+                    option(value="1") Consultants
+                    option(value="2") Offres
+            else if(section == 1)
+                select(name="section")
+                    option(value="0") Demandes
+                    option(value="1" selected) Consultants
+                    option(value="2") Offres
+            else if(section == 2)
+                select(name="section")
+                    option(value="0") Demandes
+                    option(value="1") Consultants
+                    option(value="2" selected) Offres
+            else
+                select(name="section")
+                    option(value="0") Demandes
+                    option(value="1") Consultants
+                    option(value="2") Offres
+            //| &nbsp;&nbsp;
+            if(query)
+                input(type="search" name="q" value="#{query}" placeholder="Rédacteur, Développeur...")
+            else
+                input(type="search" name="q" placeholder="Rédacteur, Développeur...")
+            //| &nbsp;&nbsp;
+            input(type="submit" value="Rechercher")
+
+mixin lgscreen-menu
+    // OTHER SCREENS
+    div.col-md-2.hidden-xs.hidden-sm
+        a(href="/")
+           img(src="/images/emploi1pro-logo_small.png")
+    div.top-search.col-md-6.col-md-offset-1.hidden-xs.hidden-sm
+      form.top-search-form(action="/search" method="post")
+        if(section == 0)
+            select(name="section")
+              option(value="0" selected) Demandes
+              option(value="1") Consultants
+              option(value="2") Offres
+        else if(section == 1)
+            select(name="section")
+                option(value="0") Demandes
+                option(value="1" selected) Consultants
+                option(value="2") Offres
+        else if(section == 2)
+            select(name="section")
+                option(value="0") Demandes
+                option(value="1") Consultants
+                option(value="2" selected) Offres
+        else
+            select(name="section")
+                option(value="0") Demandes
+                option(value="1") Consultants
+                option(value="2") Offres
+        //| &nbsp;&nbsp;
+        if(query)
+            input(type="search" name="q" value="#{query}" placeholder="Rédacteur, Développeur...")
+        else
+            input(type="search" name="q" placeholder="Rédacteur, Développeur...")
+          //| &nbsp;&nbsp;
+        input(type="submit" value=" ")
+    div.col-md-2.col-md-offset-1.hidden-xs.hidden-sm.top-menu
+        ul(class="main-header-links row")
+            if(!user)
+                li
+                    a(href="/signup") Inscription
+                li
+                    a(href="/login") Connexion
+                li
+                    a(href="/help") Aide
+            else
+                li(class="dropdown")
+                    //a(title="Notification(s)" href="#" class="cloche")
+                    //button(class="cloche" onclick='menu()')
+                        i.fa.fa-bell
+                        input(type="hidden" name="id_user" value=user._id)
+                    //div(id="myDropdown" class="dropdown-content")
+                        ul.menu
+                    //a(title="Notification(s)" class="cloche" href="#" data-toggle="popover" data-content="A larger popover to demonstrate the max-width of the Bootstrap popover.")
+                    //button(type="button" class="cloche" data-placement="bottom" data-toggle="popoverNotif" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?")
+                        i.fa.fa-bell
+                    button(class="cloche" type="button" data-toggle="dropdown" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" onclick="menu()")
+                        i.fa.fa-bell
+                        input(type="hidden" name="id_user" value=user._id) 
+                    div(id="myDropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton")
+                        ul.menu
+                        //a(class="dropdown-item" href="#") Action
+                        //a(class="dropdown-item" href="#") Another action
+                        //a(class="dropdown-item" href="#") Something else here
+
+                li
+                    a(href="/offers" title="Catalogues")
+                        i.fa.fa-list
+                li
+                    a(href="/dashboard" title="Back office")
+                        i.fa.fa-th
+                li
+                    a(href="/cart" title="Panier")
+                        i.fa.fa-shopping-cart
+                        span.badge
+                            = cart
+                li
+                    a.dropdown-toggle(href="" data-toggle="dropdown")
+                        img(class="img-circle img-responsive" alt="#{user.last_name}" title="#{user.first_name} #{user.last_name}" src="#{user.profile_pic_path}" width="34px" heigth="auto" style="display: inline; margin-top: -8px; margin-left:20px")
+                        ul.dropdown-menu
+                            li
+                                a(href="/dashboard/u/profile/#{user._id}")
+                                    i.fa.fa-user
+                                    | &nbsp;&nbsp;Profil
+                            li
+                                a(href="/dashboard/u/settings")
+                                    i.fa.fa-gears
+                                    | &nbsp;&nbsp;Paramètres
+                            li
+                                a(href="/logout")
+                                    i.fa.fa-power-off
+                                    | &nbsp;&nbsp;Déconnexion
+mixin middle-menu
+    div.middle-menu.container-fluid.hidden-xs.hidden-sm
+        div.container
+            nav.col-md-8#nav
+                ul.middle-menu-items
+                    li.menu-item
+                        a(href="/offers") Offres
+                        //<i class="fa fa-angle-down"></i>
+                    li.menu-item
+                        a(href="/demands") Demandes
+                        //<i class="fa fa-angle-down"></i>
+                    li.menu-item
+                        a(href="/consultants") Consultants
+                        //<i class="fa fa-angle-down"></i>
+// test 15/06 button(type="button" class="btn btn-secondary" data-container="body" data-toggle="popoverNotif" data-placement="bottom" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.") Popover on bottom
+mixin middle-menu-mb
+    div.middle-menu.clearfix.hidden-lg.hidden-md
+        div.mb
+            nav.col-sm-12
+                ul.middle-menu-items
+                    li.menu-item
+                        a(href="/offers") Offres
+                        //<i class="fa fa-angle-down"></i>
+                    li.menu-item
+                        a(href="/demands") Demandes
+                        //<i class="fa fa-angle-down"></i>
+                    li.menu-item
+                        a(href="/consultants") Consultants
+                        //<i class="fa fa-angle-down"></i>
+
+mixin side-menu
+    ul.side-menu-accordion.animated
+        li.has-children-li
+            a(href="/dashboard")
+                i.fa.fa-dashboard
+                | &nbsp;&nbsp;&nbsp;
+                | Tableau de bord
+        //li.side-menu-items-li
+            input(type="checkbox" name ="messages" id="messages" checked)
+            label(for="messages")
+                i.fa.fa-envelope
+                | &nbsp;&nbsp;&nbsp;
+                | ChatBox
+            ul.side-menu-items-ch.row
+                li
+                    a(href="/dashboard/conversations") Conversations <span class="badge">0</span>
+                li
+                    a(href="#") Contacts
+        // OFFERS
+        unless(user.user_role != "57b2e3f36a0c14cc080d2f64" && user.user_role != "57b2e3f36a0c14cc080d2f62" && user.user_role != "57b2eab1601665dc05e659af")
+            li.side-menu-items-li
+                input(type="checkbox" name="offers" id="offers")
+                label(for="offers")
+                    i.fa.fa-list-alt
+                    | &nbsp;&nbsp;&nbsp;
+                    | Offres
+                ul.side-menu-items-ch.row
+                    unless user.user_role != "57b2e3f36a0c14cc080d2f64"
+                        li
+                            a(href="/dashboard/offers") Toutes les offres
+                    li
+                        a(href="/dashboard/offers/u/#{user._id}") Mes offres
+                    unless user.user_role != "57b2e3f36a0c14cc080d2f64" && user.user_role != "57b2eab1601665dc05e659af"
+                        li
+                            a(href="/dashboard/o/reviews") Avis offres
+                    li
+                        a(href="/dashboard/offers/u/#{user._id}/offer/new") Ajouter offre
+        // DEMANDS - Admin - Inc - Moderator
+        unless user.user_role != "57b2e3f36a0c14cc080d2f64" && user.user_role != "57b2e3f36a0c14cc080d2f63" && user.user_role != "57b2eab1601665dc05e659af"
+            li.side-menu-items-li
+                input(type="checkbox" name="demands" id="demands")
+                label(for="demands")
+                    i.fa.fa-list
+                    | &nbsp;&nbsp;&nbsp;
+                    | Demandes
+                    //i.fa.fa-angle-right.pull-right
+                ul.side-menu-items-ch.row
+                    unless user.user_role != "57b2e3f36a0c14cc080d2f64" && user.user_role != "57b2eab1601665dc05e659af"
+                        li
+                            a(href="/dashboard/demands") Toutes les demandes
+                    li
+                        a(href="/dashboard/demands/u/#{user._id}") Mes demandes
+                    li
+                        a(href="/dashboard/demands/u/#{user._id}/demand/new") Ajouter
+        //li.side-menu-items-li
+            a(href="#")
+                i.fa.fa-quote-left
+                | &nbsp;&nbsp;&nbsp;
+                | Devis
+                //i.fa.fa-angle-right.pull-right
+        //Pour voir les devis côté entreprise
+        unless user.user_role != "57b2e3f36a0c14cc080d2f64" && user.user_role != "57b2e3f36a0c14cc080d2f63" && user.user_role != "57b2eab1601665dc05e659af"
+            li.side-menu-items-li
+                input(type="checkbox" name="devis" id="devis")
+                label(for="devis")
+                    i.fa.fa-th-list
+                    | &nbsp;&nbsp;&nbsp;
+                    | Devis <span class="badge">0</span> 
+                    //à voir en fonction du nombre de devis dans la bdd
+                    //i.fa.fa-angle-right.pull-right
+                ul.side-menu-items-ch.row
+                    li
+                        a(href="/dashboard/devis/u/#{user._id}") Les devis liés aux demandes
+                    unless user.user_role != "57b2e3f36a0c14cc080d2f64" && user.user_role != "57b2eab1601665dc05e659af"
+                        li
+                            a(href="/dashboard/devis") Tous les devis
+        //Pour voir les devis côté consultant
+        unless user.user_role != "57b2e3f36a0c14cc080d2f62" && user.user_role != "57b2eab1601665dc05e659af"
+            li.side-menu-items-li
+                input(type="checkbox" name="devis" id="devis")
+                label(for="devis")
+                    i.fa.fa-th-list
+                    | &nbsp;&nbsp;&nbsp;
+                    | Devis <span class="badge">0</span> 
+                    //à voir en fonction du nombre de devis dans la bdd
+                    //i.fa.fa-angle-right.pull-right
+                ul.side-menu-items-ch.row
+                    li
+                        a(href="/dashboard/devis/u/#{user._id}") Mes devis
+                 
+
+        li.side-menu-items-li
+            input(type="checkbox" name="orders" id="orders")
+            label(for="orders")
+                i.fa.fa-cart-plus
+                | &nbsp;&nbsp;&nbsp;
+                | Commandes
+                //i.fa.fa-angle-right.pull-right
+            ul.side-menu-items-ch.row
+                unless user.user_role != "57b2e3f36a0c14cc080d2f64"
+                    li
+                        a(href="/dashboard/command") Toutes les commandes
+                li
+                    a(href="/dashboard/command/#{user._id}") Mes commandes
+        
+        //hr/
+        unless user.user_role != "57b2e3f36a0c14cc080d2f64"
+            li.side-menu-items-li
+                input(type="checkbox" name="users" id="users")
+                label(for="users")
+                    i.fa.fa-user
+                    | &nbsp;&nbsp;&nbsp;
+                    | Utilisateurs
+                    //i.fa.fa-angle-right.pull-right
+                ul.side-menu-items-ch.row
+                    li
+                        a(href="/dashboard/users") Tous les utilisateurs
+                    li
+                        a(href="/dashboard/users/roles") Roles
+                    li
+                        a(href="/dashboard/users") Ajouter
+        unless user.user_role != "57b2e3f36a0c14cc080d2f64"
+            li.side-menu-items-li
+                input(type="checkbox" name="fields" id="fields")
+                label(for="fields")
+                    i.fa.fa-globe
+                    | &nbsp;&nbsp;&nbsp;
+                    | Domaines & Autres
+                    //i.fa.fa-angle-right.pull-right
+                ul.side-menu-items-ch.row
+                    li
+                        a(href="/dashboard/fields") Domaines
+                    li
+                        a(href="/dashboard/skills") Compétences
+                    li
+                        a(href="/dashboard/legal-status") Statuts Juridiques
+                    li
+                        a(href="/dashboard/languages") Langues
+        li.side-menu-items-li
+            input(type="checkbox" name="bank" id="bank")
+            label(for="bank")
+                i.fa.fa-university
+                | &nbsp;&nbsp;
+                | Informations Bancaires
+            ul.side-menu-items-ch.row
+                    li
+                        a(href="") Carte(s) Enregistrée(s)
+                    li
+                        a(href="/dashboard/rib") RIB / IBAN
+                    li
+                        a(href="") Virements en attente de confirmation
+
+mixin outputRating(rating)
+    - for (var i = 1; i <= rating; i++)
+        span.fa.fa-star
+    - for (i = rating; i < 5; i++)
+        span.fa.fa-star-o
+
+
+mixin formatDate(dateString)
+    -var date = new Date(dateString);
+    //-var monthNames = [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet","Août", "Septembre", "Octobre", "Novembre", "Décembre" ];
+    //-var d = date.getDate();
+    //-var m = monthNames[date.getMonth()];
+    //-var y = date.getFullYear();
+    //-var h = date.getHours();
+    //-var min = date.getMinutes();
+    //-var output = d + ' ' + m + ' ' + y + ' à ' + h + ':' + min;
+    -moment.locale('fr');
+    -var parsed = moment(dateString).format('llll');
+    -var output = parsed;
+    =output
+
+mixin formatDateOnly(dateString)
+    -var date = new Date(dateString);
+    //-var monthNames = [ "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet","Août", "Septembre", "Octobre", "Novembre", "Décembre" ];
+    //-var d = date.getDate();
+    //-var m = monthNames[date.getMonth()];
+    //-var y = date.getFullYear();
+    //-var output = d + ' ' + m + ' ' + y ;
+    -moment.locale('fr');
+    -var parsed = moment(dateString).format('Do MMMM YYYY');
+    -var output = parsed;
+    =output

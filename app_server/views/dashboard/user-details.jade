@@ -1,0 +1,48 @@
+//
+   Created by nokamojd on 30/08/2016.
+
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-xs.hidden-sm
+            +side-menu
+        div.page-nav
+            h2.dash-title Détails Utilisateur
+            div.dash-content.clearfix.hidden-md.hidden-lg
+                button.accordion Ajouter une compétence
+                div.panel
+                    form.form-default(action="#{userSingle._id}" method="post" role="form")
+                        input(type="text" name="subskillLab" placeholder="Une compétence")
+                        input(type="submit" value="Ajouter une Compétence")
+
+
+                //
+
+            /////////////////////////////////////////////////////////////////////////
+            // LARGE SCREENS
+            div.dash-content.clearfix.hidden-sm.hidden-xs
+
+                div.left-content.col-md-4
+                    img(src="#{userSingle.profile_pic_path}")
+                    h2= userSingle.first_name
+                        | &nbsp;
+                        = userSingle.last_name
+                    ul.catalog-items
+
+
+                div.right-content.col-md-4.col-md-offset-1
+                    legend Modifier données utilisateur
+                    form.form-default(method="POST" action="/users/#{userSingle._id}")
+                        input(type="hidden" name="_method" value="PUT")
+                        input(type="text" name="firstName" value="#{userSingle.first_name}")
+                        input(type="text" name="lastName" value="#{userSingle.last_name}")
+                        input(type="email" name="email" value="#{userSingle.email}")
+                        //input(type="password" name="password" value="#{userSingle.password}")
+                        select(name="role")
+                            option(selected, value="#{userSingle.user_role._id}")= userSingle.user_role.role
+                            -for(var x = 0; x < roles.length; x++)
+                                option(value=roles[x]._id)= roles[x].role
+                        input(type="submit" value="Mofifier")
+
+

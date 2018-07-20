@@ -1,0 +1,132 @@
+//
+   Created by nokamojd on 26/08/2016.
+
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-xs.hidden-sm
+            +side-menu
+        div.page-nav
+            h2.dash-title Langues
+            div.dash-content.clearfix.hidden-md.hidden-lg
+                button.accordion Ajouter une langue
+                div.panel
+                    form.form-default(action="" method="post" role="form")
+                        input(type="text" name="language" placeholder="Une langue parlée")
+                        input(type="submit" value="Ajouter une langue")
+
+
+                div.hidden-lg.hidden-md
+                    ul.catalog-items
+                        -var j = 0;
+                        -var t = 0;
+                        each language in languages
+                            div.mb-item-box
+                                li.catalog-item
+                                    ul
+                                        li
+                                            a(href="#")= language.language
+                                            | &nbsp;
+                                        li
+                                            div.remodal-bg
+                                                div(class="remodal" data-remodal-id="mb-modal" + j)
+                                                    button(data-remodal-action="close" class="remodal-close")
+                                                    h2 Modification Langue
+                                                    form.form-default(method="POST" action="languages/#{language._id}")
+                                                        input(type="hidden" name="_method" value="PUT")
+                                                        input(type="text" name="language" value="#{language.language}")
+                                                        input(type="submit" value="Mofifier")
+                                                        button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                        br/
+                                                div(class="remodal" data-remodal-id="mb-del-alert" + t)
+                                                    button(data-remodal-action="close" class="remodal-close")
+                                                    //h2 Supprimer un domaine d'activité
+                                                    form.form-default(method="POST" action="languages/#{language._id}")
+                                                        input(type="hidden" name="_method" value="DELETE")
+                                                        p Voulez-vous vraiment supprimer la langue&nbsp;:&nbsp;
+                                                            | "
+                                                            strong= language.language
+                                                            | " ?
+                                                        button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                        | &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        button(type="submit") Supprimer
+                                                        br/
+                                        li
+                                            small
+                                                | Modifié le&nbsp;
+                                                +formatDate(language.updated_at)
+                                        li
+                                            a(href="#mb-modal" + j++)
+                                                i.fa.fa-pencil
+                                        li
+                                            a(href="#mb-del-alert" + t++)
+                                                i.fa.fa-close
+
+
+
+            /////////////////////////////////////////////////////////////////////////
+            // LARGE SCREENS
+            div.dash-content.clearfix.hidden-sm.hidden-xs
+                div.right-content.col-md-3
+                    div.item-box
+                        h3 Ajouter une langue
+                        hr/
+                        form.form-default(action="", method="post", role="form")
+                            input(type="text" name="language" placeholder="Une langue parlée")
+                            input(type="submit" value="Ajouter une langue")
+
+
+                div.left-content.col-md-7
+                    div.item-box
+                        table#field-dt.table.table-responsive
+                            thead
+                                tr
+                                    //th
+                                        input(type="checkbox")
+                                    th  Intitulé
+                                    th  Modifié le
+                                    th  Actions
+                            tbody
+                                -var i = 0;
+                                -var d = 0;
+                                each language in languages
+                                    tr
+                                        //td
+                                            input(type="checkbox")
+                                        td
+                                            a(href="#")= language.language
+                                        td
+                                            +formatDate(language.updated_at)
+                                        td
+                                            div.remodal-bg
+                                                div(class="remodal" data-remodal-id="modal" + i)
+                                                    button(data-remodal-action="close" class="remodal-close")
+                                                    h2 Modifier un domaine d'activité
+                                                    form.form-default(method="POST" action="languages/#{language._id}")
+                                                        input(type="hidden" name="_method" value="PUT")
+                                                        input(type="text" name="language" value="#{language.language}")
+                                                        input(type="submit" value="Mofifier")
+                                                        button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                        br/
+                                                div(class="remodal" data-remodal-id="del-alert" + d)
+                                                    button(data-remodal-action="close" class="remodal-close")
+                                                    //h2 Supprimer un domaine d'activité
+                                                    form.form-default(method="POST" action="languages/#{language._id}")
+                                                        input(type="hidden" name="_method" value="DELETE")
+                                                        p Voulez-vous vraiment supprimer la langue&nbsp;:&nbsp;
+                                                            | "
+                                                            strong= language.language
+                                                            | " ?
+                                                        button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                        | &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        button(type="submit") Supprimer
+                                                        br/
+                                            //each innerfield in field.inner_fields
+                                                a= innerfield.inner_field_name
+                                                | ,&nbsp;
+                                            a(href="#modal"+ i++)
+                                                i.fa.fa-pencil
+                                            | &nbsp;
+                                            a(href="#del-alert"+ d++)
+                                                i.fa.fa-close

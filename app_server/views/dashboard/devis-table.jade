@@ -1,0 +1,100 @@
+//
+   Created by nokamojd on 16/09/2016.
+
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    
+        
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-xs.hidden-sm
+            +side-menu
+        div.page-nav
+            h2.dash-title DEVIS
+            h4
+                //a(href="/dashboard/offers/u/#{user._id}/offer/new") Ajouter une offre
+            div.dash-content.clearfix.hidden-md.hidden-lg
+                div.hidden-lg.hidden-md
+                    ul.catalog-items
+                        -var j = 0;
+                        -var t = 0;
+
+            //swal("Hello world!")
+
+            /////////////////////////////////////////////////////////////////////////
+            // LARGE SCREENS
+            div.dash-content.clearfix.hidden-sm.hidden-xs
+                div.col-md-10.hidden-sm.hidden-xs
+                    div.item-box
+                        table#field-dt.table.table-responsive
+                            thead
+                                tr
+                                    th  
+                                    th  Titre de la demande
+                                    th  Emis le : 
+                                    th  Par :
+                                    th  Status: 
+                                    th  Action: 
+                            tbody
+                                //-var i = 0;
+                                //-var d = 0;
+                                each devis in devis_all
+                                    
+                                            tr
+                                                td
+                                                    if(devis.status_devis.approuved)
+                                                        i.fa.fa-check-circle
+                                                    else
+                                                        i.fa.fa-ellipsis-h
+                                                td
+                                                    a(href="#")= devis.mission_title
+                                                td
+                                                    +formatDate(devis.created_at)
+                                                td
+                                                    = devis.devis_author.last_name
+                                                    |&nbsp;
+                                                    = devis.devis_author.first_name
+                                                    //if(offerReview.review_approved)
+                                                        | Validé
+                                                    //else
+                                                        | En attente de validation
+                                                td
+                                                    if (devis.status_devis.negocier)
+                                                        div(class="alert alert-info")
+                                                            strong En cours de n&eacutegociation
+                                                    else if (devis.status_devis.is_accepted)
+                                                        div(class="alert alert-success")
+                                                            strong Accept&eacute!
+                                                    else if (devis.status_devis.en_attente)
+                                                        div(class="alert alert-warning")
+                                                            strong En attente 
+                                                    else
+                                                        div(class="alert alert-danger")
+                                                            strong Refus&eacute
+                                                td
+                                                    
+                                                    //div(class="remodal" data-remodal-id="del-alert" + d)
+                                                        button(data-remodal-action="close" class="remodal-close")
+                                                        form.form-default(method="POST" action="/dashboard/devis/#{devis._id}")
+                                                            input(type="hidden" name="_method" value="DELETE")
+                                                            p Voulez-vous vraiment supprimer ce devis ?
+                                                            button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                            | &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                                            button(type="submit") Supprimer
+                                                            br/  
+                                                    div
+                                                        a(title="Ouvrir" href="/dashboard/devis/#{devis._id}")= "Ouvrir"
+                                                        | &nbsp;
+                                                        form.form-default(method="POST" action="/dashboard/devis/u/#{user._id}/#{devis._id}")
+                                                            input(type="hidden" name="_method" value="DELETE")
+                                                            button(class="submit")
+                                                                i.fa.fa-close
+                                                            //href="#del-alert"+ d++
+                                                            
+                   
+                                                                                     
+                                                        
+                                                                                                           
+                                                    
+                                
+                                                        

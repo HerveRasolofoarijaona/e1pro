@@ -1,0 +1,47 @@
+extends simple-layout
+
+block content
+    div.col-md-3.form-box
+        a(href="/")
+            img(src="/images/emploi1pro-logo_small.png")
+        div
+            //p L'inscription est absolument gratuite que vous soyez une entreprise ou un consultant
+
+            ul.ch-lists
+                li.ch-item
+                    a(href="/signup") Consultant
+                li.ch-item
+                    a(href="/enterprise/signup") Entreprise
+            div#signup1
+                -if(errors.length > 0)
+                    div.alert.alert-danger.alert-dismissible
+                        button.close(type="button", data-dismiss="alert", aria-label="Close" style="font-size:12px; text-align:center")
+                            span(aria-hidden="true") &times;
+                            = errors
+                form.form-default(role="form" action="" method="post")
+                    div
+                        input(type="text" name="businessName" placeholder="Nom de l'entreprise")
+                    div
+                        input(type="text" name="firstName" placeholder="Prénom")
+                    div
+                        input(type="text" name="lastName" placeholder="Nom")
+                    div
+                        input(type="text" name="position" placeholder="Poste occupé")
+                    div
+                        input(type="email" name="email" placeholder="Email")
+                    div
+                        input(type="password" name="password" placeholder="Mot de passe")
+                    div
+                        input(type="password" name="passconf" placeholder="Confirmer mot de passe")
+                    //div
+                        select(name="role")
+                            - for(var i = 0; i < 2; i++)
+                                option(value=roles[i]._id)= roles[i].role
+                    div
+                        input(type="hidden" name="role" value=roles[1]._id placeholder=roles[1].role)
+                    div
+                        input(type="submit" class="submit-btn" value="inscription gratuite")
+            p Déja inscrit?
+                    | &nbsp;
+                    a(href="login") Se connecter.
+            small En cliquant sur ce bouton, vous acceptez les <a href="termes-et-conditions">termes et conditions d'utilisation</a> d'emploi1Pro

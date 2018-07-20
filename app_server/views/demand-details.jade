@@ -1,0 +1,238 @@
+//
+   Created by nokamojd on 13/07/2016.
+extends _bootstrap
+extends layout
+include includes/sharedFunctions
+block content
+    style.
+        .btn1{
+            color: white;
+            background-color: #000040; /* Vert */
+            }
+        .btn2{
+            color: white;
+            background-color: #e60000; /* Rouge */
+            }
+        button[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 2px solid #001a33;
+        }
+        .modal-dialog{
+          width:900px;
+        }
+    // SMALL SCREENS
+    +middle-menu-mb
+    div.clearfix
+        div.hidden-lg.hidden-md
+            button.accordion AUTEUR DE LA DEMANDE
+            div.panel
+                div.author-details
+                    a(href="consultants/consultant-details")
+                        img.img-circle.pull-left(src="#{demand.dmd_author.profile_pic_path}" style="width:64px; height:64px")
+                    a.item-title(href="consultants/consultant-details")
+                        = demand.dmd_author.first_name
+                        | &nbsp;
+                        = demand.dmd_author.last_name.substring(0, 1).toUpperCase()
+                        | .
+                    | &nbsp; - &nbsp;
+
+        div.middle-content.hidden-lg.hidden-md
+            div.element-details
+                div.mb-item-box
+                    h4.element-title= demand.dmd_title
+                    div.item-meta
+                        small
+                            <i class="fa fa-clock-o"></i>
+                            | &nbsp;
+                            +formatDate(demand.created_at)
+                            | &nbsp;
+                            | <i class="fa fa-map-marker"></i>
+                            | &nbsp;
+                            = demand.dmd_location
+                        p= demand.dmd_description
+                        hr/
+                        h5.box-section-title Conditions
+                        p= demand.dmd_conditions
+
+                    div.spacer
+                        hr/
+                        h5.box-section-title Budget estimé:
+                                | &nbsp;
+                                span.item-price= demand.dmd_estimated_budget
+                                    | &nbsp;€&nbsp;
+                                div.control-indicator
+                            br/
+                        //div.spacer
+                            a.action-link(href="#") Ajouter au panier
+                    div.spacer
+                        hr/
+                        h3 DEVIS (0)
+                        if(user._id == demand.dmd_author._id)
+                            null
+                        else
+                            button.accordion(href="#") Faire un devis sur cette demande
+                            div.panel
+                                form.form-default
+                                    label Mission:
+                                        input(type="text" name="" disabled)
+                                    input(type="submit" value="Valider" )
+                        div.spacer
+
+    
+
+
+    // LARGE SCREENS
+    +middle-menu
+    div.container
+        div.middle-content.col-md-8.hidden-sm.hidden-xs
+            div.element-details
+                div.item-box
+                    h4.element-title= demand.dmd_title
+                    div.item-meta
+                        small
+                            <i class="fa fa-clock-o"></i>
+                            | &nbsp;
+                            +formatDate(demand.created_at)
+                            | &nbsp;
+                            | <i class="fa fa-map-marker"></i>
+                            | &nbsp;
+                            = demand.dmd_location
+                        div
+                        hr/
+                        p
+                            label.box-section-title Budget estimé:
+                            | &nbsp;
+                            span.item-price= demand.dmd_estimated_budget
+                            | &nbsp;€&nbsp;
+                            br/
+                        p
+                            label.box-section-title Date de début souhaitée:
+                            | &nbsp;
+                            span.item-price
+                                = demand.dmd_desired_start_date
+                            | &nbsp;&nbsp;
+                            label.box-section-title Date de fin estimée:
+                            | &nbsp;
+                            span.item-price
+                                = demand.dmd_supposed_end_date
+                            | &nbsp;&nbsp;
+                            br/
+                        hr/
+                        p
+                            label.box-section-title Description : 
+                            p= demand.dmd_description
+                        hr/
+                        p
+                            label.box-section-title Conditions :
+                            p= demand.dmd_conditions
+                    div
+                            input(type="button" class="form-control btn1" data-toggle="modal" data-target="#myModal" value="Faire un devis sur cette offre") 
+                        div(class="modal fade" id="myModal" role="dialog")
+                            div(class="modal-dialog")
+                                //Modal content
+                                div(class="modal-content")
+                                    div(class="modal-header")
+                                        button(type="button" class="close" data-dismiss="modal") &times;
+                                        h4(class="modal-title") Devis
+                                    div(class="modal-body")
+                                        form(class="new_devis form-default" method="POST")
+                                            div(style="height:750px;")
+                                                ul
+                                                    label Mission: 
+                                                    input(type="text" disabled value=demand.dmd_title)
+                                                    input(type="hidden" name="mission" value=demand.dmd_title)
+                                                    
+                                                    label Référence: 
+                                                    input(type="text" name="" disabled value=demand._id placeholder="Référence Mission")
+                                                    input(type="hidden" name="reference" value=demand._id)
+                                                    
+                                                    input(type="hidden" name="dmd_author" value=demand.dmd_author._id)
+                                                    //label() Nature : 
+                                                    //input(type="text" name="nature" placeholder="Nature")
+                                                   
+                                                    label Lieu de la mission : 
+                                                    input(type="text" name="motif" class="form-control" placeholder="Lieu")
+                                                    
+                                                    label Date de début : 
+                                                    input(type="text" name="date_db" class="form-control" value=demand.dmd_desired_start_date)
+                                                    
+                                                    label Date de fin : 
+                                                    input(type="text" name="date_fn" class="form-control" value=demand.dmd_desired_end_date)
+                                                                                                   
+                                                    label Emis par (Le nom et prénom du consultant) : 
+                                                    input(type="text" name="Nom" class="form-control" value=user.name)
+                                                    
+                                                    label Tarif unitaire (hors taxe en €) :
+                                                    input(type="text" id="tf_u" name="tf_u" class="form-control" placeholder="Prix proposé")
+                                                    
+                                                    label Quantité (choisir l'unité):
+                                                    br/
+                                                    div.col-md-4
+                                                        label.control.radio-control Jour(s)
+                                                            input(type="radio" class="form-control" value="Jour" name="unit" )
+                                                            div.control-indicator
+                                                    div.col-md-4
+                                                        label.control.radio-control Heure(s)
+                                                            input(type="radio" class="form-control" value="Heure" name="unit" )
+                                                            div.control-indicator
+                                                    div.col-md-4
+                                                        label.control.radio-control Mois
+                                                            input(type="radio" class="form-control" value="Mois" name="unit" )
+                                                            div.control-indicator
+                                                        br/
+                                                    
+                                                     select(id="quantity" class="form-control" name="quantity")
+                                                        option(value="0") 0
+                                                        option(value="1") 1
+                                                        option(value="2") 2
+                                                        option(value="3") 3
+                                                        option(value="4") 4
+                                                        option(value="5") 5
+                                                        option(value="6") 6
+                                                        option(value="7") 7
+                                                        option(value="8") 8
+                                                        option(value="9") 9
+                                                        option(value="10") 10
+                                                        option(value="11") 11
+                                                        option(value="12") 12
+                                                   
+                                                    label() Commentaire
+                                                    textarea(rows="4" col="50" name="commentaire" value="Mettre votre commentaire ici")
+                                                    input(type="hidden" name="devis_authr" value=user._id)
+
+                                                
+                                                    div(class="col-sm-6") 
+                                                        button(type="submit" class="form-control btn1") Valider
+                                                    div(class="col-sm-6")
+                                                        button(type="button" class="form-control btn2" data-dismiss="modal") Fermer
+        div.middle-sidebar.col-md-4.col-lg-4.hidden-xs.hidden-sm
+            div.item-box.sidebar-sticky
+                h3 Auteur de la demande
+                hr/
+                div.author-details
+                    a(href="")
+                        img.img-circle.pull-left(src="#{demand.dmd_author.profile_pic_path}" style="width:64px; height:64px"
+                            title="#{demand.dmd_author.first_name.toUpperCase()} #{demand.dmd_author.last_name.substring(0, 1).toUpperCase()}")
+                    a.item-title(href="")
+                        = demand.dmd_author.first_name.toUpperCase()
+                        | &nbsp;
+                        = demand.dmd_author.last_name.substring(0, 1).toUpperCase()
+                        | .
+                    | &nbsp; - &nbsp;
+                    span=demand.dmd_author.qualification
+                    if(demand.dmd_author.is_certified)
+                        span.certified.pull-right <i class="fa fa-check-circle-o"></i>
+                    | &nbsp;
+                    div.item-meta
+                        h5
+                            //| &nbsp;<i class="fa fa-map-marker"> </i> &nbsp;
+                            | &nbsp;
+                            = demand.dmd_author.company_name
+
+    //div.related.container
+        div.related-content
+            h3 Du même auteur

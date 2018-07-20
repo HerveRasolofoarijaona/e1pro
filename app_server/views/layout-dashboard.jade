@@ -1,0 +1,61 @@
+include includes/sharedFunctions
+doctype html
+html
+  head
+    meta(name='description', content='')
+    meta(name='keywords', content='')
+    meta(name='author', content='emploi1pro')
+    meta(name='viewport', content='width=device-width, initial-scale=1, user-scalable=no')
+    title= title
+    meta(charset="UTF-8")
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+    link(rel="styleSheet" href="/stylesheets/emp75215668r4re8errrd68r4rd44d4r4r844f44fr9fr494r.css")
+    link(rel="styleSheet" href="/stylesheets/empSel.jierf74fr68qf4862f48ed4xe24frt4tg2gt42t4zt89t46t4.min.css")
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    //link(rel='stylesheet', href='/stylesheets/cs-fonts.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css')
+    link(href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,300,300italic,700,700italic' rel='stylesheet' type='text/css')
+    link(rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css")
+    link(rel="stylesheet" href="/stylesheets/remodal.css")
+    link(rel="stylesheet" href="/stylesheets/styletest.css")
+    //link(rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css')
+    //link(rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css')
+    link(rel="stylesheet" href="/stylesheets/remodal-default-theme.css")
+    script(src="https://unpkg.com/sweetalert2@7.25.6/dist/sweetalert2.min.js")
+    link(rel='stylesheet', href='/stylesheets/menu.css')
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css")
+    
+  body
+    div.container-fluid.main-header
+        +mobile-menu
+
+        +lgscreen-menu
+    div.container-fluid.main-header.sticky
+        +mobile-menu
+
+        +lgscreen-menu
+    div.content
+      block content
+
+
+  script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js")
+  script(type="text/javascript" charset="utf8" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js")
+  //script(src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous")
+  //script(src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous")
+  //script(src="/javascripts/frmstrap.js")
+  script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
+  script(src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAupp_KXr3DIjoo4oY-WMS2AH4snSR5oAo&libraries=places")
+  script(type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js")
+  script(src="/javascripts/forloc.js")
+  script(type="text/javascript" src="/socket.io/socket.io.js")
+  script(type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js")
+  script(type="text/javascript" charset="utf8" src="/javascripts/emp75215668r4re8errrd68r4rd44d4r4r844f44fr9fr494r.js")
+  script(type="text/javascript" src="/javascripts/empSel.jierf74fr68qf4862f48ed4xe24frt4tg2gt42t4zt89t46t4.min.js")
+  script(src="/javascripts/remodal.min.js")
+  script(src="/javascripts/epp.js")
+  //script(src="http://132.148.71.212:3000/socket.io/socket.io.js")
+  script(src="/javascripts/chat.js")
+  script(src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js')
+  script(src="/javascripts/notification.js")
+ 
+  

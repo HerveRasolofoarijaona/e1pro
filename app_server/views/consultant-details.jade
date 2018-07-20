@@ -1,0 +1,79 @@
+//
+   Created by nokamojd on 28/07/2016.
+extends layout
+include includes/sharedFunctions
+block content
+    // SMALL SCREENS
+    +middle-menu-mb
+    div.clearfix
+        div.hidden-lg.hidden-md
+            button.accordion CONSULTANT
+            div.panel
+                div.author-details
+                        //img.img-circle.pull-left(src="#{demand.dmd_author.profile_pic_path}" style="width:64px; height:64px")
+                    a.item-title(href="consultants/consultant-details")
+                        = user.first_name
+                        | &nbsp;
+                        = user.last_name.substring(0, 1).toUpperCase()
+                        | .
+                    | &nbsp; - &nbsp;
+
+
+    div.middle-content.hidden-lg.hidden-md
+            div.element-details
+                div.mb-item-box
+                    h4.element-title yo
+                    div.item-meta
+                        small
+                            <i class="fa fa-clock-o"></i>
+                            | &nbsp;
+                            //+formatDate(demand.created_at)
+                            | &nbsp;
+                            | <i class="fa fa-map-marker"></i>
+                            | &nbsp;
+                            
+                        p
+                        hr/
+                        h5.box-section-title Conditions
+                        p
+
+                    div.spacer
+                        hr/
+                        h5.box-section-title 
+                                | &nbsp;
+                                span.item-price
+                                    | &nbsp;€&nbsp;
+                                div.control-indicator
+                            br/
+                        //div.spacer
+                            a.action-link(href="#") Ajouter au panier
+                    div.spacer
+                        hr/
+                        h3 DEVIS (0)
+                        
+                            button.accordion(href="#") Faire un devis sur cette demande
+                            div.panel
+                                form.form-default
+                                    label Mission:
+                                        input(type="text" name="" disabled)
+                                    input(type="submit" value="Valider" )
+                        div.spacer
+
+
+
+    // LARGE SCREENS
+    +middle-menu
+    div.container
+        div.middle-content.col-md-8.hidden-sm.hidden-xs
+            div.element-details
+                div.item-box
+                    h4.element-title A Propos
+                    div.item-meta
+                        small
+                            <i class="fa fa-clock-o"></i>
+                            | &nbsp;
+                            
+                            | &nbsp;
+                            | <i class="fa fa-map-marker"></i>
+                            | &nbsp;
+                            

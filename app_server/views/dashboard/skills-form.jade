@@ -1,0 +1,140 @@
+//
+   Created by nokamojd on 26/08/2016.
+
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-xs.hidden-sm
+            +side-menu
+        div.page-nav
+            h2.dash-title Domaines de compétences
+            div.dash-content.clearfix.hidden-md.hidden-lg
+                button.accordion Ajouter un domaine de competence
+                div.panel
+                    form.form-default(action="" method="post" role="form")
+                        input(type="text" name="skillLab" placeholder="Un domaine de compétence")
+                        input(type="submit" value="Ajouter un Domaine de Compétence")
+
+
+                div.hidden-lg.hidden-md
+                    ul.catalog-items
+                        -var j = 0;
+                        -var t = 0;
+                        each skill in skills
+                            div.mb-item-box
+                                li.catalog-item
+                                    ul
+                                        li
+                                            a(href="skills/#{skill._id}")= skill.skill_field
+                                            | &nbsp;
+                                        li
+                                            div.remodal-bg
+                                                div(class="remodal" data-remodal-id="mb-modal" + j)
+                                                    button(data-remodal-action="close" class="remodal-close")
+                                                    h2 Modifier un domaine de compétence
+                                                    form.form-default(method="POST" action="skills/#{skill._id}")
+                                                        input(type="hidden" name="_method" value="PUT")
+                                                        input(type="text" name="skillLab" value="#{skill.skill_field}")
+                                                        input(type="submit" value="Mofifier")
+                                                        button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                        br/
+                                                div(class="remodal" data-remodal-id="mb-del-alert" + t)
+                                                    button(data-remodal-action="close" class="remodal-close")
+                                                    //h2 Supprimer un domaine d'activité
+                                                    form.form-default(method="POST" action="skills/#{skill._id}")
+                                                        input(type="hidden" name="_method" value="DELETE")
+                                                        p Voulez-vous vraiment supprimer le domaine de compétence&nbsp;:&nbsp;
+                                                            | "
+                                                            strong= skill.skill_field
+                                                            | " ?
+                                                        button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                        | &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        button(type="submit") Supprimer
+                                                        br/
+                                        li
+                                            small
+                                                | Modifié le&nbsp;
+                                                +formatDate(skill.updated_at)
+                                        li
+                                            a(href="#mb-modal" + j++)
+                                                i.fa.fa-pencil
+                                        li
+                                            a(href="#mb-del-alert" + t++)
+                                                i.fa.fa-close
+
+
+
+            /////////////////////////////////////////////////////////////////////////
+            // LARGE SCREENS
+            div.dash-content.clearfix.hidden-sm.hidden-xs
+                div.right-content.col-md-3
+                    div.item-box
+                        h3 Ajouter un domaine de competence
+                        hr/
+                        form.form-default(action="" method="post" role="form")
+                            input(type="text" name="skillLab" placeholder="Un domaine de compétence")
+                            input(type="text" name="subSkillLab" placeholder="Une compétence")
+                            small
+                                em Un domaine de compétence doit contenir au minimum une compétence pour exister.
+                            input(type="submit" value="Ajouter un Domaine de Compétence")
+
+
+                div.left-content.col-md-7
+                    div.item-box
+                        table#field-dt.table.table-responsive
+                            thead
+                                tr
+                                    //th
+                                        input(type="checkbox")
+                                    th  Domaine de compétence
+                                    th  Compétences
+                                    th  Modifié le
+                                    th  Actions
+                            tbody
+                                -var i = 0;
+                                -var d = 0;
+                                each skill in skills
+                                    tr
+                                        //td
+                                            input(type="checkbox")
+                                        td
+                                            a(href="skills/#{skill._id}")= skill.skill_field
+                                        td
+                                            each subSkill in skill.inner_skills
+                                                a= subSkill.inner_skill
+                                                | ,&nbsp;
+                                        td
+                                            +formatDate(skill.updated_at)
+                                        td
+                                            div.remodal-bg
+                                                div(class="remodal" data-remodal-id="modal" + i)
+                                                    button(data-remodal-action="close" class="remodal-close")
+                                                    h2 Modifier un domaine de compétence
+                                                    form.form-default(method="POST" action="skills/#{skill._id}")
+                                                        input(type="hidden" name="_method" value="PUT")
+                                                        input(type="text" name="skillLab" value="#{skill.skill_field}")
+                                                        input(type="submit" value="Mofifier")
+                                                        button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                        br/
+                                                div(class="remodal" data-remodal-id="del-alert" + d)
+                                                    button(data-remodal-action="close" class="remodal-close")
+                                                    //h2 Supprimer un domaine d'activité
+                                                    form.form-default(method="POST" action="skills/#{skill._id}")
+                                                        input(type="hidden" name="_method" value="DELETE")
+                                                        p Voulez-vous vraiment supprimer le domaine de compétence&nbsp;:&nbsp;
+                                                            | "
+                                                            strong= skill.skill_field
+                                                            | " ?
+                                                        button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                        | &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        button(type="submit") Supprimer
+                                                        br/
+
+                                            a(alt="Modifier" href="#modal"+ i++)
+                                                i.fa.fa-pencil
+                                            | &nbsp;
+                                            a(alt="Supprimer" href="#del-alert"+ d++)
+                                                i.fa.fa-close
+
+

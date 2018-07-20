@@ -1,0 +1,44 @@
+.cloche {
+    background-color: transparent;
+    border: none;
+    color: darkgrey;
+    padding: 5px 5px;
+    cursor: pointer;
+}
+li.a {
+    text-align: center;
+}
+.menu {
+    height: 300px;
+    vertical-align: middle;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #0c1a30;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a .cmp {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover .cmp {
+    background-color: #ddd;
+}
+
+.show {
+    display: block;
+}

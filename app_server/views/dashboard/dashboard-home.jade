@@ -1,0 +1,70 @@
+//
+   Created by nokamojd on 31/07/2016.
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-xs.hidden-sm
+            +side-menu
+        div.page-nav
+            h2.dash-title Dashboard
+            div.dash-content.clearfix.hidden-sm.hidden-xs
+                div
+                    div.left-content.col-md-3
+                        div.item-box
+                            h3 Utilisateurs Inscrits : 
+                                = Data[0].length
+                            hr/
+                            h5 Administrateurs :
+                                -var a = 0;
+                                each u in Data[0]
+                                    if (u.user_role == "57b2e3f36a0c14cc080d2f64")
+                                        - a ++;
+                                |&nbsp;
+                                = a
+
+                            h5 Entreprises :
+                                -var b = 0;
+                                each u in Data[0]
+                                    if (u.user_role == "57b2e3f36a0c14cc080d2f63")
+                                        - b ++;
+                                |&nbsp;
+                                = b
+                            h5 Consultants :
+                                -var c = 0;
+                                each u in Data[0]
+                                    if (u.user_role == "57b2e3f36a0c14cc080d2f62")
+                                        - c ++;
+                                |&nbsp;
+                                = c
+                            //h2.text-center 50
+                                small Visites ce mois
+                    div.left-content.col-md-3
+                        div.item-box
+                            h3 Total des ventes : 
+                                |&nbsp;
+                                = Data[2].length
+                            hr/
+                            p
+                    div.left-content.col-md-4
+                        div.item-box
+                            h3 Devis acceptés : 
+                                = Data[1].length
+                            hr/
+                            h5 Devis aprouvé(s) :
+                                -var e = 0;
+                                -for(var i = 0; i<Data[1].length; i++)
+                                    if (JSON.stringify(Data[1][i].status_devis.approuved) == "true" )
+                                        - e ++;
+                                |&nbsp;
+                                = e
+                                
+                div
+                    div.left-content.col-md-5
+                        div.item-box
+                            h3 Commandes en cours : non op
+                            hr/
+                    div.right-content.col-md-5
+                        div.item-box
+                            h3 Recommandations
+                            hr/

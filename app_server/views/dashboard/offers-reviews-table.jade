@@ -1,0 +1,104 @@
+//
+   Created by nokamojd on 16/09/2016.
+
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-xs.hidden-sm
+            +side-menu
+        div.page-nav
+            h2.dash-title Avis
+            h4
+                //a(href="/dashboard/offers/u/#{user._id}/offer/new") Ajouter une offre
+            div.dash-content.clearfix.hidden-md.hidden-lg
+                div.hidden-lg.hidden-md
+                    ul.catalog-items
+                        -var j = 0;
+                        -var t = 0;
+
+
+
+            /////////////////////////////////////////////////////////////////////////
+            // LARGE SCREENS
+            div.dash-content.clearfix.hidden-sm.hidden-xs
+                div.col-md-10.hidden-sm.hidden-xs
+                    div.item-box
+                        table#field-dt.table.table-responsive
+                            thead
+                                tr
+                                    th  Offre notée
+                                    th  Auteur avis
+                                    th  Avis
+                                    th  Note
+                                    th  Statut
+                                    th  Modifié le
+                                    th  Actions rapides
+                            tbody
+                                -var i = 0;
+                                -var d = 0;
+                                each offerReview in offersReviewsList
+                                    tr
+                                        td
+                                            a(href="#")= offerReview.reviewed_offer.offer_title
+                                        td
+                                            = offerReview.review_author.first_name
+                                            | &nbsp;
+                                            = offerReview.review_author.last_name
+                                        td
+                                            = offerReview.review
+                                        td
+                                            = offerReview.review_rating
+                                        td
+                                            if(offerReview.review_approved)
+                                                | Validé
+                                            else
+                                                | En attente de validation
+                                        td
+                                            +formatDate(offerReview.updated_at)
+                                        td
+                                            div.remodal-bg
+                                                div(class="remodal" data-remodal-id="modal" + i)
+                                                    button(data-remodal-action="close" class="remodal-close")
+                                                    h2 Modifier cet avis de
+                                                        strong
+                                                            | &nbsp;
+                                                            = offerReview.review_author.first_name
+                                                            | &nbsp;
+                                                            = offerReview.review_author.last_name
+                                                    form.form-default(method="POST" action="reviews/#{offerReview._id}")
+                                                        input(type="hidden" name="_method" value="PUT")
+                                                        input(type="text" name="review" value="#{offerReview.review}")
+                                                        input(type="text" name="reviewRate" value="#{offerReview.review_rating}")
+                                                        //input(type="hidden" name="review" value="PUT")
+                                                        //input(type="hidden" name="_method" value="PUT")
+                                                        div.spacer
+                                                            if(offerReview.review_approved)
+                                                                label Désapprouver?
+                                                                | &nbsp;&nbsp;
+                                                                input(type="radio" name="reviewState" value="false")
+                                                                | &nbsp;&nbsp;
+                                                                label Oui
+                                                            else
+                                                                label Approuver?
+                                                                | &nbsp;&nbsp;
+                                                                input(type="radio" name="reviewState" value="true")
+                                                                | &nbsp;&nbsp;
+                                                                label Oui
+                                                        input(type="submit" value="Mofifier")
+                                                        button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                        br/
+                                                div(class="remodal" data-remodal-id="del-alert" + d)
+                                                    button(data-remodal-action="close" class="remodal-close")
+                                                    form.form-default(method="POST" action="reviews/#{offerReview._id}")
+                                                        input(type="hidden" name="_method" value="DELETE")
+                                                        p Voulez-vous vraiment supprimer cet avis ?
+                                                        button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                        | &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        button(type="submit") Supprimer
+                                                        br/
+                                            a(title="Modifier" href="#modal"+ i++)
+                                                i.fa.fa-pencil
+                                            | &nbsp;
+                                            a(title="Supprimer" href="#del-alert"+ d++)
+                                                i.fa.fa-close

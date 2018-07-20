@@ -1,0 +1,107 @@
+//
+   Created by nokamojd on 25/08/2016.
+
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-xs.hidden-sm
+            +side-menu
+        div.page-nav
+            h2.dash-title Rôles
+            div.dash-content.clearfix.hidden-md.hidden-lg
+
+                div.hidden-lg.hidden-md
+                    ul.catalog-items
+                        -var j = 0;
+                        -var t = 0;
+                        each role in roles
+                            div.mb-item-box
+                                li.catalog-item
+                                    ul
+                                        li
+                                            a(href="#")= role.role
+                                            | &nbsp;
+                                        li
+                                            div.remodal-bg
+                                                div(class="remodal" data-remodal-id="mb-modal" + j)
+                                                    button(data-remodal-action="close" class="remodal-close")
+                                                    h2 Modifier Rôle
+                                                    form.form-default(method="POST" action="roles/#{role._id}")
+                                                        input(type="hidden" name="_method" value="PUT")
+                                                        input(type="text" name="role" value="#{role.role}")
+                                                        input(type="submit" value="Mofifier")
+                                                        button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                        br/
+                                                div(class="remodal" data-remodal-id="mb-del-alert" + t)
+                                                    button(data-remodal-action="close" class="remodal-close")
+                                                    //h2 Supprimer un domaine d'activité
+                                                    form.form-default(method="POST" action="roles/#{role._id}")
+                                                        input(type="hidden" name="_method" value="DELETE")
+                                                        p Voulez-vous vraiment supprimer le rôle&nbsp;:&nbsp;
+                                                            | "
+                                                            strong= role.role
+                                                            | " ?
+                                                        button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                        | &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        button(type="submit") Supprimer
+                                                        br/
+                                        li
+                                            small
+                                                | Modifié le&nbsp;
+                                                +formatDate(role.updated_at)
+                                        li
+                                            a(href="#mb-modal" + j++)
+                                                i.fa.fa-pencil
+                                        //li
+                                            a(href="#mb-del-alert" + t++)
+                                                i.fa.fa-close
+
+
+
+            /////////////////////////////////////////////////////////////////////////
+            // LARGE SCREENS
+            div.dash-content.clearfix.hidden-sm.hidden-xs
+                -var i = 0;
+                -var d = 0;
+                each role in roles
+                    div.item-box
+                        li.catalog-item
+                            ul
+                                li
+                                    a(href="#")= role.role
+                                    | &nbsp;
+                                li
+                                    div.remodal-bg
+                                        div(class="remodal" data-remodal-id="mb-modal" + i)
+                                            button(data-remodal-action="close" class="remodal-close")
+                                            h2 Modifier Rôle
+                                            form.form-default(method="POST" action="roles/#{role._id}")
+                                                input(type="hidden" name="_method" value="PUT")
+                                                input(type="text" name="role" value="#{role.role}")
+                                                input(type="submit" value="Mofifier")
+                                                button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                br/
+                                        div(class="remodal" data-remodal-id="mb-del-alert" + d)
+                                            button(data-remodal-action="close" class="remodal-close")
+                                            //h2 Supprimer un domaine d'activité
+                                            form.form-default(method="POST" action="roles/#{role._id}")
+                                                input(type="hidden" name="_method" value="DELETE")
+                                                p Voulez-vous vraiment supprimer le rôle&nbsp;:&nbsp;
+                                                    | "
+                                                    strong= role.role
+                                                    | " ?
+                                                button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                | &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                                button(type="submit") Supprimer
+                                                br/
+                                li
+                                    small
+                                        | Modifié le&nbsp;
+                                        +formatDate(role.updated_at)
+                                li
+                                    a(href="#mb-modal" + i++)
+                                        i.fa.fa-pencil
+                                //li
+                                    a(href="#mb-del-alert" + d++)
+                                        i.fa.fa-close

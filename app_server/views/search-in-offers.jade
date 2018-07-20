@@ -1,0 +1,93 @@
+//
+   Created by nokamojd on 27/09/2016.
+
+include includes/sharedFunctions
+extends layout
+block content
+    // SMALL SCREENS
+    +middle-menu-mb
+    div.clearfix
+        div.hidden-lg.hidden-md
+            button.accordion APPLIQUER FILTRES
+            div.panel
+                // h3 Filtres
+                div.filter-form
+                    form.form-default(action="" method="post")
+                        input(type="text" class="location")
+                        select(name="select")
+                            option(value="") Tous les domaines
+                            -for(var i = 0; i < fields.length; i++)
+                                option(value=fields[i]._id)= fields[i].field_name
+        div.middle-content.hidden-lg.hidden-md
+            div.catalog-box
+                div.tab-content#mbcatalog
+                    div#mboffers
+                        if(data.length === 0)
+                            h2 h2 Aucun résultat pour
+                                | "
+                                = query
+                                | "
+                        else
+                            h2 Résultats de recherche pour &nbsp;
+                                | "
+                                = query
+                                | "
+                            ul.catalog-items
+                                -for(var i = 0; i < data.length; i++)
+                                    div.mb-item-box(onclick="location.href='offers/'" + data[i]._id)
+                                        li.catalog-item
+                                            span.item-price.pull-right= data[i].bundle_price
+                                                | &nbsp;€
+                                            a.item-title(href="offers/" + data[i]._id)= data[i].offer_title
+                                            div.item-meta
+                                                small <i class="fa fa-clock-o"> </i> &nbsp;
+                                                    +formatDateOnly(data[i].created_at)
+                                                    |  &nbsp; <i class="fa fa-map-marker"> </i> &nbsp;
+                                                    = data[i].offer_location
+                                                p.item-excerpt=data[i].offer_description.substr(0, 300)
+                                                    | ...&nbsp;
+    // LARGE SCREENS
+    +middle-menu
+    div.container
+        div.middle-content.col-md-8.hidden-sm.hidden-xs
+            div.catalog-box
+                div.tab-content#catalog
+                    div#offers
+                        if(data.length === 0)
+                            h2 h2 Aucun résultat pour
+                                | "
+                                = query
+                                | "
+                        else
+                            h2 Résultats de recherche pour &nbsp;
+                                | "
+                                = query
+                                | "
+                            ul.catalog-items
+                                -for(var i = 0; i < data.length; i++)
+                                    div.item-box(onclick="location.href='offers/'"+data[i]._id)
+                                        li.catalog-item
+                                            span.item-price.pull-right= data[i].bundle_price
+                                                | &nbsp;€
+                                            a.item-title(href="offers/"+ data[i]._id)= data[i].offer_title
+                                            div.item-meta
+                                                small <i class="fa fa-clock-o"> </i> &nbsp;
+                                                    +formatDateOnly(data[i].created_at)
+                                                    |  &nbsp; <i class="fa fa-map-marker"> </i> &nbsp;
+                                                    = data[i].offer_location
+                                                p.item-excerpt=data[i].offer_description.substr(0, 300)
+                                                    | ...&nbsp;
+
+        div.middle-sidebar.col-md-4.col-lg-4.hidden-xs.hidden-sm
+            div.item-box.sidebar-sticky
+                h3 Filtres
+                div.filter-form
+                    form.form-default(action="" method="post")
+                        input(type="text" class="location")
+                        select(name="select")
+                            option(value="") Tous les domaines
+                                -for(var i = 0; i < fields.length; i++)
+                                    option(value=fields[i]._id)= fields[i].field_name
+
+
+

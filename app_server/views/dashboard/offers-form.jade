@@ -1,0 +1,45 @@
+//
+   Created by nokamojd on 14/07/2016.
+
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-sm.hidden-xs
+            +side-menu
+        div.page-nav
+            h2.dash-title Nouvelle Offre
+            div.dash-content.clearfix
+                    form.form-default(action="" method="post" role="form")
+                        div.right-content.col-md-8
+                            div
+                                input(type="text" name="offer_t" placeholder="Titre")
+                            div
+                                textarea(name="offer_desc" placeholder="Description de l'offre ..." cols="69" rows="10")
+                            div.col-md-3
+                                input(type="text" name="h_price" placeholder="Tarif horaire")
+                            div.col-md-3
+                                input(type="text" name="bdl_price" placeholder="Prix forfait")
+                            div.col-md-3
+                                input(type="text" name="dl_price" placeholder="Prix à la journée" )
+                            div.col-md-3
+                                input(type="text" name="h_d_price" placeholder="Prix à la demi-journée" )
+                            div
+                                textarea(name="conditions" placeholder="Vos conditions. Ex: Je rends ce service à distance ou chez le client etc..." cols="69" rows="6")
+                            div.col-md-6
+                                input(type="text" name="offer_loc" class="location" placeholder="Ville, Région/Département, Pays")
+                            div
+                                textarea(name="tags" placeholder="Les mots clés donnent plus de visibilité à votre offre. Ex: Article de blog, Édition fiche de paie, etc..." cols="69" rows="3")
+                            div
+                                select(name="offer_fld")
+                                    option(value="") Sélectionner un secteur d'activité
+                                    - for(var i = 0; i < fields.length; i++)
+                                        option(value=fields[i]._id)= fields[i].field_name
+                            div
+                                input(type="hidden" name="offer_authr" value=user._id)
+
+
+                        div.left-content.col-md-2
+                            div
+                                br/
+                                input(type="submit" class="submit-btn" value="Publier")

@@ -1,0 +1,48 @@
+//
+   Created by nokamojd on 25/08/2016.
+
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-xs.hidden-sm
+            +side-menu
+        div.page-nav
+            h2.dash-title Domaines
+            //hr/
+            //div.dash-content.clearfix.hidden-md.hidden-lg
+                button.accordion Ajouter un domaine
+                div.panel
+                    form.form-default(action="" method="" role="form")
+                        input(type="text" name="" placeholder="Le domaine")
+                        br/
+                        small
+                            em Le domaine représente le secteur d'activité auquel appartient une offre ou demande, une entreprise, un consultant.
+                        br/
+                        input(type="text" name="" placeholder="L'identifiant du domaine")
+                        br/
+                        small
+                            em C'est le même que le précédent à l'exception que les caratères spéciaux doivent être remplacés par un tirait
+                        br/
+                        input(type="submit" value="Ajouter un domaine")
+
+
+
+            /////////////////////////////////////////////////////////////////////////
+            // LARGE SCREENS
+            div.dash-content.clearfix.hidden-sm.hidden-xs
+                div.right-content.col-md-3
+                    legend Ajouter un domaine
+                    form.form-default(action="", method="POST", role="form")
+                        input(type="hidden" name="_method" value="PUT")
+                        input(type="text" name="fieldname" value="#{field.field_name}")
+                        br/
+                        small
+                            em Le domaine représente le secteur d'activité auquel appartient une offre, une demande, une entreprise, ou un consultant.
+                        br/
+                        input(type="text" name="fieldslug" value="#{field.field_slug}")
+                        br/
+                        small
+                            em C'est le même que le précédent à l'exception que les caratères spéciaux doivent être remplacés par un tirait
+                        br/
+                        input(type="submit" value="Modifier")

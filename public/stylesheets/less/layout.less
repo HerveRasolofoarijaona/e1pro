@@ -1,0 +1,911 @@
+
+/*** Main Header Style ****/
+
+.main-header{
+  top:0;
+  background-color: #fff;
+  padding: 6px;
+  box-shadow: 4px 0 8px 0 #d7d7d7;
+  margin-bottom: 0;
+  width:100%;
+  z-index:9999;
+}
+
+.sticky{
+  display: none;
+  position: fixed;
+}
+
+.sidebar-sticky{
+  //display: none;
+  position: fixed;
+  width: 24.5%;
+}
+
+.top-search{
+  margin-top: 6px;
+}
+
+.top-menu{
+  margin-top: 14px;
+}
+
+.main-header-links li{
+  display: inline;
+  padding: 10px;
+  a {
+    color: @gray-link;
+    &:hover{
+      .transition(.5s);
+      text-decoration: none;
+      color: @darker-gray-bg;
+    }
+  }
+}
+
+.mobile-hd{
+  text-align: center;
+  //padding: .5%;
+  margin: 0;
+}
+
+.mobile-bars{
+  padding: 4%;
+  margin: 0;
+}
+
+.mobile-search{
+  padding: 4%;
+  margin: 0;
+}
+
+/* The side navigation menu */
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 10000; /* Stay on top */
+  top: 0;
+  left: 0;
+  background-color: @light-gray-bg; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  /* The navigation menu links */
+  a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 16px;
+    //color: #818181;
+    display: block;
+    transition: 0.3s
+  }
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover, .offcanvas a:focus{
+  ///color: @;
+}
+
+
+.sideform{
+  height: 100%;
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 10000; /* Stay on top */
+  text-align: center;
+  top: 0;
+  right: 0;
+  background-color: @light-gray-bg; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  a{
+    &:hover{
+      text-decoration: none;
+    }
+  }
+}
+
+
+
+
+
+/* Position and style the close button (top right corner) */
+.closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px !important;
+  margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#page-content {
+  transition: margin-left .5s;
+  //padding: 20px;
+}
+
+
+/**** MIDDLE MENU *****/
+/**********************/
+.middle-menu{
+  padding-top: 1.3em;
+  //background-color: @dark-blue;
+  //height: 250px;
+  height: 55px;
+  font-size: 16px;
+  //margin-bottom: 1em;
+}
+
+.mb{
+  text-align: center;
+  font-size: 1em;
+}
+
+.middle-menu-items li{
+  display: inline;
+  padding: 10px;
+  .active{
+    color: @blue;
+  }
+  a{
+    //text-transform: uppercase;
+    color: @gray-link;
+    text-decoration: none;
+    &:hover{
+      .transition(.5s);
+      text-decoration: none;
+      color: @blue;
+    }
+    /*
+    .active{
+      color: @blue;
+    }*/
+  }
+}
+
+/*** Simple Layout Style *****/
+/*****************************/
+
+#simple-layout-bg{
+  background: url(../images/emploi1pro-bg.jpg) no-repeat center center fixed;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
+.form-box{
+  background-color: @light-gray-bg;
+  position: absolute;
+  margin: auto;
+  margin-bottom: 3em;
+  top: 12%;
+  right: 10%;
+  //bottom: 2%;
+  left: 10%;
+  height: auto;
+  padding: 18px 26px 18px 18px;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.form-box-login{
+  background-color: @light-gray-bg;
+  position: absolute;
+  margin: auto;
+  margin-bottom: 3em;
+  top: 25%;
+  right: 10%;
+  //bottom: 2%;
+  left: 10%;
+  height: auto;
+  padding: 18px 25px 18px 18px;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.form-default{
+
+}
+
+.filter-form{
+  margin: auto;
+  height: auto;
+  text-align: center;
+}
+
+/***** FILTERS FORM ON MOBILE ***********/
+/*****************************************
+
+/* Style the buttons that are used to open and close the accordion panel */
+button.accordion {
+  background-color: @green-blue;
+  color: @light-gray-bg;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+button.accordion.active, button.accordion:hover {
+  background-color: @green-blue;
+  color: @light-gray-bg;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+div.panel {
+  padding: 0 18px;
+  background-color: white;
+  display: none;
+}
+
+/* The "show" class is added to the accordion panel when the user clicks on one of the buttons. This will show the panel content */
+div.panel.show {
+  display: block !important;
+}
+
+div.panel {
+  padding: 18px;
+  background-color: white;
+  border-radius: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: 0.6s ease-in-out;
+  opacity: 0;
+}
+
+div.panel.show {
+  opacity: 1;
+  max-height: 500px; /* Whatever you like, as long as its more than the height of the content (on all screen sizes) */
+}
+
+button.accordion:after {
+  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  font-size: 13px;
+  color: @light-gray-bg;
+  float: right;
+  margin-left: 5px;
+}
+
+button.accordion.active:after {
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
+  color: @light-gray-bg;
+}
+
+/**** Catalogs style ********/
+/****************************/
+
+.content{
+  position: relative;
+  min-height: 100%;
+}
+
+
+.item-box{
+  background-color: #fff;
+  padding: 14px;
+  //box-shadow: 0 1px 0 2px #f1f1f1;
+  margin-bottom: 10px;
+  &:last-child{
+    margin-bottom: 4em;
+  }
+  a{
+    font-weight: 600;
+    color: @green-blue;
+    font-size: 15px;
+    &:hover{
+      text-decoration: none;
+      color: @gray-link;
+    }
+  }
+  &:hover{
+    //box-shadow: 0 2px 0 4px #f1f1f1;
+  }
+}
+
+.catalog-item{
+  cursor: pointer;
+  img{
+    margin-right: .5em;
+  }
+}
+
+.catalog-user{
+  img{
+    margin-right: .5em;
+  }
+}
+
+.mb-item-box{
+  background-color: #fff;
+  padding: 16px 12px 8px 12px;
+  border-bottom: 1px solid @darker-gray-bg;
+  margin: 0;
+  /*&:last-child{
+    margin-bottom: 4em;
+  }*/
+
+}
+
+a.item-title{
+  font-weight: 600;
+  color: @green-blue;
+  font-size: 15px;
+  &:hover{
+    text-decoration: none;
+  }
+}
+&:hover{
+  //box-shadow: 0 2px 0 4px #f1f1f1;
+}
+
+
+span.item-price{
+  font-weight: 600;
+  font-size: 13px;
+  color: mediumseagreen;
+}
+
+span.certified{
+  margin-top: -1px;
+  float: right;
+  font-weight: 600;
+  font-size: 16px;
+  color: mediumseagreen;
+}
+
+
+.item-meta{
+  color: @darker-gray-bg;
+  line-height: 0;
+  padding: 0;
+  margin-top: 1em;
+  p{
+    text-align: justify;
+    font-size: 13px;
+  }
+}
+
+.item-excerpt{
+  line-height: 1.3em;
+  margin-top: .5em;
+  margin-bottom: .8em;
+}
+
+
+.skill-labels li{
+  display: inline-block;
+  margin: 3px;
+  //line-height: 1.7em;
+  padding-bottom: .5em;
+  a{
+    font-size: 12px;
+    padding: 5px 6px 5px 6px;
+    color: @light-gray-bg;
+    background-color: @green-blue;
+    &:hover{
+      .transition(.5s);
+      color: @green-blue;
+      background-color: @light-gray-bg;
+      text-decoration: none;
+    }
+  }
+}
+
+small.rates{
+  margin-top: -12px;
+  font-size: 14px;
+  color: orange;
+}
+
+small.item-rates{
+  font-size: 11px;
+  color: orange;
+}
+
+
+.box-section-title{
+
+}
+/**** Home Page Style ********/
+/*****************************/
+
+.page-title-section{
+  margin-top: -23px;
+  color: #fff;
+  width: 100%;
+  height: 75vh;
+  background: url(../images/homepage-bg.jpg) no-repeat center center fixed;
+  background-size: cover;
+  text-align: center;
+  a.action-link{
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+}
+
+
+.page-title{
+  //line-height: 1em;
+  padding-top: 10%;
+}
+
+.action-link{
+  background-color: @blue;
+  color: @light-gray-bg;
+  padding: 12px;
+  text-transform: uppercase;
+  font-weight: 400;
+  &:hover{
+    .transition(.5s);
+    color: #ffffff;
+    text-decoration: none;
+    background-color: @darker-blue;
+  }
+  &:focus{
+    outline: none;
+    text-decoration: none;
+    color: #ffffff;
+  }
+  &:visited{
+    outline: none;
+    text-decoration: none;
+    color: #ffffff;
+  }
+}
+
+.tagline{
+  margin: 3%;
+  font-size: 18px;
+}
+
+.spacer{
+  margin-top: 8%;
+  margin-bottom: 8%;
+}
+.preview{
+  height: 600px;
+  background-color: @darker-gray-bg;
+}
+
+.heading{
+  margin-top: 6em;
+  text-align: center;
+  padding-left: 2em;
+  padding-right: 2em;
+  h2 {
+    line-height: 1em;
+  }
+}
+
+.our-offer{
+  margin-top: 4em;
+  margin-bottom: 6em;
+  text-align: justify;
+}
+
+.our-offer-4c{
+  margin-top: 4em;
+  margin-bottom: 2em;
+  text-align: center;
+  a{
+    color: @green-blue;
+    text-transform: uppercase;
+  }
+}
+
+.intro {
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+.customers{
+  margin-top: 4em;
+  text-align: center;
+  background-color: #fff;
+  padding: 3em 2em 3em 2em;
+}
+.slide-items-list {
+  margin-top: 1em;
+  width: auto;
+  height: 300px;
+  background: url(../images/cc/customers_light.png) no-repeat center center;
+  background-size: contain;
+  //text-align: center;
+}
+
+.testimonials{
+  text-align: center;
+  padding: 3em 2em 3em 2em;
+  height: 480px;
+  background-color: @green-blue;
+  color: @light-gray-bg;
+  p {
+    color: @light-gray-bg;
+    font-size: 16px;
+  }
+}
+
+
+/* Carousel */
+#quote-carousel {
+  padding: 0 1em 3em 1em;
+  margin-top: 3em;
+}
+#quote-carousel .carousel-control {
+  background: none;
+  color: @light-gray-bg;
+  font-size: 2.3em;
+  text-shadow: none;
+  margin-top: 3em;
+}
+#quote-carousel .carousel-control.left {
+  left: -60px;
+}
+#quote-carousel .carousel-control.right {
+  right: -60px;
+}
+#quote-carousel .carousel-indicators {
+  right: 50%;
+  top: 90%;
+  bottom: 0px;
+  margin-right: -19px;
+}
+#quote-carousel .carousel-indicators li {
+  width: 32px;
+  height: 32px;
+  margin: 5px;
+  cursor: pointer;
+  border: 4px solid @darker-gray-bg;
+  border-radius: 50px;
+  opacity: 0.4;
+  overflow: hidden;
+  transition: all 0.4s;
+}
+#quote-carousel .carousel-indicators .active {
+  background: #333333;
+  width: 96px;
+  height: 96px;
+  border-radius: 100px;
+  border-color: @darker-blue;
+  opacity: 1;
+  overflow: hidden;
+}
+.carousel-inner {
+  min-height: 150px;
+}
+.item blockquote {
+  border-left: none;
+  margin: 0;
+}
+.item blockquote p:before {
+  content: "\f10d";
+  font-family: 'Fontawesome';
+  float: left;
+  margin-right: 10px;
+}
+
+
+
+/**** FOOTER *******/
+/********************/
+
+.scrollToTop{
+  border: none;
+  background-color: @blue;
+  box-shadow: 0px 1.5px 1.5px 0px @gray-link;
+  width: 38px;
+  height: 42px;
+  position:fixed;
+  top:75%;
+  right:3%;
+  display:none;
+  color: #fff;
+  &:hover {
+    //background-color: @light-gray-bg;
+    text-decoration: none;
+    //box-shadow: 0px 2px 8px 0px @dark-blue;
+  }
+  &:visited{
+    background-color: @blue;
+  }
+  i{
+    text-align: center;
+    font-size: 21px;
+    color: white;
+    padding: 8px;
+  }
+}
+/*
+.scrollToTop:hover{
+  text-decoration: none;
+}*/
+
+.footer-content{
+  //margin-top: 2em;
+  padding: 32px;
+  background-color: @darker-gray-bg;
+  color: @gray-link;
+  ul{
+    li {
+      margin: 1em;
+    }
+  }
+  a{
+    color: @dark-gray;
+    text-decoration: none;
+    margin: .5em;
+    &:hover{
+      .transition(.3s);
+      color: @gray-link;
+      text-decoration: none;
+    }
+    img{
+      margin: .7em;
+    }
+    i.social{
+      text-align: center;
+      font-size: 28px;
+      margin: .1em;
+      &:hover{
+        .transition(.3s);
+      }
+    }
+  }
+
+  a.action-link{
+    color: #ffffff;
+  }
+}
+
+.footer-bottom{
+  text-align: center;
+  background-color: @light-gray-bg;
+  color: @dark-gray;
+  padding: 1em;
+
+}
+
+
+/******************** SIDE MENU *********************/
+/*****************************************************/
+
+.side-menu{
+  background-color: @dark-blue;
+  //padding: 14px;
+  height: 100vh;
+  margin-right: 1em;
+  //position: fixed;
+  //z-index: 3;
+}
+/*
+.side-menu-items {
+  padding-left: .5em;
+  li {
+    margin: 0;
+    padding: 20px 20px 20px;
+    &:hover {
+      .transition(.5s);
+      cursor: pointer;
+      background-color: @blue;
+      color: @darker-gray-bg;
+    }
+
+    a {
+      margin: 0;
+      color: @darker-gray-bg;
+      text-decoration: none;
+      &:hover {
+        color: @darker-gray-bg;
+        text-decoration: none;
+      }
+    }
+
+    ul li {
+      display: none;
+      position: absolute;
+    }
+  }
+}*/
+
+
+
+
+
+
+
+.side-menu-accordion {
+  width: 100%;
+  //max-width: 600px;
+  background: #4d5158;
+  margin: 1.5em auto;
+  //box-shadow: 0 4px 40px #70ac76;
+}
+.side-menu-accordion ul {
+  /* by default hide all sub menus */
+  display: none;
+}
+.side-menu-accordion li {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.side-menu-accordion input[type=checkbox] {
+  /* hide native checkbox */
+  position: absolute;
+  opacity: 0;
+}
+.side-menu-accordion label, .side-menu-accordion a {
+  position: relative;
+  display: block;
+  padding: 18px 18px 18px 18px;
+  background: @dark-blue;
+  //box-shadow: inset 0 -1px #555960;
+  color: @darker-gray-bg;
+  font-size: 15px;
+  text-decoration: none;
+}
+.no-touch .side-menu-accordion label:hover, .no-touch .side-menu-accordion a:hover {
+  background-color: @blue;
+  text-decoration: none;
+  color: @light-gray-bg;
+}
+.side-menu-accordion label::before, .side-menu-accordion label::after, .side-menu-accordion a::after {
+  /* icons */
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.side-menu-accordion label {
+  cursor: pointer;
+}
+.side-menu-accordion label::before, .side-menu-accordion label::after {
+  background-image: url(../images/icons/right-arrow-angle.png);
+  background-repeat: no-repeat;
+}
+.side-menu-accordion label::before {
+  /* arrow icon */
+  ///left: 18px;
+  //float: right;
+  right: 2px;
+  background-position: 0 0;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.side-menu-accordion label::after {
+  /* folder icons */
+  left: 41px;
+  background-position: -16px 0;
+}
+/*
+.side-menu-accordion a::after {
+  /* image icon
+  left: 36px;
+  background: url(../img/cd-icons.svg) no-repeat -48px 0;
+}*/
+.side-menu-accordion input[type=checkbox]:checked + label::before {
+  /* rotate arrow */
+  -webkit-transform: translateY(-50%) rotate(90deg);;
+  -moz-transform: translateY(-50%) rotate(90deg);
+  -ms-transform: translateY(-50%) rotate(90deg);
+  -o-transform: translateY(-50%) rotate(90deg);
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.side-menu-accordion input[type=checkbox]:checked + label::after {
+  /* show open folder icon if item is checked */
+  background-position: -32px 0;
+}
+
+.side-menu-accordion input[type=checkbox]:checked + label + ul,
+.side-menu-accordion input[type=checkbox]:checked + label:nth-of-type(n) + ul {
+  /* use label:nth-of-type(n) to fix a bug on safari (<= 8.0.8) with multiple adjacent-sibling selectors*/
+  /* show children when item is checked */
+  display: block;
+}
+.side-menu-accordion ul label,
+.side-menu-accordion ul a {
+  background: #000;
+  box-shadow: inset 0 -1px #222;
+  padding-left: 50px;
+}
+.no-touch .side-menu-accordion ul label:hover, .no-touch
+.side-menu-accordion ul {
+  a {
+
+    &:hover{
+    color: @light-gray-bg;
+    text-decoration: none;
+    }
+  }
+}
+
+.side-menu-accordion > li:last-of-type > label,
+.side-menu-accordion > li:last-of-type > a,
+.side-menu-accordion > li > ul > li:last-of-type label,
+.side-menu-accordion > li > ul > li:last-of-type a {
+  box-shadow: none;
+}
+/*
+.side-menu-accordion ul label::before {
+  left: 36px;
+}
+.side-menu-accordion ul label::after,
+.side-menu-accordion ul a::after {
+  left: 59px;
+}
+.side-menu-accordion ul ul label,
+.side-menu-accordion ul ul a {
+  padding-left: 100px;
+}
+.side-menu-accordion ul ul label::before {
+  left: 54px;
+}
+.side-menu-accordion ul ul label::after,
+.side-menu-accordion ul ul a::after {
+  left: 77px;
+}
+.side-menu-accordion ul ul ul label,
+.side-menu-accordion ul ul ul a {
+  padding-left: 118px;
+}
+.side-menu-accordion ul ul ul label::before {
+  left: 72px;
+}
+.side-menu-accordion ul ul ul label::after,
+.side-menu-accordion ul ul ul a::after {
+  left: 95px;
+}*/
+
+.side-menu-accordion.animated label::before {
+  /* this class is used if you're using jquery to animate the accordion */
+  -webkit-transition: -webkit-transform 0.3s;
+  -moz-transition: -moz-transform 0.3s;
+  transition: transform 0.3s;
+}
+
+
+.badge{
+  background-color: orangered;
+}
+
+/****************************** Dashboard Styling ********************************/
+/**********************************************************************************/
+.dash-content{
+  //background-color: #fff !important;
+}
+
+.dash-title{
+  margin-left: 24px;
+}
+
+legend{
+  font-size: 18px;
+}
+
+.right-content{
+  //padding: 32px;
+}
+
+.left-content{
+  //padding: 32px;
+}

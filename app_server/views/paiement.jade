@@ -1,0 +1,72 @@
+include includes/sharedFunctions
+extends layout-dashboard
+block content
+    // SMALL SCREENS
+    +middle-menu-mb
+
+    // LARGE SCREENS
+    +middle-menu
+    div.container
+        h3 Veuillez s&eacutel&eacutectionner votre carte
+        div#error(class="alert alert-danger" role="alert" style="display: none")
+        form(class="validerInfo" action="/cart/pay/validation/#{user._id}" method="post")
+            input(type="submit" class="btn btn-primary" value="Valider") 
+            div.col-xl
+                table.table
+                    caption  
+                        h4 Vos Cartes de paiement  
+                      thead
+                        tr
+                          th
+                          th(scope='col') Carte       
+                          th(scope='col') Titulaire       
+                          th(scope='col') Date d'expiration   
+                          th(scope='col') Action
+                      tbody
+                        -if(cards.length == 0)
+                            tr
+                              p Aucune carte enregistr&racutee
+                        -else
+                            -for(var i = 0; i < cards.length-1; i++)
+                                tr
+                                  th(scope='row')
+                                    input(type="radio" name="id_card" value=cards[i].ID)
+                                  td 
+                                    = cards[i+i].EXTRA.NUM
+                                  td 
+                                    = cards[i+i+1].titulaire
+                                  td 
+                                    = cards[i+i].EXTRA.EXP
+                                  td
+                                    a(onclick="deleteCard(#{cards[i+i].ID})")
+                                        i.fa.fa-trash
+        div.col-sm-6
+            button(type="button" class="btn btn-primary" data-toggle="collapse" data-target="#CardInfo") Ajouter une carte
+            div#CardInfo.collapse
+                form.form-inline(class="registerCard" action="")
+                    table  
+                        thead
+                            tr
+                                th(scope='col') 
+                                    h4 Nom du titulaire de la carte:
+                                th(scope='col') 
+                                    input(type="text" class="form-control" name="card_owner" placeholder="Ex: Dupont")
+                            tr
+                                th(scope='col')
+                                    h4 Num&eacutero de carte de cr&eacutedit:
+                                th(scope='col') 
+                                    input(type="text" class="form-control" name="card_num")
+                            tr
+                                th(scope='col')
+                                    h4 Date d'expiration:
+                                th(scope='col') 
+                                    input(type="number" class="form-control" min="1" max="12" name="month_exp" placeholder="Mois")
+                                    input(type="number" class="form-control" name="year_exp" min="2018" max="3000" placeholder="Ex:2020")
+                            tr
+                                th(scope='col')
+                                    h4 Code de s&eacutecurit&eacute (Crypto):
+                                th(scope='col') 
+                                    input(type="text" class="form-control" name="cvc" placeholder="CVC")
+                    div
+                        input(type="hidden" name="user" value=user._id)
+                        input(type="submit" class="btn btn-primary" value="Valider") 

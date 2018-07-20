@@ -1,0 +1,30 @@
+//
+   Created by nokamojd on 24/07/2016.
+extends simple-layout
+
+block content
+    div.col-md-3.form-box-login
+        a(href="/")
+            img(src="/images/emploi1pro-logo_small.png")
+        div
+            form(class="form-default" role="form" method="post")
+                p Veuillez saisir un nouveau mot de passe.
+                -if(errors.length > 0)
+                        div.alert.alert-danger.alert-dismissible
+                            button.close(type="button", data-dismiss="alert", aria-label="Close" style="font-size:12px; text-align:center")
+                                span(aria-hidden="true") &times;
+                                = errors
+                -else if(success.length > 0)
+                        div.alert.alert-success.alert-dismissible
+                            button.close(type="button", data-dismiss="alert", aria-label="Close" style="font-size:12px; text-align:center")
+                                span(aria-hidden="true") &times;
+                                = success
+
+                div
+                    input(type="password" name="password" placeholder="Nouveau mot de passe" , autofocus=true)
+                div
+                    input(type="password" name="confirm" placeholder="Confirmer mot de passe" required)
+                div
+                    input(type="submit" class="submit-btn" value="Soumettre")
+
+                small <a href="reset">Revenir</a>

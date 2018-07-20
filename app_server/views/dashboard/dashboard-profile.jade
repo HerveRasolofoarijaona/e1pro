@@ -1,0 +1,103 @@
+//
+   Created by nokamojd on 22/09/2016.
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-xs.hidden-sm
+            +side-menu
+        div.page-nav
+            h2.dash-title Votre Profil
+            //div.dash-content.clearfix.hidden-md.hidden-lg
+                button.accordion Ajouter une compétence
+                div.panel
+                    form.form-default(action="#{user._id}" method="post" role="form")
+                        input(type="text" name="subskillLab" placeholder="Une compétence")
+                        input(type="submit" value="Ajouter une Compétence")
+
+
+                //
+
+            /////////////////////////////////////////////////////////////////////////
+            // LARGE SCREENS
+            div.dash-content.clearfix.hidden-sm.hidden-xs
+
+                div.left-content.col-md-3
+                    div.item-box
+                        div.pp-holder(style="text-align:center")
+                            img.img-circle(src="#{user.profile_pic_path}")
+                            h3= user.first_name
+                                | &nbsp;
+                                = user.last_name
+                                | &nbsp;
+                                = user.user_role.role
+                            p= user.qualification
+                            small= user.company_name
+                    div.item-box
+                        h3 Bio
+                        hr/
+                        p= user.about
+                div.right-content.col-md-7
+                    div.item-box
+                        h3 Données personnelles
+                        hr/
+                        label
+                            strong Date de naissance:
+                            label.pull-right=user.personal_details.birth_date
+                        br/
+                        br/
+                        label
+                            strong Sexe:
+                            label.pull-right=user.personal_details.gender
+                        br/
+                        br/
+                        label
+                            strong Adresse:
+                            label.pull-right=user.personal_details.address.line1
+                            if(user.personal_details.address.line2 != '')
+                                br/
+                                br/
+                                strong Complément d'adresse:
+                                label.pull-right=user.personal_details.address.line2
+                            else
+                                | &nbsp;
+                        br/
+                        br/
+                        label
+                            strong Ville, Région, Pays:
+                            label.pull-right=user.personal_details.address.location
+                        br/
+                        br/
+                        label
+                            strong Téléphone Mobile:
+                            label.pull-right=user.personal_details.mobile_phone_number
+                        if(user.personal_details.home_phone_number = '')
+                            br/
+                            br/
+                            label
+                                strong Téléphone Fixe:
+                                label.pull-right=user.personal_details.home_phone_number
+                        else
+                            | &nbsp;
+                        div.spacer
+                            a.action-link(href="/dashboard/u/settings") Modifier mes informations
+                //div.right-content.col-md-3
+                    div.item-box
+                        h3 Bio
+                        hr/
+                        form.form-default(method="post" action="" role="form")
+                            input(type="hidden" name="_method" value="PUT")
+                            textarea(placeholder="Bio..." name="biography" cols="69" rows="8")
+                            input(type="submit" value="Enregister")
+                    div.item-box
+                        h3 Compétences
+                        form.form-default
+                            select(name="demand_skills")
+                                option(value="") Compétences souhaitées
+                                - for(var i = 0; i < skills.length; i++)
+                                    optgroup(label=skills[i].skill_field)
+                                        - for(var j = 0; j < skills[i].inner_skills.length; j++)
+                                            option(value=skills[i].inner_skills[j]._id)= skills[i].inner_skills[j].inner_skill
+
+
+

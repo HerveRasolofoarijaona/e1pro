@@ -1,0 +1,88 @@
+//
+   Created by nokamojd on 20/09/2016.
+include includes/sharedFunctions
+extends layout-dashboard
+block content
+    // SMALL SCREENS
+    +middle-menu-mb
+
+    // LARGE SCREENS
+    +middle-menu
+    div.container
+            div.dash-content
+                h3 Votre Panier
+                h3 Total : 
+                    -if(cartContent.items.length == 0)
+                        div.item-box
+                            P Votre panier est vide.
+                    -else
+                        span= cartContent.total_price
+                        | &nbsp;
+                        span= cartContent.items[0].item.price_currency
+                hr/
+                -if(errors.length > 0)
+                    div.alert.alert-success.alert-dismissible
+                        button.close(type="button", data-dismiss="alert", aria-label="Close" style="font-size:12px; text-align:center")
+                            span(aria-hidden="true") &times;
+                            = errors
+                -if(cartContent.items.length == 0)
+                    div.item-box
+                        P Votre panier est vide.
+                -else
+                    ul.catalog-items
+                        div.item-box.row
+                            div.col-md-5
+                                li.head-list Article
+                            div.col-md-2
+                                li.head-list Formule
+                            div.col-md-1
+                                li.head-list Quantité
+                            div.col-md-1
+                                li.head-list Prix Unit.
+                            //div.col-md-1
+                                li.head-list Total
+                            div.col-md-2
+                                li.head-list Action
+                        -var d = 0;
+                        -for(var i = 0; i < cartContent.items.length; i++)
+                            div.item-box.row
+                                li.catalog-item
+                                    div.col-md-5
+                                        a(href="/offers/"+cartContent.items[i].item._id)=cartContent.items[i].item.offer_title
+                                    div.col-md-2
+                                        | Formule chosie
+                                    div.col-md-1
+                                        span= cartContent.items[i].quantity
+                                    div.col-md-1
+                                        span= cartContent.items[i].price
+                                        | &nbsp;
+                                        span= cartContent.items[i].item.price_currency
+                                    //div.col-md-1
+                                        span= cartContent.total_price
+                                        | &nbsp;
+                                        span= cartContent.items[i].item.price_currency
+                                    div.col-md-2
+                                        div.remodal-bg
+                                            div(class="remodal" data-remodal-id="del-alert" + d)
+                                                button(data-remodal-action="close" class="remodal-close")
+                                                form.form-default(method="POST" action="cart/remove")
+                                                    //input(type="hidden" name="_method" value="DELETE")
+                                                    input(type="hidden", name="offerItem"  value=cartContent.items[i]._id)
+                                                    input(type="hidden", name="price"  value=cartContent.items[i].price)
+                                                    p Voulez-vous vraiment supprimer du panier l'article &nbsp;:&nbsp;
+                                                        | "
+                                                        strong= cartContent.items[i].item.offer_title
+                                                        | " ?
+                                                    button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                    | &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    button(type="submit") Supprimer
+                                                    br/
+                                        small
+                                            a(href="#del-alert"+ d++ +"" style="color: red")
+                                                span Supprimer
+                                                i.fa.fa-close
+
+                    div
+                        a.pull-right.action-link(href="/cart/pay/#{user._id}") Commander
+                    br/
+                    br/

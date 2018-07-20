@@ -1,0 +1,98 @@
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    style.
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 2px solid #001a33;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td {
+            padding: 1px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {background-color:#f5f5f5;}
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-xs.hidden-sm
+            +side-menu
+        div.page-nav
+            h2.dash-title RIB
+            div.dash-content.clearfix.hidden-sm.hidden-xs
+                div
+                    -if(success.length > 0)
+                        div.alert.alert-success.alert-dismissible
+                            button.close(type="button", data-dismiss="alert", aria-label="Close" style="font-size:12px; text-align:center")
+                                span(aria-hidden="true") &times;
+                                = success
+                    div.left-content.col-md-10
+                        div.item-box
+                            form(method="POST" action="/dashboard/rib/register")
+                                table
+                                    tr
+                                        //peut-être facultatif
+                                        input(type="hidden" name="user" value=user._id)
+                                        td
+                                            h3.dash-title IBAN *
+                                        td
+                                            h4.dash-title
+                                                input(type="text" name="iban" placeholder="IBAN" required="true")
+                                            -if(error1.length > 0)
+                                                div.alert.alert-danger.alert-dismissible
+                                                    button.close(type="button", data-dismiss="alert", aria-label="Close" style="font-size:12px; text-align:center")
+                                                        span(aria-hidden="true") &times;
+                                                        = error1
+                                            
+                                    tr
+                                        td
+                                            h3.dash-title BIC *
+                                        td
+                                            h4.dash-title
+                                                input(type="text" name="bic" required="true") 
+                                            -if(error2.length > 0)
+                                                div.alert.alert-danger.alert-dismissible
+                                                    button.close(type="button", data-dismiss="alert", aria-label="Close" style="font-size:12px; text-align:center")
+                                                        span(aria-hidden="true") &times;
+                                                        = error2
+                                    tr
+                                        td
+                                            h3.dash-title Titulaire du compte bancaire *
+                                        td
+                                            h4.dash-title
+                                                input(type="text" name="titulaire" placeholder="Nom, Prénom(s)" required="true")
+                                    
+                                 button(type="submit") VALIDER 
+                if(rib.length>0)
+                    div.left-content.col-md-10
+                            h2 RIB ENREGISTRE
+                            div.item-box
+                                table
+                                    tr
+                                            input(type="hidden" name="user" value=user._id)
+                                            td
+                                                h3.dash-title IBAN *
+                                            td
+                                                h4.dash-title
+                                                    input(type="text" name="" disabled="disabled" value=rib[0].DATA)                                            
+                                        tr
+                                            td
+                                                h3.dash-title BIC *
+                                            td
+                                                h4.dash-title
+                                                    input(type="text" name="" disabled="disabled" value=rib[0].SWIFT) 
+                                        tr
+                                            td
+                                                h3.dash-title Titulaire du compte bancaire *
+                                            td
+                                                h4.dash-title
+                                                    input(type="text" name="" disabled="disabled" value=rib[0].HOLDER)      
+                                                
+                                                    

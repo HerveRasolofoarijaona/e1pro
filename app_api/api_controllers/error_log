@@ -1,0 +1,36 @@
+[10-Jan-2017 01:36:09 UTC] PHP Fatal error:  Uncaught exception 'phpmailerException' with message 'Invalid address: ' in /home/iismadag/public_html/iismadav2/wp-includes/class-phpmailer.php:946
+Stack trace:
+#0 /home/iismadag/public_html/iismadav2/wp-includes/pluggable.php(352): PHPMailer->setFrom('', 'Meredith', false)
+#1 /home/iismadag/public_html/iismadav2/wp-content/themes/OnePager/library/functions/widgets.php(3809): wp_mail('pl.gervais@iis-...', 'VJ', '<p>Dear Orion D...', 'MIME-Version: 1...')
+#2 /home/iismadag/public_html/iismadav2/wp-content/themes/OnePager/library/functions/widgets.php(3861): send_contact_email(Array)
+#3 /home/iismadag/public_html/iismadav2/wp-includes/class-wp-widget.php(395): supreme_contact_widget->widget(Array, Array)
+#4 [internal function]: WP_Widget->display_callback(Array, Array)
+#5 /home/iismadag/public_html/iismadav2/wp-includes/widgets.php(738): call_user_func_array(Array, Array)
+#6 /home/iismadag/public_html/iismadav2/wp-content/themes/OnePager/page-templates/front-page.php(312): dynamic_sidebar('home_after_cont...') in /home/iismadag/public_html/iismadav2/wp-includes/class-phpmailer.php on line 946
+[10-Jan-2017 01:36:11 UTC] PHP Fatal error:  Uncaught exception 'phpmailerException' with message 'Invalid address: ' in /home/iismadag/public_html/iismadav2/wp-includes/class-phpmailer.php:946
+Stack trace:
+#0 /home/iismadag/public_html/iismadav2/wp-includes/pluggable.php(352): PHPMailer->setFrom('', 'Meredith', false)
+#1 /home/iismadag/public_html/iismadav2/wp-content/themes/OnePager/library/functions/widgets.php(3809): wp_mail('pl.gervais@iis-...', 'VJ', '<p>Dear Orion D...', 'MIME-Version: 1...')
+#2 /home/iismadag/public_html/iismadav2/wp-content/themes/OnePager/library/functions/widgets.php(3861): send_contact_email(Array)
+#3 /home/iismadag/public_html/iismadav2/wp-includes/class-wp-widget.php(395): supreme_contact_widget->widget(Array, Array)
+#4 [internal function]: WP_Widget->display_callback(Array, Array)
+#5 /home/iismadag/public_html/iismadav2/wp-includes/widgets.php(738): call_user_func_array(Array, Array)
+#6 /home/iismadag/public_html/iismadav2/wp-content/themes/OnePager/page-templates/front-page.php(312): dynamic_sidebar('home_after_cont...') in /home/iismadag/public_html/iismadav2/wp-includes/class-phpmailer.php on line 946
+[10-Jan-2017 01:36:12 UTC] PHP Fatal error:  Uncaught exception 'phpmailerException' with message 'Invalid address: ' in /home/iismadag/public_html/iismadav2/wp-includes/class-phpmailer.php:946
+Stack trace:
+#0 /home/iismadag/public_html/iismadav2/wp-includes/pluggable.php(352): PHPMailer->setFrom('', 'Meredith', false)
+#1 /home/iismadag/public_html/iismadav2/wp-content/themes/OnePager/library/functions/widgets.php(3809): wp_mail('pl.gervais@iis-...', 'VJ', '<p>Dear Orion D...', 'MIME-Version: 1...')
+#2 /home/iismadag/public_html/iismadav2/wp-content/themes/OnePager/library/functions/widgets.php(3861): send_contact_email(Array)
+#3 /home/iismadag/public_html/iismadav2/wp-includes/class-wp-widget.php(395): supreme_contact_widget->widget(Array, Array)
+#4 [internal function]: WP_Widget->display_callback(Array, Array)
+#5 /home/iismadag/public_html/iismadav2/wp-includes/widgets.php(738): call_user_func_array(Array, Array)
+#6 /home/iismadag/public_html/iismadav2/wp-content/themes/OnePager/page-templates/front-page.php(312): dynamic_sidebar('home_after_cont...') in /home/iismadag/public_html/iismadav2/wp-includes/class-phpmailer.php on line 946
+[10-Jan-2017 01:36:14 UTC] PHP Fatal error:  Uncaught exception 'phpmailerException' with message 'Invalid address: ' in /home/iismadag/public_html/iismadav2/wp-includes/class-phpmailer.php:946
+Stack trace:
+#0 /home/iismadag/public_html/iismadav2/wp-includes/pluggable.php(352): PHPMailer->setFrom('', 'Meredith', false)
+#1 /home/iismadag/public_html/iismadav2/wp-content/themes/OnePager/library/functions/widgets.php(3809): wp_mail('pl.gervais@iis-...', 'VJ', '<p>Dear Orion D...', 'MIME-Version: 1...')
+#2 /home/iismadag/public_html/iismadav2/wp-content/themes/OnePager/library/functions/widgets.php(3861): send_contact_email(Array)
+#3 /home/iismadag/public_html/iismadav2/wp-includes/class-wp-widget.php(395): supreme_contact_widget->widget(Array, Array)
+#4 [internal function]: WP_Widget->display_callback(Array, Array)
+#5 /home/iismadag/public_html/iismadav2/wp-includes/widgets.php(738): call_user_func_array(Array, Array)
+#6 /home/iismadag/public_html/iismadav2/wp-content/themes/OnePager/page-templates/front-page.php(312): dynamic_sidebar('home_after_cont...') in /home/iismadag/public_html/iismadav2/wp-includes/class-phpmailer.php on line 946

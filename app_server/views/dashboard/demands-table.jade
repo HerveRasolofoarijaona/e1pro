@@ -1,0 +1,120 @@
+//
+   Created by nokamojd on 06/09/2016.
+
+
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-xs.hidden-sm
+            +side-menu
+        div.page-nav
+            h2.dash-title Demandes
+            h4
+                a(href="/dashboard/demands/u/#{user._id}/demand/new") Ajouter une demande
+            div.dash-content.clearfix.hidden-md.hidden-lg
+                div.hidden-lg.hidden-md
+                    ul.catalog-items
+                        -var j = 0;
+                        -var t = 0;
+
+
+
+            /////////////////////////////////////////////////////////////////////////
+            // LARGE SCREENS
+            div.dash-content.clearfix.hidden-sm.hidden-xs
+                div.col-md-10.hidden-sm.hidden-xs
+                    div.item-box
+                        label Légende :
+                            |&nbsp;&nbsp;
+                            i.fa.fa-check-circle
+                                |&nbsp;
+                                label Approuvée
+                            |&nbsp;&nbsp; 
+                            i.fa.fa-ellipsis-h
+                                |&nbsp;
+                                label En attente ou non approuvée
+                    div.item-box
+                        table#field-dt.table.table-responsive
+                            thead
+                                tr
+                                    th
+                                    th  Intitulé
+                                    //th  Excerpt
+                                    th  Auteur
+                                    th  Secteur
+                                    th  Modifié le
+                                    th  État de la demande
+                                    th  Actions rapides
+                            tbody
+                                -var i = 0;
+                                -var d = 0;
+                                each demand in demands
+                                    tr
+                                        td
+                                            if(demand.dmd_approved)
+                                                i.fa.fa-check-circle
+                                            else
+                                                i.fa.fa-ellipsis-h
+                                        td
+                                            a(href="/dashboard/demands/#{demand._id}")= demand.dmd_title
+                                        td
+                                            each u in usersAll
+                                                 if u._id.equals(demand.dmd_author)
+                                                     = u.last_name
+                                                     | &nbsp;
+                                                     = u.first_name
+                                        td
+                                            each f in fields
+                                                 if f._id.equals(demand.dmd_field)
+                                                     = f.field_name
+                                            //.field_name
+                                        td
+                                            +formatDateOnly(demand.updated_at)
+                                        td
+                                            if(demand.is_dmd_completed)
+                                                span Terminée
+                                            else
+                                                span Ouverte
+                                        td
+                                            div.remodal-bg
+                                                //div(class="remodal" data-remodal-id="modal" + i)
+                                                    button(data-remodal-action="close" class="remodal-close")
+                                                    h2 Modifier données utilisateur
+                                                    form.form-default(method="POST" action="users/#{user._id}")
+                                                        input(type="hidden" name="_method" value="PUT")
+                                                        input(type="text" name="firstName" value="#{user.first_name}")
+                                                        input(type="text" name="lastName" value="#{user.last_name}")
+                                                        input(type="email" name="email" value="#{user.email}")
+                                                        input(type="password" name="password" value="#{user.password}")
+                                                        select(name="role")
+                                                            option(selected, value="#{user.user_role._id}")= user.user_role.role
+                                                            -for(var x = 0; x < roles.length; x++)
+                                                                option(value=roles[x]._id)= roles[x].role
+
+                                                        input(type="submit" value="Mofifier")
+                                                        button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                        br/
+                                                div(class="remodal" data-remodal-id="del-alert" + d)
+                                                    button(data-remodal-action="close" class="remodal-close")
+                                                    //h2 Supprimer un domaine d'activité
+                                                    form.form-default(method="POST" action="demands/#{demand._id}")
+                                                        input(type="hidden" name="_method" value="DELETE")
+                                                        p Voulez-vous vraiment supprimer l'offre&nbsp;:&nbsp;
+                                                            | "
+                                                            strong= demand.dmd_title
+                                                            | " ?
+                                                        button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                                                        | &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                                        button(type="submit") Supprimer
+                                                        br/
+
+                                            //a(title="Modifier" href="#modal"+ i++)
+                                                i.fa.fa-pencil
+                                            a(title="Modifier" href="/dashboard/demands/#{demand._id}")
+                                                i.fa.fa-pencil
+                                            | &nbsp;
+                                            a(title="Supprimer" href="#del-alert"+ d++)
+                                                i.fa.fa-close
+
+

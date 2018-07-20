@@ -1,0 +1,86 @@
+/*** GENERAL TYPOGRAPHY STYLE ***/
+
+body{
+  background-color: @light-gray-bg;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Open Sans', Georgia, serif;
+  font-weight: 400;
+  color: @dark-gray;
+}
+
+h1{
+  font-size: 38px;
+  line-height: 1em;
+  color: #ffffff;
+}
+
+h2{
+  font-size: 26px;
+  line-height: 1em;
+
+}
+
+h3 {
+  font-size: 18px;
+  line-height: 1em;
+
+}
+
+h4 {
+  font-size: 16px;
+  padding-bottom: .5em;
+  color: @green-blue;
+  font-weight: 600;
+}
+
+h5{
+  font-size: 14px;
+  //font-weight: 600;
+  //color: @gray-link;
+  color: @dark-gray;
+}
+
+p{
+  font-size: 15px;
+  line-height: 1.5em;
+  font-weight: 300;
+  color: @dark-gray
+  //margin-bottom: 1.5em;
+}
+
+a{
+  color: @blue;
+  text-decoration: none;
+  &:hover{
+    //text-decoration: none;
+    .transition(.5s);
+    outline: none;
+  }
+  /*&:visited{
+    text-decoration: none;
+    color: @blue;
+  }*/
+}
+
+/*
+p{
+	margin-bottom: 1.5em;
+ 	a{
+		color: @lightG-color;
+
+		.transition();
+
+		&:hover {
+		text-decoration: none;
+		border-bottom: 1px dotted;
+		color: @bg-color;
+		}
+	}
+}
+*/

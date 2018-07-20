@@ -1,0 +1,50 @@
+//
+   Created by nokamojd on 06/09/2016.
+
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-sm.hidden-xs
+            +side-menu
+        div.page-nav
+            h2.dash-title Nouvelle Demande
+            div.dash-content.clearfix
+                form.form-default(action="" method="post" role="form")
+                    div.right-content.col-md-8
+                        div
+                            input(type="text" class="form-control" name="demand_t" placeholder="Titre")
+                        div
+                            textarea(name="demand_desc" class="form-control" placeholder="Description de votre demande ..." cols="69" rows="10")
+                        div.col-md-3
+                            input(type="text" class="form-control" name="demand_d_s_d" placeholder="Date de début")
+                        div.col-md-3
+                            input(type="text" class="form-control" name="demand_e_d" placeholder="Date de fin")
+                        div.col-md-3
+                            input(type="text" class="form-control" name="duree" placeholder="Durée")
+                        div.col-md-3
+                            input(type="number" class="form-control" name="demand_es_bgt" placeholder="Budget estimé en €" )
+                        div
+                            textarea(name="demand_conds" class="form-control" placeholder="Vos conditions. Ex: La mission se fera dans nos locaux etc..." cols="69" rows="5")
+                        div
+                            input(type="text" name="demand_loc" class="location form-control" placeholder="Ville, Région/Département, Pays")
+                        div
+                            select(name="demand_fld" class="form-control")
+                                option(value="") Sélectionner un secteur d'activité
+                                -for(var i = 0; i < fields.length; i++)
+                                    option(value=fields[i]._id)= fields[i].field_name
+                        div
+                            select(name="demand_skills" class="form-control")
+                                option(value="") Compétences souhaitées
+                                -for(var i = 0; i < skills.length; i++)
+                                    optgroup(label=skills[i].skill_field)
+                                        -for(var j = 0; j < skills[i].inner_skills.length; j++)
+                                            option(value=skills[i].inner_skills[j]._id)= skills[i].inner_skills[j].inner_skill
+                        div
+                            input(type="hidden" name="demand_authr" value="#{user._id}") 
+                            //, user.first_name, user.last_name
+
+                    div.left-content.col-md-2
+                        div
+                            br/
+                            input(type="submit" class="submit-btn form-control" value="Publier")

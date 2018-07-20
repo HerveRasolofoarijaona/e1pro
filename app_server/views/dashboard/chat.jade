@@ -1,0 +1,223 @@
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+
+block content
+    style.
+        .button {
+                width: 100%;
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+        .btn1{
+            background-color: #4CAF50; /* Vert */
+            }
+        .btn2{
+            background-color: #e60000; /* Rouge */
+            }
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: none;
+            border-bottom: 2px solid #001a33;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td {
+            padding: 1px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {background-color:#f5f5f5;}
+    div.dashboard-content.clearfix
+    div.side-menu.col-md-2.row.hidden-xs.hidden-sm
+        +side-menu
+    div.page-nav
+        div.dash-content.clearfix.hidden-sm.hidden-xs
+            div.col-md-10.hidden-sm.hidden-xs
+                div(id="#postResultDiv")
+                div(id="frame")
+                    div(id="sidepanel")
+                        div(id="profile")
+                            div(class="wrap")
+                                img(id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="")
+                                p(style="color:white;") 
+                                    = user.name
+                                i(class="fa fa-chevron-down expand-button" aria-hidden="true")
+                                div(id="status-options")
+                                    ul
+                                        li(id="status-online" class="active")
+                                            span(class="status-circle") 
+                                                p(style="color:white;") Online
+                                        li(id="status-away")
+                                            span(class="status-circle") 
+                                                p(style="color:white;") Away
+                                        li(id="status-busy")
+                                            span(class="status-circle") 
+                                                p(style="color:white;") Busy
+                                        li(id="status-offline")
+                                            span(class="status-circle") 
+                                                p(style="color:white;") Offline
+                        div(id="contacts")
+                            ul
+                                li(class="contact active")
+                                    div(class="wrap")
+                                        img(src="http://emilcarlsson.se/assets/harveyspecter.png" alt="")
+                                        //span(class="contact-status busy")
+                                        div(class="meta")
+                                            p(class="name" style="color:white;") Auteur du devis :
+                                            p(class="name" style="color:white;") 
+                                                = devis.devis_author.last_name + ", " + devis.devis_author.first_name
+                            button(type="button" data-toggle="modal" data-target="#myModal2" class="button btn1") proposition r&eacutecente
+                    // enlever pour tester
+                    div(class="content")
+                        div(class="contact-profile")
+                            p(style="font-family:serif; font-size: 1.10em;") 
+                                = " Titre de la demande: "+ devis.reference.dmd_title + " et ID devis : " + devis.reference._id + ". (Cette discussion est temporaire mais la dernière mise à jour sera enregistrée.)"
+                        //affichage des submits (liens vers les devis)   
+                        div(class="messages")
+                            ul
+                                //config d'un bouton création de devis
+                                //Modal
+                                //Trigger the modal with a button
+                        div
+                            button(type="button" class="button btn1" data-toggle="modal" data-target="#myModal") N&eacutegocier
+                        div(class="modal fade" id="myModal" role="dialog")
+                            div(class="modal-dialog")
+                                //Modal content
+                                div(class="modal-content")
+                                    div(class="modal-header")
+                                        button(type="button" class="close" data-dismiss="modal") &times;
+                                        h4(class="modal-title") Devis
+                                    div(class="modal-body")
+                                        form.saveNegociation
+                                            table
+                                                tr
+                                                    //peut-être facultatif
+                                                    td
+                                                        h3.dash-title Motif
+                                                    td
+                                                        h4.dash-title
+                                                            p
+                                                                input(type="checkbox" name="motif1" value="prix")
+                                                                label(for="test1") Prix
+                                                            p
+                                                                input(type="checkbox" name="motif2" value="date debut")
+                                                                label(for="test2") Date de d&eacutebut
+                                                            p
+                                                                input(type="checkbox" name="motif3" value="duration")
+                                                                label(for="test3") Dur&eacutee
+                                                            //p
+                                                                input#test4(type="checkbox")
+                                                                label(for="test4") Marron
+                                                tr
+                                                    td
+                                                        h3.dash-title Date de d&eacutebut
+                                                    td
+                                                        h4.dash-title
+                                                            input(type="date" name="dt_db")
+                                                tr
+                                                    td
+                                                        h3.dash-title Date de fin
+                                                    td
+                                                        h4.dash-title
+                                                            input(type="date" name="dt_fn")
+                                                tr
+                                                    td
+                                                        h3.dash-title prix (en euros)
+                                                    td
+                                                        h4.dash-title
+                                                            input(type="number" name="prix" value="0" min="0" max="20000")
+                                                    td
+                                                        input(type="hidden" name="devis_id" value=devis._id)
+                                                        input(type="hidden" name="sender" value=user._id)
+
+                                        
+                                            div(class="row")
+                                                div(class="col-sm-6") 
+                                                    input(type="submit" class="button btn1" value="Valider") 
+                                                div(class="col-sm-6")
+                                                    button(type="button" class="button btn2" data-dismiss="modal") Close
+                            //2eme modal
+                        div(class="modal fade" id="myModal2" role="dialog")
+                            div(class="modal-dialog")
+                            
+                                //Modal content
+                                div(class="modal-content")
+                                    div(class="modal-header")
+                                        button(type="button" class="close" data-dismiss="modal") &times;
+                                        h4(class="modal-title") Devis
+                                    div(class="modal-body")
+                                            table
+                                                tr
+                                                    //peut-être facultatif
+                                                    td
+                                                        h3.dash-title Motif
+                                                    td
+                                                        h4.dash-title
+                                                            p
+                                                                if(devis.negociation.motif_datedb)
+                                                                    label() Prix
+                                                            p
+                                                                if(devis.negociation.motif_duree)
+                                                                    label() Date de d&eacutebut
+                                                            p
+                                                                if(devis.negociation.motif_prix)
+                                                                    label() Dur&eacutee
+                                                tr
+                                                    td
+                                                        h3.dash-title Date de d&eacutebut
+                                                    td
+                                                        h4.dash-title
+                                                            input(type="text" name="get_dt_db" disabled value=devis.negociation.new_date_db)
+                                                tr
+                                                    td
+                                                        h3.dash-title Date de fin
+                                                    td
+                                                        h4.dash-title
+                                                            input(type="text" name="get_dt_fn" disabled value=devis.negociation.new_date_fn)
+                                                tr
+                                                    td
+                                                        h3.dash-title prix (en euros)
+                                                    td
+                                                        h4.dash-title
+                                                            input(type="text" name="get_prix" disabled value=devis.negociation.new_price)
+                                                    //td
+                                                        input(type="hidden" name="devis_id" value=devis._id)
+
+                                        
+                                            div(class="row")
+                                                div(class="col-sm-6") 
+                                                    form(class="accept")
+                                                        input(type="hidden" name="accepted" value="true")
+                                                        input(type="hidden" name="negocier" value="false")
+                                                        input(type="hidden" name="attente" value="false")
+                                                        input(type="submit" class="button btn1" name="accept" value="Accepter")
+                                                div(class="col-sm-6")
+                                                    form(class="refuse")
+                                                        input(type="hidden" name="accepted" value="false")
+                                                        input(type="hidden" name="negocier" value="true")
+                                                        input(type="hidden" name="attente" value="false")
+                                                        input(type="submit" class="button btn2" name="refuse" value="Refuser") 
+                              
+
+                        //div(class="message-input")
+                            div(class="wrap")
+                                form(class="customerForm")
+                                    input(type="text" name="message" placeholder="Ecrire votre message")
+                                    input(type="hidden" name="id_devis" value="devis._id")
+                                    input(type="hidden" name="id_user" value=user.id)
+                                    i(class="fa fa-paperclip attachment" aria-hidden="true")
+                                    button(type="submit" class="submit envoie")
+                                        i(class="fa fa-paper-plane" aria-hidden="true")

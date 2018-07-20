@@ -1,0 +1,95 @@
+//
+   Created by nokamojd on 05/09/2016.
+
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-sm.hidden-xs
+            +side-menu
+        div.page-nav
+            h2.dash-title Mettre à jour
+            div.dash-content.clearfix
+                form.form-default(action="" method="post" role="form")
+                    input(type="hidden" name="_method" value="PUT")
+                    div.right-content.col-md-8
+                        div
+                            label Titre de l'offre
+                            input(type="text" name="offer_t" value="#{offer.offer_title}")
+                        div
+                            textarea(name="offer_desc" cols="69" rows="16")= offer.offer_description
+                        div.col-md-3
+                            label Tarif horaire
+                            input(type="text" name="h_price" value="#{offer.hourly_price}")
+                        div.col-md-3
+                            label Prix forfait
+                            input(type="text" name="bdl_price" value="#{offer.bundle_price}")
+                        div.col-md-3
+                            label Prix à la journée
+                            input(type="text" name="dl_price" value="#{offer.daily_price}" )
+                        div.col-md-3
+                            label Prix à la demi-journée
+                            input(type="text" name="h_d_price" value="#{offer.half_day_price}" )
+                        div
+                            label Vos conditions
+                            textarea(name="conditions" cols="69" rows="6")= offer.conditions
+                        div.col-md-6
+                            label Ville, Région, Pays
+                            input(type="text" name="offer_loc" class="location" value="#{offer.offer_location}")
+                        div
+                            label Mots-clés
+                            textarea(name="tags" cols="69" rows="3")= offer.keywords
+                        div
+                            label Secteur d'activité
+                            select(name="offer_fld")
+                                option(selected, value=offer.offer_field._id)= offer.offer_field.field_name
+                                - for(var i = 0; i < fields.length; i++)
+                                    option(value=fields[i]._id)= fields[i].field_name
+
+                        div
+                            input(type="hidden" name="offer_authr" value="#{offer.offer_author._id}")
+
+                    div.left-content.col-md-2
+                        div.spacer
+                            label Rendre l'offre disponible?
+                            | &nbsp;&nbsp;
+                            input(type="radio" name="isAvailable" value="true" checked)
+                            | &nbsp;&nbsp;
+                            label Oui
+                            | &nbsp;&nbsp;
+                            input(type="radio" name="isAvailable" value="false")
+                            | &nbsp;&nbsp;
+                            label Non
+
+                        div.spacer
+                            label Archiver l'offre?
+                            | &nbsp;&nbsp;
+                            input(type="radio" name="notPublished" value="true" checked)
+                            | &nbsp;&nbsp;
+                            label Oui
+                            | &nbsp;&nbsp;
+                            input(type="radio" name="notPublished" value="false")
+                            | &nbsp;&nbsp;
+                            label Non
+                        small Modifié le:
+                                +formatDate(offer.updated_at)
+                        div
+                            br/
+                            input(type="submit" class="submit-btn" value="Mettre à jour")
+                        // end update form
+
+                        // start delete modal
+                div(class="remodal" data-remodal-id="del-alert")
+                    button(data-remodal-action="close" class="remodal-close")
+                    form.form-default(method="POST" action="#{offer._id}")
+                        input(type="hidden" name="_method" value="DELETE")
+                        p Voulez-vous vraiment supprimer l'offre&nbsp;:&nbsp;
+                            | "
+                            strong= offer.offer_title
+                            | " ?
+                        button(data-remodal-action="cancel" class="remodal-cancel") Annuler
+                        | &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                        button(type="submit") Supprimer
+                        br/
+                div.spacer
+                    a(title="Supprimer" href="#del-alert" style="color:red") Supprimer

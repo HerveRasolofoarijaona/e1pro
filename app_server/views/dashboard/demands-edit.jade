@@ -1,0 +1,58 @@
+//
+   Created by nokamojd on 06/09/2016.
+
+extends ../layout-dashboard
+include ../includes/sharedFunctions
+block content
+    div.dashboard-content.clearfix
+        div.side-menu.col-md-2.row.hidden-sm.hidden-xs
+            +side-menu
+        div.page-nav
+            h2.dash-title Nouvelle Demande
+            div.dash-content.clearfix
+                form.form-default(action="" method="post" role="form")
+                    input(type="hidden" name="_method" value="PUT")
+                    div.right-content.col-md-8
+                        div
+                            input(type="text" class="form-control" name="demand_t" value="#{demand.dmd_title}")
+                        div
+                            textarea(class="form-control" name="demand_desc" cols="69" rows="10")= demand.dmd_description
+                        div.col-md-3
+                            input(type="text" class="form-control" name="demand_d_s_d" value="#{demand.dmd_desired_start_date}")
+                        div.col-md-3
+                            input(type="text" class="form-control" name="demand_e_d" value="#{demand.dmd_supposed_end_date}")
+                        div.col-md-3
+                            input(type="text" class="form-control" name="duree" value="#{demand.dmd_duree}")
+                        div.col-md-3
+                            input(type="number" class="form-control" name="demand_es_bgt" value="#{demand.dmd_estimated_budget}" )
+                        div
+                            textarea(class="form-control" name="demand_conds" cols="69" rows="5")= demand.dmd_conditions
+                        div
+                            input(type="text" class="form-control" name="demand_loc" class="location" value="#{demand.dmd_location}")
+                        div
+                            select(class="form-control" name="demand_fld")
+                                option(value=demand.dmd_field._id selected)= demand.dmd_field.field_name
+                                - for(var i = 0; i < fields.length; i++)
+                                    option(value=fields[i]._id)= fields[i].field_name
+                        div
+                            select(name="demand_skills" class="form-control")
+                                option(value="#{demand.dmd_required_skills}") Compétences souhaitées
+                                - for(var i = 0; i < skills.length; i++)
+                                    optgroup(label=skills[i].skill_field)
+                                    - for(var j = 0; j < skills[i].inner_skills.length; j++)
+                                        option(value=skills[i].inner_skills[j]._id)= skills[i].inner_skills[j].inner_skill
+                        div
+                            input(type="hidden" name="demand_authr" value=user._id)
+
+
+                    div.left-content.col-md-2
+                        div
+                            br/
+                            input(type="submit" class="submit-btn form-control" value="Publier")
+                unless user.user_role != "57b2e3f36a0c14cc080d2f64" && user.user_role != "57b2eab1601665dc05e659af"
+                    div.left-content.col-md-2
+                        div
+                            br/
+                            form.dmd_approuved
+                                input(type="hidden" name="id_demand" value="#{demand._id}")
+                                input(type="submit" class="submit-btn form-control" value="APPROUVER")

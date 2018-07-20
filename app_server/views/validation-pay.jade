@@ -1,0 +1,48 @@
+include includes/sharedFunctions
+extends layout-dashboard
+block content
+    // SMALL SCREENS
+    +middle-menu-mb
+
+    // LARGE SCREENS
+    +middle-menu
+    div.container
+            div.dash-content
+                div.col-sm-6
+                    table.table.table-bordered
+                        thead
+                            tr
+                                th Commande(s)
+                                th Quantit&eacute
+                                th Prix
+                        tbody
+                            //ajouter la variable CART ITEM
+                            -for(var i = 0; i < cards[0].items.length; i++)
+                                tr 
+                                  td 
+                                    a(href="/offers/"+cards[0].items[i].item._id)=cards[0].items[i].item.offer_title
+                                  td 
+                                    = cards[0].items[i].quantity
+                                  td 
+                                    = cards[0].items[i].price
+                                    | &nbsp;
+                                    = cards[0].items[0].item.price_currency
+                            tr
+                              th(colspan='2') TOTAL
+                              th 
+                                span= cards[0].total_price
+                                | &nbsp;
+                                span= cards[0].items[0].item.price_currency
+
+                //
+                div.col-sm-3
+                    form.payValid(method="post" action="/cart/pay/valider")
+                        input(type="hidden" name="user" value=user._id)
+                        input(type="hidden" name="id_card" value=cards[0].card_used)
+                        input(type="hidden" name="price" value=cards[0].total_price)
+                        -if(!cards[0].paid)
+                            input(type="submit" class="btn btn-primary" value="Payer") 
+                        -else
+                            div(class="p-3 mb-2 bg-success text-white")
+                                p Paiement accept&eacute
+                             

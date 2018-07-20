@@ -1,0 +1,290 @@
+//
+   Created by nokamojd on 13/07/2016.
+include includes/sharedFunctions
+extends layout
+block content
+    // SMALL SCREENS
+    +middle-menu-mb
+    div.clearfix
+        div.hidden-lg.hidden-md
+            button.accordion AUTEUR DE L'OFFRE
+            div.panel
+                div.author-details
+                    a(href="consultants/consultant-details")
+                        img.img-circle.pull-left(src="#{offer.offer_author.profile_pic_path}" style="width:64px; height:64px")
+                    a.item-title(href="consultants/consultant-details")
+                        
+                        = offer.offer_author.first_name
+                        | &nbsp;
+                        = offer.offer_author.last_name
+                        | .
+                    | &nbsp; - &nbsp;
+
+
+        div.middle-content.hidden-lg.hidden-md
+                div.element-details
+                    div.mb-item-box
+                        h4.element-title= offer.offer_title
+                        div.item-meta
+                            small
+                                <i class="fa fa-clock-o"></i>
+                                | &nbsp;
+                                +formatDate(offer.created_at)
+                                | &nbsp;
+                                | <i class="fa fa-map-marker"></i>
+                                | &nbsp;
+                                = offer.offer_location
+                            p= offer.offer_description
+                            hr/
+                            h5.box-section-title Conditions
+                            p= offer.conditions
+
+                        div.spacer
+                            hr/
+                            h5.box-section-title Choisir une formule
+                            form.form-default(action="" method="")
+                                label.control.radio-control
+                                    | &nbsp;Forfait :
+                                    | &nbsp;
+                                    span.item-price= offer.bundle_price
+                                        | &nbsp;€&nbsp;
+                                    input(type="radio" name="price" value="" checked)
+                                    div.control-indicator
+                                br/
+
+                                label.control.radio-control
+                                    | &nbsp;Demi-journée :
+                                    | &nbsp;
+                                    span.item-price= offer.half_day_price
+                                        | &nbsp;€&nbsp;
+                                    input(type="radio" name="price" value="")
+                                    div.control-indicator
+                                br/
+
+                                label.control.radio-control
+                                    | &nbsp;Journée :
+                                    | &nbsp;
+                                    span.item-price= offer.daily_price
+                                        | &nbsp;€&nbsp;
+                                    input(type="radio" name="price" value="")
+                                    div.control-indicator
+                                br/
+                            if(user._id == offer.offer_author)
+                                div.spacer
+                                    //._id
+                                    input(type="submit" value="Ajouter au panier" style="width: 25%" disabled)
+                                    br/
+                                    small Note: En tant qu'auteur de cette offre vous ne pouvez vous même pas l'acheter. Merci.
+
+                            else
+                                div.spacer
+                                    input(type="submit" name="addToCart" value="Ajouter au panier" style="width: 25%")
+                        div.spacer
+                            hr/
+                            h3 AVIS (
+                                = reviews_all.length
+                                | )
+                            button.accordion(href="#") Ecrire un avis
+                            div.panel
+                                if(user._id == offer.offer_author)
+                                    p Désolé, vous ne pouvez pas noter votre propre offre. Merci.
+                                else
+                                    form(class="new_avis" method="post")
+                                        select(name="reviewRating")
+                                            option(value="0") Donner une note pour ce service
+                                            option(value="1") 1
+                                            option(value="2") 2
+                                            option(value="3") 3
+                                            option(value="4") 4
+                                            option(value="5") 5
+                                        textarea(placeholder="Votre avis ici...." name="reviewBody" cols="69" rows="8")
+                                        input(type="hidden", name="reviewAuthor" value=user._id)
+                                        input(type="hidden", name="receiver" value=offer.offer_author)
+                                        input(type="hidden", name="reviewedOffer" value=offer._id)
+                                        input(type="submit" value="Valider" )
+
+
+
+    // LARGE SCREENS
+    +middle-menu
+    div.container
+        div.middle-content.col-md-8.hidden-sm.hidden-xs
+                div.element-details
+                    div.item-box
+                        h4.element-title= offer.offer_title
+                        div.item-meta
+                            small
+                                <i class="fa fa-clock-o"></i>
+                                | &nbsp;
+                                +formatDate(offer.created_at)
+                                | &nbsp;
+                                | <i class="fa fa-map-marker"></i>
+                                | &nbsp;
+                                = offer.offer_location
+                            p= offer.offer_description
+                            hr/
+                            h5.box-section-title Conditions
+                            p= offer.conditions
+                        div
+                            hr/
+                            h5.box-section-title Choisir une formule
+                            form.form-default(action="" method="post")
+                                input(type="hidden" name="_method" value="PUT")
+                                input(type="hidden", name="offerItem" id="" value="#{offer._id}")
+                                input(type="hidden",  id="quantity" name="quantity" value="1")
+                                label.control.radio-control
+                                    | &nbsp;Forfait :
+                                    | &nbsp;
+                                    span.item-price= offer.bundle_price
+                                        | &nbsp;€&nbsp;
+                                    input(type="radio" id="price" name="price" value="#{offer.bundle_price}" checked)
+                                    div.control-indicator
+                                br/
+
+                                label.control.radio-control
+                                    | &nbsp;Demi-journée :
+                                    | &nbsp;
+                                    span.item-price= offer.half_day_price
+                                        | &nbsp;€&nbsp;
+                                    input(type="radio" name="price"  value="#{offer.half_day_price}")
+                                    div.control-indicator
+                                br/
+
+                                label.control.radio-control
+                                    | &nbsp;Journée :
+                                    | &nbsp;
+                                    span.item-price= offer.daily_price
+                                        | &nbsp;€&nbsp;
+                                    input(type="radio" name="price" value="#{offer.daily_price}")
+                                    div.control-indicator
+                                br/
+                                //div.btn-group(role="group" aria-label="...")
+                                    input(type="hidden",  id="quantity" name="quantity" value="1")
+                                    button(type="button" id="minus" class="minus addlink") -
+                                    button(type="button" id="total_price" class="minus addlink") 1
+                                    button(type="button" id="plus addlink" class="btn btn-default") +
+                                //div.offer-quantity
+                                    div.minus
+                                        a.addlink(href="javascript:void(0)") -
+                                    div.offer-quantity-input
+                                        input(type="text" class="quantity-input" style="width:5%" name="quantity" value="1")
+                                    div.plus
+                                        a.addlink(href="javascript:void(0)") +
+
+                                //div.price-value
+                                    input(type="text" name="priceValue" value="")
+
+                                if(user._id == offer.offer_author)
+                                    div.spacer
+                                        input(type="submit" value="Ajouter au panier" style="width: 25%" disabled)
+                                        br/
+                                        small Note: En tant qu'auteur de cette offre vous ne pouvez vous même pas l'acheter. Merci.
+
+                                else
+                                    div.spacer
+                                        input(type="submit" value="Ajouter au panier" style="width: 25%")
+
+                        div.spacer
+                            hr/
+                            h3 AVIS (
+                                = reviews_all.length
+                                |)
+                            if(user._id == offer.offer_author)
+                                null
+                            else
+                                button.accordion(href="#") Ecrire un avis
+                                div.panel
+                                    form(class="new_avis form-default" action="" method="post")
+                                        select(name="reviewRating")
+                                            option(value="0") Donner une note pour ce service
+                                            option(value="1") 1
+                                            option(value="2") 2
+                                            option(value="3") 3
+                                            option(value="4") 4
+                                            option(value="5") 5
+                                        textarea(placeholder="Votre avis ici...." name="reviewBody" cols="69" rows="8")
+                                        input(type="hidden", name="reviewAuthor" value=user._id)
+                                        input(type="hidden", name="reviewedOffer" value=offer._id)
+                                        input(type="submit" value="Valider")
+
+
+                            div.spacer
+                                hr/
+                                ul
+                                    -for(var i = 0; i < reviews_all.length; i++)
+                                        //if(reviews_all[i].reviewed_offer._id == req.params.id)
+                                        li
+                                            small=reviews_all[i].review_author.first_name
+                                                | &nbsp;
+                                                = reviews_all[i].review_author.last_name
+                                            small(style="color: #d7d7d7")
+                                                | &nbsp;
+                                                | &nbsp;
+                                                | &nbsp;
+                                                | &nbsp;
+                                                <i class="fa fa-clock-o"> </i> &nbsp;
+                                                +formatDate(reviews_all[i].created_at)
+
+                                            //div.item-meta
+                                                small <i class="fa fa-map-marker"> </i> &nbsp;
+                                                    = oneOfferReviews[i].review_author.
+                                                    | &nbsp;
+                                                small.item-rates.pull-right &nbsp;
+                                                    +outputRating(reviews_all[i].review_rating)
+                                                p.item-excerpt=reviews_all[i].review
+                                        hr/
+
+
+
+
+        div.middle-sidebar.col-md-4.col-lg-4.hidden-xs.hidden-sm
+            div.item-box.sidebar-sticky
+                h3 Auteur de l'offre
+                hr/
+                div.author-details
+                    a(href="consultants/consultant-details")
+                        img.img-circle.pull-left(src="#{offer.offer_author.profile_pic_path}" style="width:64px; height:64px")
+                    a.item-title(href="consultants/consultant-details")
+                        = offer.offer_author.first_name
+                        | &nbsp;
+                        = offer.offer_author.last_name
+                        | .
+                    | &nbsp; - &nbsp;
+                    span=offer.offer_author.qualification
+                    if(offer.offer_author.is_certified)
+                        span.certified.pull-right <i class="fa fa-check-circle-o"></i>
+                    | &nbsp;
+                    div.item-meta
+                        small
+                            | &nbsp;<i class="fa fa-map-marker"> </i> &nbsp;
+                            = offer.offer_author.personal_details.address.location
+                        div.item-excerpt
+                            ul.skill-labels
+                                -for (var i = 0; i < offer.offer_author.user_skills.length; ++i)
+                                    - var skill = offer.offer_author.user_skills[i].user_skill
+                                    li
+                                        a(href="#")=skill
+                                li
+                                    a(href="#") ...
+                        //small.rates.pull-right &nbsp;
+                            +outputRating(offer.consultant.rating)
+                    hr/
+                    p= offer.offer_author.about
+                    div.spacer
+                        div.remodal-bg
+                            div(class="remodal" data-remodal-id="contactModal" style="width:75%")
+                                button(data-remodal-action="close" class="remodal-close")
+                                h3 Envoyer un message à&nbsp;
+                                    = offer.offer_author.first_name
+                                    | &nbsp;
+                                    = offer.offer_author.last_name
+                                hr/
+                                form.form-default(action="")
+                                    input(type="hidden" name="message_sender" value="#{user._id}")
+                                    textarea(name="message_text" placeholder="Sasire votre message..." cols="10" rows="12")
+                                    input(type="submit" value="Envoyer Message")
+                        a.pull-right(style="text-align:center" href="#contactModal") CONTACTER &nbsp;
+
+    //div.related.container
+        div.related-content
+            h3 Du même auteur

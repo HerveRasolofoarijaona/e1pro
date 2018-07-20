@@ -1,0 +1,137 @@
+//
+   Created by nokamojd on 17/07/2016.
+extends layout
+//include includes/sharedFunctions
+block content
+    div#page-content.page-content(onclick="closeNav()")
+        div.title-section
+            div.page-title-section
+                h1.page-title Trouvez les meilleurs consultants et services sur
+                img(src="images/emploi1pro-logo_white.png")
+                //|<em style="font-size:50px">emploi1pro</em>
+                //p.tagline Nous avons pensé à tout pour vous assurer une expérience unique avec les meilleurs consultants indépendants du monde.
+                div.spacer
+                    a.action-link(href="#content") En savoir plus
+                    -if(!user)
+                        | &nbsp;&nbsp;
+                        a.action-link(href="signup") Créer un compte
+                //small Vous êtes couvert par notre <a href="/insurance">assurance</a>.
+
+        div.container-fluid
+            // What we offer to enterprises
+            div.clearfix.content#content
+                div.heading
+                    h2 Notre Offre aux Entreprises
+                    p Notre objectif est de vous faire gagner du temps dans votre recherche du conultant le plus adapté à votre besoin.
+                section.row.our-offer#1
+                    div.col-md-5.col-md-offset-1.intro
+                        h3 Vous n'avez pas le temps pour les détails?
+                        p Commandez directement le service qui correspond à votre besoin en consultant notre catalogue de services
+                            | enrichi par des proposotions de services de consultants expérimentés dans leurs domaines respectifs.
+                        div.spacer
+                            a.action-link(href="offers") Parcourir le catalogue
+                    div.col-md-6.preview
+                        img.img-responsive(src="/images/photo_accueil1.jpg")
+                hr/
+                section.row.our-offer.hidden-sm.hidden-xs
+                    div.col-md-6.preview
+                        img.img-responsive(src="/images/photo_accueil2.jpg")
+                    div.col-md-5.col-md-offset-1.intro
+                        h3 Vous avez plutôt un besoin très spécifique?
+                        p Créez votre profil entreprise et publiez gratuitement votre demande qui sera disponible dans la rubrique "Demandes"
+                            | pour être consultée par les consultants interessés. Vous recrevrez ainsi de la part de ces derniers des propositions
+                            | de prix que vous aurez le choix d'accepeter ou de décliner.
+                        div.spacer
+                            a.action-link(href="signup") Publier mon besoin
+                // show this section only on sm and xs devices
+                section.row.our-offer.hidden-lg.hidden-md
+                    div.col-md-5.col-md-offset-1.intro
+                        h3 Vous avez plutôt un besoin très spécifique?
+                        p Créez votre profil entreprise et publiez gratuitement votre demande qui sera disponible dans la rubrique "Demandes"
+                            | pour être consultée par les consultants interessés. Vous recrevrez ainsi de la part de ces derniers des propositions
+                            | de prix que vous aurez le choix d'accepeter ou de décliner.
+                        div.spacer
+                            a.action-link(href="signup") Publier mon besoin
+                    div.col-md-6.preview
+                         img.img-responsive(src="/images/photo_accueil2.jpg")
+                hr/
+                section.row.our-offer#3
+                    div.col-md-5.col-md-offset-1.intro
+                        h3 Ou vous savez exactement de qui vous avez besoin?
+                        p Contactez directement le consultant qui correspond à votre besoin en parcourant notre book de consultants
+                            | enrichi par des profils expérimentés et qualifiés dans leurs domaines respectifs.
+                        div.spacer
+                            a.action-link(href="consultants") Parcourir les profils
+                    div.col-md-6.preview
+                        img.img-responsive(src="/images/photo_accueil3.jpg")
+
+                section.row.customers
+                    h2 Ces entreprises qui nous font confiance
+                    p Les entreprises ci-dessous et plein d'autres utilisent déjà <em>emploi1pro</em> pour trouver les consultants qui répondent le mieux à
+                        | &nbsp;leurs besoins.
+                    //div#slide-box
+                    div.slide-items-list.container
+
+
+            // What we offer to consultants
+            div.clearfix.content
+                div.heading
+                    h2 Notre Offre aux Consultants
+
+                section.our-offer-4c.container#4
+                    p Notre objectif est de vous faire gagner du temps dans votre recherche de mission. Toutes vos missons sont assurées et vous
+                        | êtes sûr d'être payé dans les plus brefs délais. Aussi il vous est possible de vendre vos services directement sans plus
+                        | attendre les missions venant des entreprises.
+                    div.col-md-4.intro
+                        img(src="images/icons/list-searching-variant.png")
+                        p Parcourez le catalogue de missions publiées par les entreprises et faites des propositions de prix.
+                        div.spacer
+                            a(href="demands") Parcourir les demandes
+                    div.col-md-4.intro
+                        img(src="images/icons/profits.png")
+                        p Créez une liste de services que vous pouvez offrir aux entreprises avec vos conditions d'exécution et vos prix.
+                        div.spacer
+                            a(href="login") Vendre mes services
+                    div.col-md-4.intro
+                        img(src="images/icons/add-user.png")
+                        p Recevez directement en privé des offre de mission d'entreprises qui ont flashé sur votre profil et établissez le contact.
+                        div.spacer
+                            a(href="signup") Créer mon profil
+
+                section.row.testimonials(data-wow-delay="0.2s")
+                    div.carousel.slide(data-ride="carousel" id="quote-carousel")
+                        // avatars indicators
+                        ol.carousel-indicators
+                            li(data-target="#quote-carousel" data-slide-to="0" class="active")
+                                img.img-responsive(src="images/avatars/avatar.png")
+                            li(data-target="#quote-carousel" data-slide-to="1")
+                                img.img-responsive(src="images/avatars/girl.png")
+                            li(data-target="#quote-carousel" data-slide-to="2")
+                                img.img-responsive(src="images/avatars/elder man.png")
+                        //h2 Ces entreprises qui nous font confiance
+                        //div#slide-box
+                        div.carousel-inner.text-center
+                            // Quotes
+                            div.item.active
+                                blockquote
+                                    div
+                                        div.col-sm-8.col-sm-offset-2
+                                            p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                                                | dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                                            small - Benard Tapis
+                            div.item
+                                blockquote
+                                    div
+                                        div.col-sm-8.col-sm-offset-2
+                                            p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                                                | dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                                            small - Benard Tapis
+                            div.item
+                                blockquote
+                                    div
+                                        div.col-sm-8.col-sm-offset-2
+                                            p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                                                | dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                                            small - Benard Tapis
+                            //a(data-slide="prev" href="#quote-carousel" class="left carousel-control") <i class="fa fa-chevron-left"></i>
+                           // a(data-slide="next" href="#quote-carousel" class="right carousel-control") <i class="fa fa-chevron-right"></i></a>

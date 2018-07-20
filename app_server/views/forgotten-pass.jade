@@ -1,0 +1,31 @@
+//
+   Created by nokamojd on 20/07/2016.
+extends simple-layout
+
+block content
+    div.col-md-3.form-box-login
+        a(href="/")
+            img(src="/images/emploi1pro-logo_small.png")
+        div
+            form(class="form-default" role="form" action="" method="post")
+                p Veuillez saisir l'adresse e-mail associée à votre compte, et nous vous enverrons par e-mail.
+                    | un lien pour réinitialiser votre mot de passe.
+                    -if(errors.length > 0)
+                        div.alert.alert-danger.alert-dismissible
+                            button.close(type="button", data-dismiss="alert", aria-label="Close" style="font-size:12px; text-align:center")
+                                span(aria-hidden="true") &times;
+                                = errors
+                    -if(success.length > 0)
+                        div.alert.alert-success.alert-dismissible
+                            button.close(type="button", data-dismiss="alert", aria-label="Close" style="font-size:12px; text-align:center")
+                                span(aria-hidden="true") &times;
+                                = success
+                div
+                    input(type="email" name="email" placeholder="Email")
+                div
+                    input(type="submit" class="submit-btn" value="Récupérer mot de passe")
+
+                small <a href="login">Retourner sur la page de connexion</a>
+
+
+

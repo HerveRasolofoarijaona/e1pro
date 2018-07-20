@@ -1,0 +1,3 @@
+cd C:\ITU\M1\Mr_Rojo\testChatEmploi\super-chat\super-chat
+nodemon app.js
+localhost:3000

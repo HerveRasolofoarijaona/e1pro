@@ -1,0 +1,15 @@
+extends layout
+include includes/sharedFunctions
+block content
+	div#page-content.page-content(onclick="closeNav()")
+		div.container-fluid
+			div.clearfix.content#content
+				div.heading
+					h2 Nous contacter
+				section.row
+					div.col-md-12
+						if(typeof msg !== 'undefined')
+							if(!!err)
+								div(class='msgbox err') #{msg}
+							else
+								div(class='msgbox success') #{msg}

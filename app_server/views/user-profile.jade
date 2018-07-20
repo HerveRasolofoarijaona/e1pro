@@ -1,0 +1,19 @@
+extends layout
+include includes/sharedFunctions
+block content
+    div.container
+        +middle-menu
+        div.middle-content.col-md-9
+            div.catalog-box
+                div.item-box
+                    //ol.breadcrumb
+                        li.active
+                            a(href="/offers") Offres
+                        li(class="active") Titre de l'offre
+                    h4 A Propos
+                    p item description item description item descriptionitem descriptionitem description
+
+        div.middle-sidebar.col-md-3
+            div.item-box
+                img(src="")
+                div.user-info
