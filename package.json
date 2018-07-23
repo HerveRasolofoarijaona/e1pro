@@ -1,10 +1,6 @@
 {
   "name": "eapp",
   "version": "1.8.1",
-  "engines": {
-    "node": "8.11.3",
-    "npm": "6.1.0"
-    },
   "private": true,
   "scripts": {
     "start": "node app.js"
