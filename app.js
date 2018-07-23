@@ -100,10 +100,10 @@ app.locals.moment = require('moment');
 // function to call user data on multiple pages
 //test 07/06
 
-var server = http.createServer(app);
-var serverS = server.listen(3000);
+//var server = http.createServer(app);
+//var serverS = server.listen(3000);
 //var listener = socket.listen(server, { log: false });
-var io = socket(serverS);
+//var io = socket(serverS);
 // test 08/06
 //à modifier 06/06 
 //pour les notifications
