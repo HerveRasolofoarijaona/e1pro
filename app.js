@@ -32,6 +32,7 @@ var express = require('express');
 var app = express();
 var http = require('http');
 var socket = require("socket.io");
+const PORT = process.env.PORT || 5000
 
  
 /*var tpe = new cmcic.tpe({
@@ -100,8 +101,8 @@ app.locals.moment = require('moment');
 // function to call user data on multiple pages
 //test 07/06
 
-//var server = http.createServer(app);
-//var serverS = server.listen(3000);
+var server = http.createServer(app);
+var serverS = server.listen(PORT);
 //var listener = socket.listen(server, { log: false });
 //var io = socket(serverS);
 // test 08/06
