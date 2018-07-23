@@ -49,11 +49,11 @@ var socket = require("socket.io");
 
 
 // connection to the database through mongoose
-var db = mongoose.createConnection("mongodb://localhost/user");
+/*var db = mongoose.createConnection("mongodb://localhost/user");
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function(){
   console.log("we are connected to the db");
-});
+});*/
 
 
 // view engine setup
@@ -69,19 +69,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-/*app.use(session({
+app.use(session({
   resave: true,
   saveUninitialized: true,
   secret: "2ZviIunej4MnmsiVGJOBwNQSx8oOTWpg05nQo1nqK6DsAYJAn27bpJ1klk6QE0NSktrDByCTX8eBUHu4N4MbVuqBWx46HVW9p7ZEy12JOY1AHAGpSrx8Mv54mMMqDYMb",
   store: new MongoStore({url:"mongodb://epp:testepppdb@ds139645.mlab.com:39645/eappdb", auto_reconnect:true})
-}));*/
+}));
 //pour local bdd
-app.use(session({
+/*app.use(session({
     resave: true,
     saveUninitialized: true,
     secret: "2ZviIunej4MnmsiVGJOBwNQSx8oOTWpg05nQo1nqK6DsAYJAn27bpJ1klk6QE0NSktrDByCTX8eBUHu4N4MbVuqBWx46HVW9p7ZEy12JOY1AHAGpSrx8Mv54mMMqDYMb",
     store: new MongoStore({ url: 'mongodb://localhost/user' })
-}));
+}));*/
 app.use(flash());
 
 app.use(methodOverride(function(req, res){
@@ -105,7 +105,7 @@ var serverS = server.listen(3000);
 //var listener = socket.listen(server, { log: false });
 var io = socket(serverS);
 // test 08/06
-//à modifier 06/06 
+//Ã  modifier 06/06 
 //pour les notifications
 /*function start(socket) {
     //if(user){
@@ -209,19 +209,19 @@ app.use(function(err, req, res, next) {
         console.log(data);
         io.sockets.emit('notification', data);
         //Si le visiteur possede bien un compte avec ce login et ce password
-            //utilisateur authentifié
-        /*console.log("Connexion authentifiée : " + user.login);
+            //utilisateur authentifiÃ©
+        /*console.log("Connexion authentifiÃ©e : " + user.login);
         socket.broadcast.emit('notification', 'Test is connected');
         socket.on('called', function () {
             console.log("Request received");
             io.sockets.emit('notification', 'broadcast notification');
-                //On met a jour la liste des connectés
+                //On met a jour la liste des connectÃ©s
                 //connected.push({ id: user.id, login: user.login, avatar: user.avatar });
-                //On lie l'utilisateur connecté au socket de manière a pouvoir le récuperer partout
+                //On lie l'utilisateur connectÃ© au socket de maniÃ¨re a pouvoir le rÃ©cuperer partout
             socket.set('user', user, function () {
-                    //On avrtis tous le monde (sauf l'utilisateur) que l'utilisateur est connecté et on leur retournes quelques infos sur lui
+                    //On avrtis tous le monde (sauf l'utilisateur) que l'utilisateur est connectÃ© et on leur retournes quelques infos sur lui
                     //socket.broadcast.emit('new_user', { id: user.id, login: user.login, avatar: user.avatar });
-                    //On avertis l'utilisateur qu'il est bien connecté et on lui retourne toutes ses infos de compte
+                    //On avertis l'utilisateur qu'il est bien connectÃ© et on lui retourne toutes ses infos de compte
                     //socket.emit('connected', { connected: connected, user: user });
             });
         });
