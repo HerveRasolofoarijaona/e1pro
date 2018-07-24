@@ -70,19 +70,23 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-  resave: true,
-  saveUninitialized: true,
-  secret: "2ZviIunej4MnmsiVGJOBwNQSx8oOTWpg05nQo1nqK6DsAYJAn27bpJ1klk6QE0NSktrDByCTX8eBUHu4N4MbVuqBWx46HVW9p7ZEy12JOY1AHAGpSrx8Mv54mMMqDYMb",
-  store: new MongoStore({url:"mongodb://epp:testepppdb@ds139645.mlab.com:39645/eappdb", auto_reconnect:true})
-}));
-//pour local bdd
-/*app.use(session({
-    resave: true,
-    saveUninitialized: true,
-    secret: "2ZviIunej4MnmsiVGJOBwNQSx8oOTWpg05nQo1nqK6DsAYJAn27bpJ1klk6QE0NSktrDByCTX8eBUHu4N4MbVuqBWx46HVW9p7ZEy12JOY1AHAGpSrx8Mv54mMMqDYMb",
-    store: new MongoStore({ url: 'mongodb://localhost/user' })
-}));*/
+
+if (app.get('env') === 'production') { //Quand le projet est déployé
+    app.use(session({
+        resave: true,
+        saveUninitialized: true,
+        secret: "2ZviIunej4MnmsiVGJOBwNQSx8oOTWpg05nQo1nqK6DsAYJAn27bpJ1klk6QE0NSktrDByCTX8eBUHu4N4MbVuqBWx46HVW9p7ZEy12JOY1AHAGpSrx8Mv54mMMqDYMb",
+        store: new MongoStore({ url: "mongodb://epp:testepppdb@ds139645.mlab.com:39645/eappdb", auto_reconnect: true })
+    }));
+} else if (app.get('env') === 'development') { //Quand le projet est en local
+    app.use(session({
+        resave: true,
+        saveUninitialized: true,
+        secret: "2ZviIunej4MnmsiVGJOBwNQSx8oOTWpg05nQo1nqK6DsAYJAn27bpJ1klk6QE0NSktrDByCTX8eBUHu4N4MbVuqBWx46HVW9p7ZEy12JOY1AHAGpSrx8Mv54mMMqDYMb",
+        store: new MongoStore({ url: 'mongodb://localhost/user' })
+    }));
+}
+
 app.use(flash());
 
 app.use(methodOverride(function(req, res){

@@ -304,9 +304,9 @@ mixin side-menu
             ul.side-menu-items-ch.row
                 unless user.user_role != "57b2e3f36a0c14cc080d2f64"
                     li
-                        a(href="/dashboard/command") Toutes les commandes
+                        a(href="/dashboard/commandes") Toutes les commandes
                 li
-                    a(href="/dashboard/command/#{user._id}") Mes commandes
+                    a(href="/dashboard/commandes/#{user._id}") Mes commandes
         
         //hr/
         unless user.user_role != "57b2e3f36a0c14cc080d2f64"

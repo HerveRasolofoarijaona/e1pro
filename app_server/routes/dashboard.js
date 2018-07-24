@@ -130,8 +130,8 @@ router.get('/conversations/:id_devis', chatCtrlr.chats);
 
 //MES COMMANDES
 var payCtrlr = require('../controllers/payment.controller');
-router.get('/command/:id_user', payCtrlr.commandePageRender); // Mes Commandes
-router.get('/command', payCtrlr.allCommand); // toutes les commandes (mode administrateur)
+router.get('/commandes/:id_user', payCtrlr.commandePageRender); // Mes Commandes
+router.get('/commandes', payCtrlr.allCommand); // toutes les commandes (mode administrateur)
 //router.get();
 
 //RIB, Cartes enregistrées

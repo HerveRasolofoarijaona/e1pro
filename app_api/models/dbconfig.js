@@ -4,8 +4,9 @@
 
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://epp:testepppdb@ds139645.mlab.com:39645/eappdb");//qd c'est en ligne
-//mongoose.connect("mongodb://localhost/user")
+//mongoose.connect("mongodb://epp:testepppdb@ds139645.mlab.com:39645/eappdb");//qd c'est en ligne
+mongoose.connect("mongodb://localhost/user"); //en local
+
 
 /*
 var gracefulShutdown;

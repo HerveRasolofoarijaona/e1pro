@@ -5,71 +5,54 @@ block content
         div.side-menu.col-md-2.row.hidden-xs.hidden-sm
             +side-menu
         div.page-nav
-            h2.dash-title Mes Commandes
+            -if(mescom == "")
+                h2.dash-title Les Commandes
+            -else
+                h2.dash-title Mes Commandes
             /////////////////////////////////////////////////////////////////////////
             // LARGE SCREENS
-            div.dash-content.clearfix.hidden-sm.hidden-xs
-                div
-                    div.left-content.col-md-5
-                        -for(var i = 0 ; i<command.length; i++)
+            -if(command.length=="")
+                div.dash-content.clearfix.hidden-sm.hidden-xs
+                    div
+                        div.left-content.col-md-5
                             div.item-box
-                                a Id de la Commande: 
-                                    = command[i]._id
-                                p Le :
-                                    | &nbsp;
-                                    +formatDate(command[i].created_at)
-                                p Mode de paiement :
-                                    | &nbsp;
-                                    = command[i].card_used
+                                h3 Aucune commande disponible
+            -else
+                div.dash-content.clearfix.hidden-sm.hidden-xs
+                    div
+                        div.left-content.col-md-5
+                            -for(var i = 0 ; i<command.length; i++)
+                                div.item-box
+                                    a Id de la Commande: 
+                                        = command[i]._id
+                                    p Le :
+                                        | &nbsp;
+                                        +formatDate(command[i].created_at)
+                                    p Mode de paiement :
+                                        | &nbsp;
+                                        = command[i].card_used
                     
-                                table.table
-                                  thead.blue-grey.lighten-4
-                                    tr
-                                      th Article
-                                      th Quantité
-                                      th Prix
-                                  tbody
-                                    -for(var j = 0; j<command[i].items.length; j++)
+                                    table.table
+                                      thead.blue-grey.lighten-4
                                         tr
-                                            td.table-active 
-                                                a(href="/offers/#{command[i].items[j].item._id}")=command[i].items[j].item.offer_title
-                                            td 
-                                                = command[i].items[j].quantity
-                                            td 
-                                                = command[i].items[j].price
+                                          th Article
+                                          th Quantité
+                                          th Prix
+                                      tbody
+                                        -for(var j = 0; j<command[i].items.length; j++)
+                                            tr
+                                                td.table-active 
+                                                    a(href="/offers/#{command[i].items[j].item._id}")=command[i].items[j].item.offer_title
+                                                td 
+                                                    = command[i].items[j].quantity
+                                                td 
+                                                    = command[i].items[j].price
+                                                    | &nbsp;
+                                                    = command[i].items[0].item.price_currency
+                                        tr
+                                            th Total
+                                            th
+                                            th
+                                                span= command[i].total_price
                                                 | &nbsp;
-                                                = command[i].items[0].item.price_currency
-                                    tr
-                                        th Total
-                                        th
-                                        th
-                                            span= command[i].total_price
-                                            | &nbsp;
-                                            span= command[i].items[0].item.price_currency
-                                    
-                        //div.item-box
-                            a Id de la Commande: 
-                                = JSON.stringify(command[1]._id)
-                            table.table
-                              thead.mdb-color.darken-3
-                                tr.text-white
-                                  th #
-                                  th First Name
-                                  th Last Name
-                                  th Username
-                              tbody
-                                tr
-                                  th(scope='row') 1
-                                  td Mark
-                                  td Otto
-                                  td @mdo
-                                tr
-                                  th(scope='row') 2
-                                  td Jacob
-                                  td Thornton
-                                  td @fat
-                                tr
-                                  th(scope='row') 3
-                                  td Larry
-                                  td the Bird
-                                  td @twitter     
+                                                span= command[i].items[0].item.price_currency    

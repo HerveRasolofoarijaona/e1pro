@@ -4,6 +4,15 @@
 var mongoose = require('mongoose');
 require('../models/user.schema');
 var User = mongoose.model('User');
+var Cart = require('../models/cart.schema');
+var OfferReview = require('../models/offerReview.schema');
+var Offer = require('../models/offer.schema');
+var Command = require('../models/commande.schema');
+var Consultant = require('../models/consultant.schema');
+var ConsultantReview = require('../models/consultantReview.schema');
+var Entreprise = require('../models/enterprise.schema');
+var Devis = require('../models/devis.schema');
+var Demand = require('../models/demand.schema');
 
 var sendJsonResponse = (function (res, status, content) {
     res.status(status);
@@ -315,6 +324,96 @@ module.exports.usersDeleteOneSkill = (function (req, res) {
 module.exports.usersDeleteOne = (function (req, res) {
     var id_user = req.params.id_user;
     if (id_user) {
+        OfferReview
+            .remove({ review_author: id_user }/*, {}*/)
+            .exec(
+            function (err, user) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                else { console.log("supprimé") };
+            }
+        );
+        Offer
+            .remove({ offer_author: id_user }/*, {}*/)
+            .exec(
+            function (err, user) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                else { console.log("supprimé") };
+            }
+        );
+        Cart
+            .remove({ owner: id_user }/*, {}*/)
+            .exec(
+            function (err, user) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                else { console.log("supprimé") };
+            }
+        );
+        Command
+            .remove({ owner: id_user }/*, {}*/)
+            .exec(
+            function (err, user) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                else { console.log("supprimé") };
+            }
+        );
+        Consultant
+            .remove({ related_user: id_user }/*, {}*/)
+            .exec(
+            function (err, user) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                else { console.log("supprimé") };
+            }
+        );
+        Entreprise
+            .remove({ linked_user: id_user }/*, {}*/)
+            .exec(
+            function (err, user) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                else { console.log("supprimé") };
+            }
+        );
+        Demand
+            .remove({ dmd_author: id_user }/*, {}*/)
+            .exec(
+            function (err, user) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                else { console.log("supprimé") };
+            }
+        );
+        Devis
+            .remove({ devis_author: id_user }/*, {}*/)
+            .exec(
+            function (err, user) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                else { console.log("supprimé") };
+            }
+        );
+        //ConsultantReview.remove({ '': id_user }, {});
+
         User
             .findByIdAndRemove(id_user)
             .exec(

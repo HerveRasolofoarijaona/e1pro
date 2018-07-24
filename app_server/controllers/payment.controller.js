@@ -175,13 +175,15 @@ module.exports.confirm = (function (req, res) {
     );
 });
 //page render après validation du paiement
-var renderCommandPage = function (req, res, responseBody) {
+/*var renderCommandPage = function (req, res, responseBody) {
     //console.log(responseBody);
     return res.render('dashboard/command', {
         title: 'Mes Commandes | Emploi1pro',
+        mescom: req.flash('mescom'),
         command: responseBody,
+        
     });
-};
+};*/
 
 // Mes commandes
 module.exports.commandePageRender = (function (req, res) {
@@ -196,8 +198,12 @@ module.exports.commandePageRender = (function (req, res) {
     request(
         requestOptions,
         function (err, response, body) {
-            console.log(JSON.stringify(body));
-            renderCommandPage(req, res, body);
+            //renderCommandPage(req, res, body);
+            return res.render('dashboard/command', {
+                title: 'Mes Commandes | Emploi1pro',
+                mescom: 'mescom',
+                command: body,
+            });
         }
     );
 });
@@ -218,7 +224,12 @@ module.exports.allCommand = (function (req, res) {
         requestOptions,
         function (err, response, body) {
             if (response.statusCode === 200) {
-                renderCommandPage(req, res, body);
+                //renderCommandPage(req, res, body);
+                return res.render('dashboard/command', {
+                    title: 'Les Commandes | Emploi1pro',
+                    mescom: '',
+                    command: body,
+                });
             } else {
                 _showError(req, res, response.statusCode);
             }
