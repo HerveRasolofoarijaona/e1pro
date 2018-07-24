@@ -7,12 +7,11 @@ var methodOverride = require('method-override');
 
 
 var apiOptions = {
-    server : "http://localhost:3000"
+    server : "http://localhost:5000"
 };
 if (process.env.NODE_ENV === 'production') {
-    apiOptions.server = "";
+    apiOptions.server = "http://thawing-fjord-87586.herokuapp.com";
 }
-
 // error handling function
 var _showError = function (req, res, status) {
     var errTitle, content;
