@@ -5,9 +5,8 @@ var nodemailer = require('nodemailer');
 var request = require('request');
 
 var apiOptions = {
-    server: "http://localhost:3000"
+    server: ""
 };
-
 if (process.env.NODE_ENV === 'production') {
     apiOptions.server = "";
 }
