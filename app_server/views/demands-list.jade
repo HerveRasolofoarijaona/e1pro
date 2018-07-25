@@ -6,68 +6,79 @@ block content
     // SMALL SCREENS
     +middle-menu-mb
     div.clearfix
-        div.hidden-lg.hidden-md
-            button.accordion APPLIQUER FILTRES
-            div.panel
-                // h3 Filtres
-                div.filter-form
-                    form.form-default(action="" method="post")
-                        input(type="text" class="location")
-                        select(name="select")
-                            option(value="") Tous les domaines
+        -if(demands != "")
+            div.hidden-lg.hidden-md
+                button.accordion APPLIQUER FILTRES
+                div.panel
+                    // h3 Filtres
+                    div.filter-form
+                        form.form-default(action="" method="post")
+                            input(type="text" class="location")
+                            select(name="select")
                                 option(value="") Tous les domaines
-                                    -for(var i = 0; i < fields.length; i++)
-                                        option(value=fields[i]._id)= fields[i].field_name
+                                    option(value="") Tous les domaines
+                                        -for(var i = 0; i < fields.length; i++)
+                                            option(value=fields[i]._id)= fields[i].field_name
         div.middle-content.hidden-lg.hidden-md
-            div.catalog-box
-                div.tab-content#mbcatalog
-                    div#mboffers
-                        ul.catalog-items
-                            each demand in demands
-                                div.mb-item-box(onclick="location.href='demands/#{demand._id}'")
-                                    li.catalog-item
-                                        a.item-title(href="demands/#{demand._id}")= demand.dmd_title
-                                        div.item-meta
-                                            span.item-price.pull-right= demand.dmd_estimated_budget
-                                                | &nbsp;€
-                                            small <i class="fa fa-clock-o"> </i> &nbsp;
-                                                +formatDate(demand.created_at)
-                                                |  &nbsp; <i class="fa fa-map-marker"> </i> &nbsp;
-                                                = demand.dmd_location
-                                            p.item-excerpt=demand.dmd_description
-                                                    //.substr(0, 300)
-                                                | ...&nbsp;
-    // LARGE SCREENS
+            -if(demands == "")
+                div.left-content.col-md-12
+                    div.item-box
+                        h3.dash-title Aucune demande n'est disponible pour le moment.
+            -else
+                div.catalog-box
+                    div.tab-content#mbcatalog
+                        div#mboffers
+                            ul.catalog-items
+                                each demand in demands
+                                    div.mb-item-box(onclick="location.href='demands/#{demand._id}'")
+                                        li.catalog-item
+                                            a.item-title(href="demands/#{demand._id}")= demand.dmd_title
+                                            div.item-meta
+                                                span.item-price.pull-right= demand.dmd_estimated_budget
+                                                    | &nbsp;€
+                                                small <i class="fa fa-clock-o"> </i> &nbsp;
+                                                    +formatDate(demand.created_at)
+                                                    |  &nbsp; <i class="fa fa-map-marker"> </i> &nbsp;
+                                                    = demand.dmd_location
+                                                p.item-excerpt=demand.dmd_description
+                                                        //.substr(0, 300)
+                                                    | ...&nbsp;
+        // LARGE SCREENS
     +middle-menu
     div.container
         div.middle-content.col-md-8.hidden-sm.hidden-xs
-            div.catalog-box
-                div.tab-content#catalog
-                    div#offers
-                        ul.catalog-items
-                            each demand in demands
-                                div.item-box(onclick="location.href='demands/#{demand._id}'")
-                                    li.catalog-item
-                                        span.item-price.pull-right= demand.dmd_estimated_budget
-                                            | &nbsp;€
-                                        a.item-title(href="demands/#{demand._id}")= demand.dmd_title
-                                        div.item-meta
-                                            small <i class="fa fa-clock-o"> </i> &nbsp;
-                                                +formatDate(demand.created_at)
-                                                |  &nbsp; <i class="fa fa-map-marker"> </i> &nbsp;
-                                                = demand.dmd_location
-                                            p.item-excerpt=demand.dmd_description
-                                                        //.substr(0, 300)
-                                                | ...&nbsp;
-
-        div.middle-sidebar.col-md-4.col-lg-4.hidden-xs.hidden-sm
-            div.item-box.sidebar-sticky
-                h3 Filtres
-                div.filter-form
-                    form.form-default(action="" method="post")
-                        input(type="text" class="location")
-                        select(name="select")
-                            option(value="") Tous les domaines
+            -if(demands == "")
+                div.left-content.col-md-12
+                    div.item-box
+                        h3.dash-title Aucune demande n'est disponible pour le moment.
+            -else
+                div.catalog-box
+                    div.tab-content#catalog
+                        div#offers
+                            ul.catalog-items
+                                each demand in demands
+                                    div.item-box(onclick="location.href='demands/#{demand._id}'")
+                                        li.catalog-item
+                                            span.item-price.pull-right= demand.dmd_estimated_budget
+                                                | &nbsp;€
+                                            a.item-title(href="demands/#{demand._id}")= demand.dmd_title
+                                            div.item-meta
+                                                small <i class="fa fa-clock-o"> </i> &nbsp;
+                                                    +formatDate(demand.created_at)
+                                                    |  &nbsp; <i class="fa fa-map-marker"> </i> &nbsp;
+                                                    = demand.dmd_location
+                                                p.item-excerpt=demand.dmd_description
+                                                            //.substr(0, 300)
+                                                    | ...&nbsp;
+        -if(demands != "")
+            div.middle-sidebar.col-md-4.col-lg-4.hidden-xs.hidden-sm
+                div.item-box.sidebar-sticky
+                    h3 Filtres
+                    div.filter-form
+                        form.form-default(action="" method="post")
+                            input(type="text" class="location")
+                            select(name="select")
                                 option(value="") Tous les domaines
-                                    -for(var i = 0; i < fields.length; i++)
-                                        option(value=fields[i]._id)= fields[i].field_name
+                                    option(value="") Tous les domaines
+                                        -for(var i = 0; i < fields.length; i++)
+                                            option(value=fields[i]._id)= fields[i].field_name

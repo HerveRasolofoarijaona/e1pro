@@ -60,6 +60,7 @@ var userSchema = new Schema({
         first_name: { type: String/*, lowercase: true, validate: nameValidator*/ },
         last_name: { type: String/*, lowercase: true, validate: nameValidator*/ },
         password: { type: String/*, validate: passwordValidator, select: false*/ },
+        profile_pic_path: { type: String, default: '' },
         resetPasswordToken: String,
         resetPasswordExpires: Date,
         email: { type: String, required: true, lowercase: true, unique: true/*, validate: emailValidator*/ },
@@ -85,16 +86,16 @@ var userSchema = new Schema({
             home_phone_number: {type:String, default:""}
         },
         user_skills: [uSkillSchema],
-        company_name: { type: String, default: '' },
         payment: [{
             card: String ,
             titulaire : String,
         }],
         rib: [{
             id_iban: String,
-        }]
+        }],
+        company_name: { type: String, default: '' },
     },
-    { usePushEach: true },
+    //{ usePushEach: true },
     {
         timestamps: { createdAt: 'created_at', updatedAt: 'updated_at'}
     },
