@@ -7,11 +7,10 @@
     "\\app_api\\routes",
     "\\app_server",
     "\\app_server\\controllers",
-    "\\app_server\\routes",
     "\\app_server\\views",
-    "\\public",
-    "\\public\\javascripts"
+    "\\app_server\\views\\dashboard",
+    "\\app_server\\views\\includes"
   ],
-  "SelectedNode": "\\app_server\\controllers\\demands.controller.js",
+  "SelectedNode": "\\app_api\\models\\user.schema.js",
   "PreviewInSolutionExplorer": false
 }
