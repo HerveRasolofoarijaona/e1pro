@@ -24,6 +24,7 @@ var Field = require('./app_api/models/field.schema');
 var Skill = require('./app_api/models/skill.schema');
 var Role = require('./app_api/models/role.schema');
 var User = require('./app_api/models/user.schema');
+
 var cartLength = require('./app_server/middlewares/cart.lenght');
 var offerApprovedReviews = require('./app_server/middlewares/offer.reviews.approved');
 var cmcic = require('cmcic');
@@ -32,9 +33,9 @@ var express = require('express');
 var app = express();
 var http = require('http');
 var socket = require("socket.io");
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000;
 
- 
+
 /*var tpe = new cmcic.tpe({
   CMCIC_TPE: 'tpeid',
   CMCIC_CODESOCIETE: 'societykey',
@@ -89,13 +90,13 @@ if (app.get('env') === 'production') { //Quand le projet est déployé
 
 app.use(flash());
 
-app.use(methodOverride(function(req, res){
-  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-    // look in urlencoded POST bodies and delete it
-    var method = req.body._method;
-    delete req.body._method;
-    return method
-  }
+app.use(methodOverride(function(req, res) {
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+        // look in urlencoded POST bodies and delete it
+        var method = req.body._method;
+        delete req.body._method;
+        return method;
+    }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -124,17 +125,17 @@ var serverS = server.listen(PORT);
 
 
 
-app.use(function (req, res, next) {
-  res.locals.user = req.user;
-  //console.log(req.sessionID); pour afficher l'id de la session
-  //console.log(req.user);
-  /*if(req.user){
-    console.log(req.user.name + " is connected");
-  }
-  else{
-    console.log("No one is connected");
-  }*/
-  next();
+app.use(function(req, res, next) {
+    res.locals.user = req.user;
+    //console.log(req.sessionID); pour afficher l'id de la session
+    //console.log(req.user);
+    /*if(req.user){
+      console.log(req.user.name + " is connected");
+    }
+    else{
+      console.log("No one is connected");
+    }*/
+    next();
 });
 
 app.use(cartLength);
@@ -142,32 +143,32 @@ app.use(offerApprovedReviews);
 
 
 // function to call fields data on multiple page
-app.use(function (req, res, next) {
-  Field.find({}, function (err, fields) {
-    if(err) return next(err);
-    res.locals.fields = fields;
-    next();
-  });
+app.use(function(req, res, next) {
+    Field.find({}, function(err, fields) {
+        if (err) return next(err);
+        res.locals.fields = fields;
+        next();
+    });
 });
 
 // function to call skills data on multiple page
-app.use(function (req, res, next) {
-  Skill.find({}, function (err, skills) {
-    if(err) return next(err);
-    res.locals.skills = skills;
-    next();
-  })
+app.use(function(req, res, next) {
+    Skill.find({}, function(err, skills) {
+        if (err) return next(err);
+        res.locals.skills = skills;
+        next();
+    });
 });
 
 // function to call roles data on multiple page
-app.use(function (req, res, next) {
-  Role.find({}, function (err, roles) {
-    if(err) return next(err);
-    res.locals.roles = roles;
-    next();
-  });
+app.use(function(req, res, next) {
+    Role.find({}, function(err, roles) {
+        if (err) return next(err);
+        res.locals.roles = roles;
+        next();
+    });
 });
- 
+
 
 
 app.use('/', routes);
@@ -178,9 +179,9 @@ app.use('/api', apiRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handlers
@@ -188,23 +189,23 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    //res.address(err.address || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
+    app.use(function(err, req, res, next) {
+        //res.address(err.address || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
     });
-  });
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  //res.address(err.address || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+    //res.address(err.address || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
 });
 /*io.on('connection', function (socket) {
     //console.log('Nouvelle connexion anonyme');
