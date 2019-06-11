@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // error handling function
-var _showError = function (req, res, status) {
+var _showError = function(req, res, status) {
     var errTitle, content;
     if (status === 404) {
         errTitle = "404, page not found";
@@ -25,16 +25,16 @@ var _showError = function (req, res, status) {
     }
     res.status(status);
     res.render('index', {
-        errTitle : errTitle,
-        content : content
+        errTitle: errTitle,
+        content: content
     });
 };
 
 
 // skills page list renderer function
-var renderSkillsPage = function (req, res, responseBody) {
-    if(!req.user) return res.redirect('/login');
-    else if(req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64') return res.redirect('/denied');
+var renderSkillsPage = function(req, res, responseBody) {
+    if (!req.user) return res.redirect('/login');
+    else if (req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64') return res.redirect('/denied');
     res.render('dashboard/skills-form', {
         title: 'Domaines de compétences | Emploi1pro',
         skills: responseBody
@@ -42,13 +42,13 @@ var renderSkillsPage = function (req, res, responseBody) {
 };
 
 // Get all skills controller
-module.exports.allSkills = (function (req, res) {
+module.exports.allSkills = (function(req, res) {
     var requestOptions, path;
     path = '/api/skills';
     requestOptions = {
-        url : apiOptions.server + path,
-        method : "GET",
-        json : {}
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
         //qs : {}
     };
     request(
@@ -61,25 +61,25 @@ module.exports.allSkills = (function (req, res) {
 });
 
 // add Skill renderer function
-var renderSkillDetail = function (req, res, skillDetail) {
-    if(!req.user) return res.redirect('/login');
-    else if(req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64') return res.redirect('/denied');
+var renderSkillDetail = function(req, res, skillDetail) {
+    if (!req.user) return res.redirect('/login');
+    else if (req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64') return res.redirect('/denied');
     res.render('dashboard/skill-details', {
         title: 'Domaines de compétences | Emploi1pro',
         skill: skillDetail
     });
 };
 // Get one Skill controller
-module.exports.getOneSkill = function (req, res) {
+module.exports.getOneSkill = function(req, res) {
     var requestOptions, path;
-    path = '/api/skills/'+ req.params.id_skill;
+    path = '/api/skills/' + req.params.id_skill;
     requestOptions = {
         url: apiOptions.server + path,
         method: "GET",
         json: {}
     };
     request(requestOptions,
-        function(err, response, body){
+        function(err, response, body) {
             renderSkillDetail(req, res, body);
         }
     );
@@ -99,157 +99,151 @@ module.exports.newField = (function (req, res) {
 */
 
 // Create a Skill Controller method
-module.exports.addSkill = (function (req, res) {
+module.exports.addSkill = (function(req, res) {
     var requestOptions, path, postData;
-    path='/api/skills';
+    path = '/api/skills';
     postData = {
         skill_field_lab: req.body.skillLab,
         inner_skill_lab: req.body.subSkillLab
     };
     requestOptions = {
         url: apiOptions.server + path,
-        method:"POST",
+        method: "POST",
         json: postData
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 201) {
+        function(err, response, body) {
+            if (response.statusCode === 201) {
                 res.redirect('skills');
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });
 
 
 // Update a skill controller method
-module.exports.updateSkill = (function (req, res) {
+module.exports.updateSkill = (function(req, res) {
     var requestOptions, path, putData;
 
-    path='/api/skills/'+ req.params.id_skill;
+    path = '/api/skills/' + req.params.id_skill;
     putData = {
         skill_field_lab: req.body.skillLab
     };
     requestOptions = {
         url: apiOptions.server + path,
-        method:"PUT",
+        method: "PUT",
         json: putData
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 200) {
+        function(err, response, body) {
+            if (response.statusCode === 200) {
                 res.redirect('/dashboard/skills');
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });
 
 
 // Delete a skill controller method
-module.exports.deleteSkill = (function (req, res) {
+module.exports.deleteSkill = (function(req, res) {
     var requestOptions, path;
-    path='/api/skills/'+ req.params.id_skill;
+    path = '/api/skills/' + req.params.id_skill;
     requestOptions = {
         url: apiOptions.server + path,
-        method:"DELETE",
+        method: "DELETE",
         json: {}
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 204) {
+        function(err, response, body) {
+            if (response.statusCode === 204) {
                 res.redirect('/dashboard/skills');
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });
 
 
 // SUB SKILLS CRUD
 
 // Create a subSkill Controller method
-module.exports.addSubSkill = (function (req, res) {
+module.exports.addSubSkill = (function(req, res) {
     var requestOptions, path, postData;
-    path='/api/skills/'+ req.params.id_skill+'/sub-skills';
+    path = '/api/skills/' + req.params.id_skill + '/sub-skills';
     postData = {
         inner_skill_lab: req.body.subskillLab
-        //inner_skill_lab: req.body.subSkillLab
+            //inner_skill_lab: req.body.subSkillLab
     };
     requestOptions = {
         url: apiOptions.server + path,
-        method:"POST",
+        method: "POST",
         json: postData
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 201) {
+        function(err, response, body) {
+            if (response.statusCode === 201) {
                 res.redirect(req.params.id_skill);
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });
 
 
 // Update a skill controller method
-module.exports.updateSubSkill = (function (req, res) {
+module.exports.updateSubSkill = (function(req, res) {
     var requestOptions, path, putData;
 
-    path='/api/skills/'+ req.params.id_skill +'/sub-skills/'+req.params.id_inner_skill;
+    path = '/api/skills/' + req.params.id_skill + '/sub-skills/' + req.params.id_inner_skill;
     putData = {
         inner_skill_lab: req.body.subskillLab
     };
     requestOptions = {
         url: apiOptions.server + path,
-        method:"PUT",
+        method: "PUT",
         json: putData
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 200) {
-                res.redirect('/dashboard/skills/'+req.params.id_skill);
-            }
-            else {
+        function(err, response, body) {
+            if (response.statusCode === 200) {
+                res.redirect('/dashboard/skills/' + req.params.id_skill);
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });
 
 
 
 // Delete a field controller method
-module.exports.deleteSubSkill = (function (req, res) {
+module.exports.deleteSubSkill = (function(req, res) {
     var requestOptions, path;
-    path='/api/skills/'+ req.params.id_skill +'/sub-skills/'+req.params.id_inner_skill;
+    path = '/api/skills/' + req.params.id_skill + '/sub-skills/' + req.params.id_inner_skill;
     requestOptions = {
         url: apiOptions.server + path,
-        method:"DELETE",
+        method: "DELETE",
         json: {}
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 204) {
-                res.redirect('/dashboard/skills/'+req.params.id_skill);
-            }
-            else {
+        function(err, response, body) {
+            if (response.statusCode === 204) {
+                res.redirect('/dashboard/skills/' + req.params.id_skill);
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });

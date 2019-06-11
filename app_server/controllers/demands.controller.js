@@ -8,7 +8,7 @@ var User = require('../../app_api/models/user.schema'); //pour utiliser users da
 var Demand = require('../../app_api/models/demand.schema');
 var Field = require('../../app_api/models/field.schema');
 
-var sendJsonResponse = (function (res, status, content) {
+var sendJsonResponse = (function(res, status, content) {
     res.status(status);
     res.send(content);
 });
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // error handling function
-var _showError = function (req, res, status) {
+var _showError = function(req, res, status) {
     var errTitle, content;
     if (status === 404) {
         errTitle = "404, page not found";
@@ -32,63 +32,63 @@ var _showError = function (req, res, status) {
     }
     res.status(status);
     res.render('index', {
-        errTitle : errTitle,
-        content : content
+        errTitle: errTitle,
+        content: content
     });
 };
 
 
 // Demands list page renderer
 // All demands request
-module.exports.allDemands = function (req, res, next) {
+module.exports.allDemands = function(req, res, next) {
     if (!req.user) return res.redirect('/login');
     else if (req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64') return res.redirect('/denied');
     async.parallel({
-        user: function (callback) {
-            User.find({},function (err, users_all) {
-                if (!users_all) {
-                    sendJsonResponse(res, 404, {
-                        "message": "No users found"
-                    });
-                }
-                /*else {
-                    sendJsonResponse(res, 200, users_all);
-                }*/
-            })
-                .exec(callback)
+        user: function(callback) {
+            User.find({}, function(err, users_all) {
+                    if (!users_all) {
+                        sendJsonResponse(res, 404, {
+                            "message": "No users found"
+                        });
+                    }
+                    /*else {
+                        sendJsonResponse(res, 200, users_all);
+                    }*/
+                })
+                .exec(callback);
         },
-        fieldsAll: function (callback) {
-            Field.find({}, function (err, fields_all) {
-                if (!fields_all) {
-                    sendJsonResponse(res, 404, {
-                        "message": "No fields found"
-                    });
-                }
-                /*else {
-                    sendJsonResponse(res, 200, demands_all);
-                }*/
-            })
-                .exec(callback)
+        fieldsAll: function(callback) {
+            Field.find({}, function(err, fields_all) {
+                    if (!fields_all) {
+                        sendJsonResponse(res, 404, {
+                            "message": "No fields found"
+                        });
+                    }
+                    /*else {
+                        sendJsonResponse(res, 200, demands_all);
+                    }*/
+                })
+                .exec(callback);
         },
-        demandsAll: function (callback) {
-            Demand.find({}, function (err, demands_all) {
-                if (!demands_all) {
-                    sendJsonResponse(res, 404, {
-                        "message": "No demands found"
-                    });
-                }
-                /*else {
-                    sendJsonResponse(res, 200, demands_all);
-                }*/
-            })
-                .exec(callback)
+        demandsAll: function(callback) {
+            Demand.find({}, function(err, demands_all) {
+                    if (!demands_all) {
+                        sendJsonResponse(res, 404, {
+                            "message": "No demands found"
+                        });
+                    }
+                    /*else {
+                        sendJsonResponse(res, 200, demands_all);
+                    }*/
+                })
+                .exec(callback);
         },
-    }, function (err, results) { //faire une erreur pour les trois données
+    }, function(err, results) { //faire une erreur pour les trois données
         if (err) { return next(err); } // Error in API usage.
         if (results.user == null) { // No results.
-            var err = new Error('Author not found');
-            err.status = 404;
-            return next(err);
+            var err1 = new Error('Author not found');
+            err1.status = 404;
+            return next(err1);
         }
         // Successful, so render.
         res.render('dashboard/demands-table', {
@@ -96,7 +96,7 @@ module.exports.allDemands = function (req, res, next) {
             usersAll: results.user,
             fields: results.fieldsAll,
             demands: results.demandsAll,
-            
+
         });
     });
 
@@ -177,55 +177,55 @@ var renderDemandsPage2 = function (req, res, usersAll) { // 19/04
 };*/
 
 // All demands by author request
-module.exports.allDemandsByAuthor = function (req, res, next) {
+module.exports.allDemandsByAuthor = function(req, res, next) {
     if (!req.user) return res.redirect('/login');
     else if (req.user && req.user._id != req.params.id_user) return res.redirect('/denied');
     async.parallel({
-        user: function (callback) {
-            User.find({/*'_id': { $id: req.params.id_user }*/}, function (err, users_all) {
-                if (!users_all) {
-                    sendJsonResponse(res, 404, {
-                        "message": "No users found"
-                    });
-                }
-                /*else {
-                    sendJsonResponse(res, 200, users_all);
-                }*/
-            })
-                .exec(callback)
+        user: function(callback) {
+            User.find({ /*'_id': { $id: req.params.id_user }*/ }, function(err, users_all) {
+                    if (!users_all) {
+                        sendJsonResponse(res, 404, {
+                            "message": "No users found"
+                        });
+                    }
+                    /*else {
+                        sendJsonResponse(res, 200, users_all);
+                    }*/
+                })
+                .exec(callback);
         },
-        fieldsAll: function (callback) {
-            Field.find({}, function (err, fields_all) {
-                if (!fields_all) {
-                    sendJsonResponse(res, 404, {
-                        "message": "No fields found"
-                    });
-                }
-                /*else {
-                    sendJsonResponse(res, 200, demands_all);
-                }*/
-            })
-                .exec(callback)
+        fieldsAll: function(callback) {
+            Field.find({}, function(err, fields_all) {
+                    if (!fields_all) {
+                        sendJsonResponse(res, 404, {
+                            "message": "No fields found"
+                        });
+                    }
+                    /*else {
+                        sendJsonResponse(res, 200, demands_all);
+                    }*/
+                })
+                .exec(callback);
         },
-        demandsAll: function (callback) {
-            Demand.find({'dmd_author': req.params.id_user }, function (err, demands_all) {
-                if (!demands_all) {
-                    sendJsonResponse(res, 404, {
-                        "message": "No demands found"
-                    });
-                }
-                /*else {
-                    sendJsonResponse(res, 200, demands_all);
-                }*/
-            })
-                .exec(callback)
+        demandsAll: function(callback) {
+            Demand.find({ 'dmd_author': req.params.id_user }, function(err, demands_all) {
+                    if (!demands_all) {
+                        sendJsonResponse(res, 404, {
+                            "message": "No demands found"
+                        });
+                    }
+                    /*else {
+                        sendJsonResponse(res, 200, demands_all);
+                    }*/
+                })
+                .exec(callback);
         },
-    }, function (err, results) { //faire une erreur pour les trois données
+    }, function(err, results) { //faire une erreur pour les trois données
         if (err) { return next(err); } // Error in API usage.
         if (results.user == null) { // No results.
-            var err = new Error('Author not found');
-            err.status = 404;
-            return next(err);
+            var err1 = new Error('Author not found');
+            err1.status = 404;
+            return next(err1);
         }
         // Successful, so render.
         res.render('dashboard/demands-table', {
@@ -240,40 +240,40 @@ module.exports.allDemandsByAuthor = function (req, res, next) {
 };
 
 // Demand details renderer function
-var renderDemandDetail = function (req, res, demand) {
-    if(!req.user) return res.redirect('/login');
-    else if(req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64' && req.user.user_role!='57b2e3f36a0c14cc080d2f63') return res.redirect('/denied');
+var renderDemandDetail = function(req, res, demand) {
+    if (!req.user) return res.redirect('/login');
+    else if (req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64' && req.user.user_role != '57b2e3f36a0c14cc080d2f63') return res.redirect('/denied');
     res.render('dashboard/demands-edit', {
         title: 'Dashboard - Demandes | Emploi1pro',
         demand: demand
     });
 };
 
-module.exports.getOneDemand = (function (req, res) {
+module.exports.getOneDemand = (function(req, res) {
     var requestOptions, path;
-    path = '/api/demands/'+ req.params.id_demand;
+    path = '/api/demands/' + req.params.id_demand;
     requestOptions = {
         url: apiOptions.server + path,
         method: "GET",
         json: {}
     };
     request(requestOptions,
-        function(err, response, body){
+        function(err, response, body) {
             renderDemandDetail(req, res, body);
         }
     );
 });
 
 
-module.exports.getDemandForm = (function (req, res) {
-    if(!req.user) return res.redirect('/login');
-    else if(req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64' && req.user.user_role!='57b2e3f36a0c14cc080d2f63') return res.redirect('/denied');
+module.exports.getDemandForm = (function(req, res) {
+    if (!req.user) return res.redirect('/login');
+    else if (req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64' && req.user.user_role != '57b2e3f36a0c14cc080d2f63') return res.redirect('/denied');
     res.render('dashboard/demands-form', {
         title: 'Créer demande | Emploi1pro'
     });
 });
 
-module.exports.addDemand = (function (req, res) {
+module.exports.addDemand = (function(req, res) {
     var requestOptions, path, postData;
     path = '/api/demands';
     postData = {
@@ -296,11 +296,10 @@ module.exports.addDemand = (function (req, res) {
     };
     request(
         requestOptions,
-        function (err, response, body) {
+        function(err, response, body) {
             if (response.statusCode === 201) {
                 res.redirect('/dashboard/demands/u/' + req.params.id_user);
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
@@ -308,7 +307,7 @@ module.exports.addDemand = (function (req, res) {
 });
 
 
-module.exports.updateDemand = (function (req, res) {
+module.exports.updateDemand = (function(req, res) {
     var requestOptions, path, putData;
     path = '/api/demands/' + req.params.id_demand;
     putData = {
@@ -328,42 +327,40 @@ module.exports.updateDemand = (function (req, res) {
     };
     requestOptions = {
         url: apiOptions.server + path,
-        method:"PUT",
+        method: "PUT",
         json: putData
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 200) {
-                res.redirect('/dashboard/demands/'+ req.params.id_demand);
-            }
-            else {
+        function(err, response, body) {
+            if (response.statusCode === 200) {
+                res.redirect('/dashboard/demands/' + req.params.id_demand);
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });
 
-module.exports.deleteDemand = (function (req, res) {
+module.exports.deleteDemand = (function(req, res) {
     var requestOptions, path;
-    path='/api/demands/'+ req.params.id_demand;
+    path = '/api/demands/' + req.params.id_demand;
     requestOptions = {
         url: apiOptions.server + path,
-        method:"DELETE",
+        method: "DELETE",
         json: {}
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 204) {
-                if(req.user.user_role != '57b2e3f36a0c14cc080d2f64')
-                    return res.redirect('/dashboard/demands/u/'+req.params.id_user);
+        function(err, response, body) {
+            if (response.statusCode === 204) {
+                if (req.user.user_role != '57b2e3f36a0c14cc080d2f64')
+                    return res.redirect('/dashboard/demands/u/' + req.params.id_user);
                 else
-                    return res.redirect('/dashboard/demands')
-            }
-            else {
+                    return res.redirect('/dashboard/demands');
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });

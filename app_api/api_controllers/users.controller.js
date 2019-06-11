@@ -14,70 +14,69 @@ var Entreprise = require('../models/enterprise.schema');
 var Devis = require('../models/devis.schema');
 var Demand = require('../models/demand.schema');
 
-var sendJsonResponse = (function (res, status, content) {
+var sendJsonResponse = (function(res, status, content) {
     res.status(status);
     res.send(content);
 });
 
-module.exports.usersImport = (function (req, res) {
+module.exports.usersImport = (function(req, res) {
     User.create(
         //{"first_name":"Mike", "last_name":"Byby", "email":"mike@byby.com", "password":"weTest", "user_role":"57b2e3f36a0c14cc080d2f62"},
-        {"first_name":"Priscilla", "last_name":"Donovan", "email":"donovan@yahoo.com", "password":"tryThis", "user_role":"57b2e3f36a0c14cc080d2f63"},
-        function (err) {
+        { "first_name": "Priscilla", "last_name": "Donovan", "email": "donovan@yahoo.com", "password": "tryThis", "user_role": "57b2e3f36a0c14cc080d2f63" },
+        function(err) {
             if (err) return console.log(err);
             return res.sendStatus(202);
         });
 });
 
-module.exports.usersCreate = (function (req, res) {
+module.exports.usersCreate = (function(req, res) {
     User.create({
-        first_name : req.body.firstName,
-        last_name : req.body.lastName,
-        email : req.body.email,
-        password: req.body.password,
-        user_role: req.body.role
+            first_name: req.body.firstName,
+            last_name: req.body.lastName,
+            email: req.body.email,
+            password: req.body.password,
+            user_role: req.body.role
 
-        /*personal_details:{
-            birth_date: req.body.uBirthday,
-            gender: req.body.uGender,
-            address:{
-                line1: req.body.uLine1,
-                line2: req.body.uLine2,
-                city: req.body.uCity,
-                country: req.body.uCountry,
-                region: req.body.uRegion,
-                department: req.body.uDepartment,
-                postal_code: req.body.uPostalCode
+            /*personal_details:{
+                birth_date: req.body.uBirthday,
+                gender: req.body.uGender,
+                address:{
+                    line1: req.body.uLine1,
+                    line2: req.body.uLine2,
+                    city: req.body.uCity,
+                    country: req.body.uCountry,
+                    region: req.body.uRegion,
+                    department: req.body.uDepartment,
+                    postal_code: req.body.uPostalCode
+                }
+            }*/
+        },
+        /*User.findOne({email: req.body.email}, function (err, existingUser) {
+            if(existingUser){
+                console.log(req.body.email + " already exists");
             }
-        }*/
-    },
-    /*User.findOne({email: req.body.email}, function (err, existingUser) {
-        if(existingUser){
-            console.log(req.body.email + " already exists");
-        }
-    }),*/
-    User.findOne({email: req.body.email} ,function(err, existingUser, user) {
-        if (err) {
-            sendJsonResponse(res, 400, err);
-        }else if(existingUser) {
-            sendJsonResponse(res, 400, err);
-            console.log(req.body.email + " already exists");
-        } else {
-            sendJsonResponse(res, 201, user);
-        }
+        }),*/
+        User.findOne({ email: req.body.email }, function(err, existingUser, user) {
+            if (err) {
+                sendJsonResponse(res, 400, err);
+            } else if (existingUser) {
+                sendJsonResponse(res, 400, err);
+                console.log(req.body.email + " already exists");
+            } else {
+                sendJsonResponse(res, 201, user);
+            }
         }));
 });
 
 
-module.exports.usersList = (function (req, res) {
+module.exports.usersList = (function(req, res) {
     //sendJsonResponse(res, 200, {"status": "success"});
     User.find(function(err, users_all) {
         if (!users_all) {
             sendJsonResponse(res, 404, {
                 "message": "No users found"
             });
-        }
-        else {
+        } else {
             sendJsonResponse(res, 200, users_all);
         }
     }).populate('user_role');
@@ -98,7 +97,7 @@ module.exports.usersList = (function (req, res) {
     }).populate('_id first_name last_name');
 });*/
 
-module.exports.usersGetOne = (function (req, res) {
+module.exports.usersGetOne = (function(req, res) {
     if (req.params && req.params.id_user) {
         User
             .findById(req.params.id_user)
@@ -127,7 +126,7 @@ module.exports.usersGetOne = (function (req, res) {
 });
 
 
-module.exports.usersUpdateOne = (function (req, res) {
+module.exports.usersUpdateOne = (function(req, res) {
     if (!req.params.id_user) {
         sendJsonResponse(res, 404, {
             "message": "Not found, id_user is required"
@@ -166,7 +165,7 @@ module.exports.usersUpdateOne = (function (req, res) {
 });
 
 
-module.exports.usersUpdatePersoDetails = (function (req, res) {
+module.exports.usersUpdatePersoDetails = (function(req, res) {
     if (!req.params.id_user) {
         sendJsonResponse(res, 404, {
             "message": "Not found, id_user is required"
@@ -205,7 +204,7 @@ module.exports.usersUpdatePersoDetails = (function (req, res) {
 });
 
 
-module.exports.usersUpdateOneBio = (function (req, res) {
+module.exports.usersUpdateOneBio = (function(req, res) {
     if (!req.params.id_user) {
         sendJsonResponse(res, 404, {
             "message": "Not found, id_user is required"
@@ -240,7 +239,7 @@ module.exports.usersUpdateOneBio = (function (req, res) {
 });
 
 
-module.exports.usersAddOneSkill = (function (req, res) {
+module.exports.usersAddOneSkill = (function(req, res) {
     if (!req.params.id_user) {
         sendJsonResponse(res, 404, {
             "message": "Not found, id_user is required"
@@ -261,7 +260,7 @@ module.exports.usersAddOneSkill = (function (req, res) {
                     return;
                 }
                 user.user_skills.push({
-                        user_skill : req.body.userSkill
+                    user_skill: req.body.userSkill
                 });
                 user.save(function(err, user) {
                     if (err) {
@@ -275,7 +274,7 @@ module.exports.usersAddOneSkill = (function (req, res) {
 });
 
 
-module.exports.usersDeleteOneSkill = (function (req, res) {
+module.exports.usersDeleteOneSkill = (function(req, res) {
     if (!req.params.id_user || !req.params.id_user_skill) {
         sendJsonResponse(res, 404, {
             "message": "Not found, id_user and id_user_skill are both required"
@@ -321,97 +320,89 @@ module.exports.usersDeleteOneSkill = (function (req, res) {
 });
 
 
-module.exports.usersDeleteOne = (function (req, res) {
+module.exports.usersDeleteOne = (function(req, res) {
     var id_user = req.params.id_user;
     if (id_user) {
         OfferReview
-            .remove({ review_author: id_user }/*, {}*/)
+            .remove({ review_author: id_user } /*, {}*/ )
             .exec(
-            function (err, user) {
-                if (err) {
-                    console.log(err);
-                    return;
+                function(err, user) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    } else console.log("supprimï¿½");
                 }
-                else { console.log("supprimé") };
-            }
-        );
+            );
         Offer
-            .remove({ offer_author: id_user }/*, {}*/)
+            .remove({ offer_author: id_user } /*, {}*/ )
             .exec(
-            function (err, user) {
-                if (err) {
-                    console.log(err);
-                    return;
+                function(err, user) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    } else console.log("supprimï¿½");
                 }
-                else { console.log("supprimé") };
-            }
-        );
+            );
         Cart
-            .remove({ owner: id_user }/*, {}*/)
+            .remove({ owner: id_user } /*, {}*/ )
             .exec(
-            function (err, user) {
-                if (err) {
-                    console.log(err);
-                    return;
+                function(err, user) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    } else console.log("supprimï¿½");
                 }
-                else { console.log("supprimé") };
-            }
-        );
+            );
         Command
-            .remove({ owner: id_user }/*, {}*/)
+            .remove({ owner: id_user } /*, {}*/ )
             .exec(
-            function (err, user) {
-                if (err) {
-                    console.log(err);
-                    return;
+                function(err, user) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    } else console.log("supprimï¿½");
                 }
-                else { console.log("supprimé") };
-            }
-        );
+            );
         Consultant
-            .remove({ related_user: id_user }/*, {}*/)
+            .remove({ related_user: id_user } /*, {}*/ )
             .exec(
-            function (err, user) {
-                if (err) {
-                    console.log(err);
-                    return;
+                function(err, user) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    } else console.log("supprimï¿½");
                 }
-                else { console.log("supprimé") };
-            }
-        );
+            );
         Entreprise
-            .remove({ linked_user: id_user }/*, {}*/)
+            .remove({ linked_user: id_user } /*, {}*/ )
             .exec(
-            function (err, user) {
-                if (err) {
-                    console.log(err);
-                    return;
+                function(err, user) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    } else console.log("supprimï¿½");
                 }
-                else { console.log("supprimé") };
-            }
-        );
+            );
         Demand
-            .remove({ dmd_author: id_user }/*, {}*/)
+            .remove({ dmd_author: id_user } /*, {}*/ )
             .exec(
-            function (err, user) {
-                if (err) {
-                    console.log(err);
-                    return;
+                function(err, user) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    } else console.log("supprimï¿½");
                 }
-                else { console.log("supprimé") };
-            }
-        );
+            );
         Devis
-            .remove({ devis_author: id_user }/*, {}*/)
+            .remove({ devis_author: id_user } /*, {}*/ )
             .exec(
-            function (err, user) {
-                if (err) {
-                    console.log(err);
-                    return;
+                function(err, user) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    } else console.log("supprimï¿½");
                 }
-                else { console.log("supprimé") };
-            }
-        );
+            );
         //ConsultantReview.remove({ '': id_user }, {});
 
         User

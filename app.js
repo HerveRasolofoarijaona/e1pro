@@ -35,18 +35,17 @@ var http = require('http');
 var socket = require("socket.io");
 const PORT = process.env.PORT || 5000;
 
-
-/*var tpe = new cmcic.tpe({
-  CMCIC_TPE: 'tpeid',
-  CMCIC_CODESOCIETE: 'societykey',
-  CMCIC_CLE: '1234567890abcdef',
-  CMCIC_BANK: 'CIC',
-  CMCIC_LNG: 'FR',
-  CMCIC_CURRENCY: 'EUR',
-  CMCIC_URL_RETOUR: '/url/return',
-  CMCIC_URLOK: '/url/ok',
-  CMCIC_URLKO: '/url/ko'
-});*/
+var tpe = new cmcic.tpe({
+    CMCIC_TPE: 'tpeid',
+    CMCIC_CODESOCIETE: 'societykey',
+    CMCIC_CLE: '1234567890abcdef',
+    CMCIC_BANK: 'CIC',
+    CMCIC_LNG: 'FR',
+    CMCIC_CURRENCY: 'EUR',
+    CMCIC_URL_RETOUR: '/url/return',
+    CMCIC_URLOK: '/url/ok',
+    CMCIC_URLKO: '/url/ko'
+});
 
 
 
@@ -109,7 +108,7 @@ app.locals.moment = require('moment');
 var server = http.createServer(app);
 var serverS = server.listen(PORT);
 //var listener = socket.listen(server, { log: false });
-//var io = socket(serverS);
+var io = socket(serverS);
 // test 08/06
 //à modifier 06/06 
 //pour les notifications
@@ -127,14 +126,13 @@ var serverS = server.listen(PORT);
 
 app.use(function(req, res, next) {
     res.locals.user = req.user;
-    //console.log(req.sessionID); pour afficher l'id de la session
-    //console.log(req.user);
-    /*if(req.user){
-      console.log(req.user.name + " is connected");
+    console.log(req.sessionID); //pour afficher l'id de la session
+    console.log(req.user);
+    if (req.user) {
+        console.log(req.user.name + " is connected");
+    } else {
+        console.log("No one is connected");
     }
-    else{
-      console.log("No one is connected");
-    }*/
     next();
 });
 
@@ -207,32 +205,33 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-/*io.on('connection', function (socket) {
+io.on('connection', function(socket) {
     //console.log('Nouvelle connexion anonyme');
-   
 
-    socket.on('login', function (data) {
+
+    socket.on('login', function(data) {
         console.log(data);
         io.sockets.emit('notification', data);
         //Si le visiteur possede bien un compte avec ce login et ce password
-            //utilisateur authentifié
-        /*console.log("Connexion authentifiée : " + user.login);
+        //utilisateur authentifié
+        console.log("Connexion authentifiée : " + user.login);
         socket.broadcast.emit('notification', 'Test is connected');
-        socket.on('called', function () {
+        socket.on('called', function() {
             console.log("Request received");
             io.sockets.emit('notification', 'broadcast notification');
-                //On met a jour la liste des connectés
-                //connected.push({ id: user.id, login: user.login, avatar: user.avatar });
-                //On lie l'utilisateur connecté au socket de manière a pouvoir le récuperer partout
-            socket.set('user', user, function () {
-                    //On avrtis tous le monde (sauf l'utilisateur) que l'utilisateur est connecté et on leur retournes quelques infos sur lui
-                    //socket.broadcast.emit('new_user', { id: user.id, login: user.login, avatar: user.avatar });
-                    //On avertis l'utilisateur qu'il est bien connecté et on lui retourne toutes ses infos de compte
-                    //socket.emit('connected', { connected: connected, user: user });
+            //On met a jour la liste des connectés
+            //connected.push({ id: user.id, login: user.login, avatar: user.avatar });
+            //On lie l'utilisateur connecté au socket de manière a pouvoir le récuperer partout
+            socket.set('user', user, function() {
+                //On avrtis tous le monde (sauf l'utilisateur) que l'utilisateur est connecté et on leur retournes quelques infos sur lui
+                //socket.broadcast.emit('new_user', { id: user.id, login: user.login, avatar: user.avatar });
+                //On avertis l'utilisateur qu'il est bien connecté et on lui retourne toutes ses infos de compte
+                //socket.emit('connected', { connected: connected, user: user });
             });
         });
     });
-});*/
+});
+
 //parametre de base
 /*var httpS = require('http');
   //var serverS = httpS.createServer(app).listen(3000);

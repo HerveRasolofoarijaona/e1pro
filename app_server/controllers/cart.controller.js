@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // error handling function
-var _showError = function (req, res, status) {
+var _showError = function(req, res, status) {
     var errTitle, content;
     if (status === 404) {
         errTitle = "404, page not found";
@@ -25,27 +25,25 @@ var _showError = function (req, res, status) {
     }
     res.status(status);
     res.render('index', {
-        errTitle : errTitle,
-        content : content
+        errTitle: errTitle,
+        content: content
     });
 };
 
 var mongoose = require('mongoose');
 var Cart = require('../../app_api/models/cart.schema');
 
-module.exports.getCart = (function (req, res, next) {
-    if(!req.user) return res.redirect('/login');
+module.exports.getCart = (function(req, res, next) {
+    if (!req.user) return res.redirect('/login');
     Cart
-        .findOne({owner: req.user._id})
+        .findOne({ owner: req.user._id })
         .populate('items.item')
-        .exec(function (err, foundCart) {
-            if(err) return next(err);
+        .exec(function(err, foundCart) {
+            if (err) return next(err);
             res.render('cart', {
                 title: 'Panier | Emploi1pro',
                 cartContent: foundCart,
                 errors: req.flash('remove')
-            })
+            });
         });
 });
-
-

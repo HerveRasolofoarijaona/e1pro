@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // error handling function
-var _showError = function (req, res, status) {
+var _showError = function(req, res, status) {
     var errTitle, content;
     if (status === 404) {
         errTitle = "404, page not found";
@@ -25,28 +25,28 @@ var _showError = function (req, res, status) {
     }
     res.status(status);
     res.render('index', {
-        errTitle : errTitle,
-        content : content
+        errTitle: errTitle,
+        content: content
     });
 };
 
 
 // Offers list page renderer
-var renderOffersPage = function (req, res, responseBody) {
+var renderOffersPage = function(req, res, responseBody) {
     return res.render('offers-list', {
         title: 'Offres| Emploi1pro',
         offers: responseBody
-    })
+    });
 };
 
 // All offers request
-module.exports.offers = (function (req, res) {
+module.exports.offers = (function(req, res) {
     var requestOptions, path;
     path = '/api/offers';
     requestOptions = {
-        url : apiOptions.server + path,
-        method : "GET",
-        json : {}
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
         //qs : {}
     };
     request(
@@ -59,21 +59,21 @@ module.exports.offers = (function (req, res) {
 
 
 // Demands list page renderer
-var renderDemandsPage = function (req, res, responseBody) {
+var renderDemandsPage = function(req, res, responseBody) {
     return res.render('demands-list', {
         title: 'Demandes | Emploi1pro',
         demands: responseBody
-    })
+    });
 };
 
 // All demands request
-module.exports.demands = (function (req, res) {
+module.exports.demands = (function(req, res) {
     var requestOptions, path;
     path = '/api/demands';
     requestOptions = {
-        url : apiOptions.server + path,
-        method : "GET",
-        json : {}
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
         //qs : {}
     };
     request(
@@ -88,21 +88,21 @@ module.exports.demands = (function (req, res) {
 
 
 // Consultant list page renderer
-var renderConsultantsPage = function (req, res, responseBody) {
+var renderConsultantsPage = function(req, res, responseBody) {
     return res.render('consultants-list', {
         title: 'Consultants | Emploi1pro',
         consultants: responseBody
-    })
+    });
 };
 
 // All offers request
-module.exports.consultants = (function (req, res) {
+module.exports.consultants = (function(req, res) {
     var requestOptions, path;
     path = '/api/consultants';
     requestOptions = {
-        url : apiOptions.server + path,
-        method : "GET",
-        json : {}
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
         //qs : {}
     };
     request(
@@ -114,17 +114,18 @@ module.exports.consultants = (function (req, res) {
 });
 
 
-module.exports.consultants = (function (req, res) {
-    res.render('consultants-list', {title:'Consultants | Emploi1pro',
-        consultants:[
-            {
+module.exports.consultants = (function(req, res) {
+    res.render('consultants-list', {
+        title: 'Consultants | Emploi1pro',
+        consultants: [{
                 firstName: "Patrick",
                 lastName: "Leihman",
                 resume: {
                     title: 'Expert ITIL',
                     //about: String,
                     skills: ['ITIL Fondamentaux', 'MOA', 'Systèmes d\'information', 'Infrastructure', 'Cloud',
-                    'Amazon EC3', 'SIRH Intégration', 'CRM Intégration'],
+                        'Amazon EC3', 'SIRH Intégration', 'CRM Intégration'
+                    ],
                 },
                 is_certified: true,
                 last_seen: '13/07/2016',
@@ -139,7 +140,8 @@ module.exports.consultants = (function (req, res) {
                     title: 'Expert Technologies Microsoft',
                     //about: String,
                     skills: ['Powerpoint Ninja', 'Word Sensei', 'Sharepoint Developer', 'Excel Jinja', 'Access Expert',
-                        'SQL Server Pro'],
+                        'SQL Server Pro'
+                    ],
                 },
                 is_certified: false,
                 last_seen: '12/07/2016',
@@ -154,7 +156,8 @@ module.exports.consultants = (function (req, res) {
                     title: 'Développeur Web PHP',
                     //about: String,
                     skills: ['PHP', 'Simphony', 'Zend Framework', 'Laravel', 'MySQL',
-                        'PostgreSQL', 'Wordpress', 'CMS'],
+                        'PostgreSQL', 'Wordpress', 'CMS'
+                    ],
                 },
                 is_certified: true,
                 last_seen: '11/07/2016',
@@ -169,7 +172,8 @@ module.exports.consultants = (function (req, res) {
                     title: 'Expert ITIL',
                     //about: String,
                     skills: ['ITIL Fondamentaux', 'MOA', 'Systèmes d\'information', 'Infrastructure', 'Cloud',
-                        'Amazon EC3', 'SIRH Intégration', 'CRM Intégration'],
+                        'Amazon EC3', 'SIRH Intégration', 'CRM Intégration'
+                    ],
                 },
                 is_certified: true,
                 last_seen: '13/07/2016',
@@ -184,7 +188,8 @@ module.exports.consultants = (function (req, res) {
                     title: 'Développeur Web PHP',
                     //about: String,
                     skills: ['PHP', 'Simphony', 'Zend Framework', 'Laravel', 'MySQL',
-                        'PostgreSQL', 'Wordpress', 'CMS'],
+                        'PostgreSQL', 'Wordpress', 'CMS'
+                    ],
                 },
                 is_certified: true,
                 last_seen: '11/07/2016',
@@ -199,7 +204,8 @@ module.exports.consultants = (function (req, res) {
                     title: 'Expert Technologies Microsoft',
                     //about: String,
                     skills: ['Powerpoint Ninja', 'Word Sensei', 'Sharepoint Developer', 'Excel Jinja', 'Access Expert',
-                        'SQL Server Pro'],
+                        'SQL Server Pro'
+                    ],
                 },
                 is_certified: false,
                 last_seen: '12/07/2016',
@@ -214,7 +220,8 @@ module.exports.consultants = (function (req, res) {
                     title: 'Expert ITIL',
                     //about: String,
                     skills: ['ITIL Fondamentaux', 'MOA', 'Systèmes d\'information', 'Infrastructure', 'Cloud',
-                        'Amazon EC3', 'SIRH Intégration', 'CRM Intégration'],
+                        'Amazon EC3', 'SIRH Intégration', 'CRM Intégration'
+                    ],
                 },
                 is_certified: true,
                 last_seen: '13/07/2016',
@@ -224,18 +231,19 @@ module.exports.consultants = (function (req, res) {
             },
         ],
 
-        fields:[
-            {
+        fields: [{
                 fieldName: "Comptabilité",
-                innerFields:['Comptabilité','Préparation de l\'impôt', 'Comptabilité',
+                innerFields: ['Comptabilité', 'Préparation de l\'impôt', 'Comptabilité',
                     'Certified Public Accountant ( CPA)', 'Conseiller financier',
-                    'Courtier hypothécaire', 'Impôts des petites entreprises', 'Impôts personnels']
+                    'Courtier hypothécaire', 'Impôts des petites entreprises', 'Impôts personnels'
+                ]
             },
             {
                 fieldName: "Markerting",
-                innerFields:['Préparation de l\'impôt', 'Comptabilité',
+                innerFields: ['Préparation de l\'impôt', 'Comptabilité',
                     'Certified Public Accountant ( CPA)', 'Conseiller financier',
-                    'Courtier hypothécaire', 'Impôts des petites entreprises', 'Impôts personnels']
+                    'Courtier hypothécaire', 'Impôts des petites entreprises', 'Impôts personnels'
+                ]
             }
         ],
     });
@@ -243,8 +251,8 @@ module.exports.consultants = (function (req, res) {
 
 
 // Offer details renderer function
-var renderOfferDetail = function (req, res, offer) {
-    if(!req.user) return res.redirect('/login');
+var renderOfferDetail = function(req, res, offer) {
+    if (!req.user) return res.redirect('/login');
     res.render('offer-details', {
         title: 'Offre | Emploi1pro',
         offer: offer
@@ -253,24 +261,24 @@ var renderOfferDetail = function (req, res, offer) {
 
 
 // Offers details function
-module.exports.offerDetails = (function (req, res) {
+module.exports.offerDetails = (function(req, res) {
     var requestOptions, path;
-    path = '/api/offers/'+ req.params.id_offer;
+    path = '/api/offers/' + req.params.id_offer;
     requestOptions = {
         url: apiOptions.server + path,
         method: "GET",
         json: {}
     };
     request(requestOptions,
-        function(err, response, body){
+        function(err, response, body) {
             renderOfferDetail(req, res, body);
         }
     );
 });
 
-module.exports.postReview = (function (req, res) {
+module.exports.postReview = (function(req, res) {
     var requestOptions, path, postData;
-    path='/api/reviews';
+    path = '/api/reviews';
     postData = {
         reviewAuthor: req.body.reviewAuthor,
         reviewedOffer: req.body.reviewedOffer,
@@ -279,28 +287,27 @@ module.exports.postReview = (function (req, res) {
     };
     requestOptions = {
         url: apiOptions.server + path,
-        method:"POST",
+        method: "POST",
         json: postData
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 201) {
-                res.redirect('/offers/'+req.params.id_offer);
-            }
-            else {
+        function(err, response, body) {
+            if (response.statusCode === 201) {
+                res.redirect('/offers/' + req.params.id_offer);
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });
 
 var mongoose = require('mongoose');
 require('../../app_api/models/cart.schema');
 var Cart = mongoose.model('Cart');
 
-module.exports.addToCart = (function (req, res, next) {
-    Cart.findOne({ owner: req.user._id }, function(err, cart){
+module.exports.addToCart = (function(req, res, next) {
+    Cart.findOne({ owner: req.user._id }, function(err, cart) {
         cart.items.push({
             item: req.body.offerItem,
             price: parseFloat(req.body.price),
@@ -308,23 +315,23 @@ module.exports.addToCart = (function (req, res, next) {
         });
         cart.total_price = (cart.total_price + parseFloat(req.body.price)).toFixed(2);
 
-        cart.save(function (err) {
-            if(err) return next(err);
+        cart.save(function(err) {
+            if (err) return next(err);
             return res.redirect('/cart');
-        })
-    })
+        });
+    });
 });
 
-module.exports.removeItemFromCart = (function (req, res, next) {
-   Cart.findOne({owner: req.user._id}, function (err, cartContent) {
-       cartContent.items.pull(String(req.body.offerItem));
-       cartContent.total_price = (cartContent.total_price - parseFloat(req.body.price)).toFixed(2);
-       cartContent.save(function (err, cartRest) {
-           if(err) return next(err);
-           req.flash('remove', 'Article retiré du panier');
-           res.redirect('/cart')
-       })
-   })
+module.exports.removeItemFromCart = (function(req, res, next) {
+    Cart.findOne({ owner: req.user._id }, function(err, cartContent) {
+        cartContent.items.pull(String(req.body.offerItem));
+        cartContent.total_price = (cartContent.total_price - parseFloat(req.body.price)).toFixed(2);
+        cartContent.save(function(err, cartRest) {
+            if (err) return next(err);
+            req.flash('remove', 'Article retiré du panier');
+            res.redirect('/cart');
+        });
+    });
 });
 
 
@@ -358,8 +365,8 @@ module.exports.offerDetailsWithReviewsApproved = (function (req, res) {
 
 
 // Demand details renderer function
-var renderDemandDetail = function (req, res, demand) {
-    if(!req.user) return res.redirect('/login');
+var renderDemandDetail = function(req, res, demand) {
+    if (!req.user) return res.redirect('/login');
     res.render('demand-details', {
         title: 'Demandes | Emploi1pro',
         demand: demand
@@ -367,16 +374,16 @@ var renderDemandDetail = function (req, res, demand) {
 };
 
 
-module.exports.demandDetails = (function (req, res) {
+module.exports.demandDetails = (function(req, res) {
     var requestOptions, path;
-    path = '/api/demands/'+ req.params.id_demand;
+    path = '/api/demands/' + req.params.id_demand;
     requestOptions = {
         url: apiOptions.server + path,
         method: "GET",
         json: {}
     };
     request(requestOptions,
-        function(err, response, body){
+        function(err, response, body) {
             renderDemandDetail(req, res, body);
         }
     );
@@ -386,15 +393,15 @@ module.exports.demandDetails = (function (req, res) {
 
 
 
-module.exports.consultantDetails = (function (req, res) {
-    res.render('consultant-details', {title: 'consultant firstname | Emploi1Pro'});
+module.exports.consultantDetails = (function(req, res) {
+    res.render('consultant-details', { title: 'consultant firstname | Emploi1Pro' });
 });
 
 
-module.exports.createOffer = (function (req, res) {
-    res.render('dashboard/offer-form', {title: 'Emploi1Pro | Nouvelle offre'});
+module.exports.createOffer = (function(req, res) {
+    res.render('dashboard/offer-form', { title: 'Emploi1Pro | Nouvelle offre' });
 });
 
-module.exports.createDemand = (function (req, res) {
-    res.render('demand-form', {title: 'Emploi1Pro | Nouvelle demande'});
+module.exports.createDemand = (function(req, res) {
+    res.render('demand-form', { title: 'Emploi1Pro | Nouvelle demande' });
 });

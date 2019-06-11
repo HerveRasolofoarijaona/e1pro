@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // error handling function
-var _showError = function (req, res, status) {
+var _showError = function(req, res, status) {
     var errTitle, content;
     if (status === 404) {
         errTitle = "404, page not found";
@@ -25,16 +25,16 @@ var _showError = function (req, res, status) {
     }
     res.status(status);
     res.render('index', {
-        errTitle : errTitle,
-        content : content
+        errTitle: errTitle,
+        content: content
     });
 };
 
 
 // fields page list renderer function
-var renderLanguagesPage = function (req, res, responseBody) {
-    if(!req.user) return res.redirect('/login');
-    else if(req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64') return res.redirect('/denied');
+var renderLanguagesPage = function(req, res, responseBody) {
+    if (!req.user) return res.redirect('/login');
+    else if (req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64') return res.redirect('/denied');
     res.render('dashboard/status-form', {
         title: 'Status Juridiques | Emploi1pro',
         legalStatus: responseBody
@@ -42,13 +42,13 @@ var renderLanguagesPage = function (req, res, responseBody) {
 };
 
 // Get all languages controller
-module.exports.allStatus = (function (req, res) {
+module.exports.allStatus = (function(req, res) {
     var requestOptions, path;
     path = '/api/status';
     requestOptions = {
-        url : apiOptions.server + path,
-        method : "GET",
-        json : {}
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
         //qs : {}
     };
     request(
@@ -98,76 +98,73 @@ module.exports.allStatus = (function (req, res) {
  */
 
 // Create a Language Controller method
-module.exports.addStatus = (function (req, res) {
+module.exports.addStatus = (function(req, res) {
     var requestOptions, path, postData;
-    path='/api/status';
+    path = '/api/status';
     postData = {
         status_label: req.body.statusLab
     };
     requestOptions = {
         url: apiOptions.server + path,
-        method:"POST",
+        method: "POST",
         json: postData
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 201) {
+        function(err, response, body) {
+            if (response.statusCode === 201) {
                 res.redirect('legal-status');
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });
 
 
 // Update a field controller method
-module.exports.updateStatus = (function (req, res) {
+module.exports.updateStatus = (function(req, res) {
     var requestOptions, path, putData;
 
-    path='/api/status/'+ req.params.id_status;
+    path = '/api/status/' + req.params.id_status;
     putData = {
         status_label: req.body.statusLab
     };
     requestOptions = {
         url: apiOptions.server + path,
-        method:"PUT",
+        method: "PUT",
         json: putData
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 200) {
+        function(err, response, body) {
+            if (response.statusCode === 200) {
                 res.redirect('/dashboard/legal-status');
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });
 
 
 // Delete a field controller method
-module.exports.deleteStatus = (function (req, res) {
+module.exports.deleteStatus = (function(req, res) {
     var requestOptions, path;
-    path='/api/status/'+ req.params.id_status;
+    path = '/api/status/' + req.params.id_status;
     requestOptions = {
         url: apiOptions.server + path,
-        method:"DELETE",
+        method: "DELETE",
         json: {}
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 204) {
+        function(err, response, body) {
+            if (response.statusCode === 204) {
                 res.redirect('/dashboard/legal-status');
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });

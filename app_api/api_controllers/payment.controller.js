@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
-var User = require('../models/user.schema'); 
-var Cart = require('../models/cart.schema'); 
+var User = require('../models/user.schema');
+var Cart = require('../models/cart.schema');
 var Commande = require('../models/commande.schema');
 //var User = ...
-var sendJsonResponse = (function (res, status, content) {
+var sendJsonResponse = (function(res, status, content) {
     res.status(status);
     res.send(content);
 });
@@ -35,14 +35,13 @@ function GetWalletDetailsResult(error, response, body) {
         if (body.d.E) {
             // Handle API error
             console.log(body.d.E);
-        } else {
+        } else
             console.log(body.d.WALLET.CARDS);
-            //sendJsonResponse(res, 200, body.d.WALLET.CARDS);
-        }
+        //sendJsonResponse(res, 200, body.d.WALLET.CARDS);
     }
-};
+}
 
-module.exports.GetCard = (function (req, res) { // afficher les cartes qui existent
+module.exports.GetCard = (function(req, res) { // afficher les cartes qui existent
     //console.log("GETCARD: " + req.params.id_user);
     if (req.params && req.params.id_user) {
         // Method name
@@ -59,7 +58,7 @@ module.exports.GetCard = (function (req, res) { // afficher les cartes qui exist
                 "wallet": "101825062018"
             }
         };
-        sendRequest(methodName, postData, function (error, response, body) {
+        sendRequest(methodName, postData, function(error, response, body) {
             if (error) {
                 // Handle request error
                 console.log(error);
@@ -78,7 +77,7 @@ module.exports.GetCard = (function (req, res) { // afficher les cartes qui exist
                     User
                         .findById(req.params.id_user)
                         //.populate('dmd_field dmd_author dmd_required_skills')
-                        .exec(function (err, user) {
+                        .exec(function(err, user) {
                             if (!user) {
                                 sendJsonResponse(res, 404, {
                                     "message": "id_user not found"
@@ -89,7 +88,7 @@ module.exports.GetCard = (function (req, res) { // afficher les cartes qui exist
                                 return;
                             } else {
                                 var select = [];
-                                var cards = user.payment;// data depuis bdd mongo
+                                var cards = user.payment; // data depuis bdd mongo
                                 for (var j = 0; j < cards.length; j++) {
                                     for (var i = 0; i < results.length; i++) {
                                         if (cards[j].card == results[i].ID) {
@@ -104,11 +103,10 @@ module.exports.GetCard = (function (req, res) { // afficher les cartes qui exist
                             //
                             //sendJsonResponse(res, 200, body.d.WALLET.CARDS);
                         });
-                    
-                    }
+
                 }
             }
-        );
+        });
         /*User
             .findById(req.params.id_user)
             //.populate('dmd_field dmd_author dmd_required_skills')
@@ -134,7 +132,7 @@ module.exports.GetCard = (function (req, res) { // afficher les cartes qui exist
 });
 
 //Enregistrer une carte
-module.exports.RegisterCard = (function (req, res) { // afficher les cartes qui existent
+module.exports.RegisterCard = (function(req, res) { // afficher les cartes qui existent
     if (req.params && req.params.id_user) {
         // Method name
         var methodName = "RegisterCard";
@@ -155,7 +153,7 @@ module.exports.RegisterCard = (function (req, res) { // afficher les cartes qui 
                 //"specialConfig": "string",
             }
         };
-        sendRequest(methodName, postData, function (error, response, body) {
+        sendRequest(methodName, postData, function(error, response, body) {
             if (error) {
                 // Handle request error
                 console.log(error);
@@ -167,46 +165,43 @@ module.exports.RegisterCard = (function (req, res) { // afficher les cartes qui 
                     // Handle API error
                     console.log(body.d.E);
                 } else {
-                        console.log("RegisterCARD: " + req.params.id_user);
-                        User.findOne({ "_id": req.params.id_user }, function (err, user) {
-                            if (err) {
-                                console.log(err);
-                            }
-                            else if (!user) {
-                                console.log("user vide");
-                            }
-                            user.payment.push({
-                                card: body.d.CARD.ID,
-                                titulaire: req.body.titulaire,
-                            });
-                            user.save(function (err) {
-                                if (err) return err;
-                                console.log("user.save");
-                                //console.log(body.d.WALLET.CARDS);
-                                sendJsonResponse(res, 200, body.d.CARD);
-                            })
+                    console.log("RegisterCARD: " + req.params.id_user);
+                    User.findOne({ "_id": req.params.id_user }, function(err, user) {
+                        if (err) {
+                            console.log(err);
+                        } else if (!user) {
+                            console.log("user vide");
+                        }
+                        user.payment.push({
+                            card: body.d.CARD.ID,
+                            titulaire: req.body.titulaire,
                         });
-                    }
-                    
+                        user.save(function(err) {
+                            if (err) return err;
+                            console.log("user.save");
+                            //console.log(body.d.WALLET.CARDS);
+                            sendJsonResponse(res, 200, body.d.CARD);
+                        });
+                    });
+                }
 
-                
+
+
             }
-        }
-        );
+        });
     }
 
 });
 
 //get cammandPageRender
-module.exports.commandePageRender = (function (req, res) {
+module.exports.commandePageRender = (function(req, res) {
     Commande
-        .find({ 'owner': req.params.id_user }, function (err, command) {
+        .find({ 'owner': req.params.id_user }, function(err, command) {
             if (!command) {
                 sendJsonResponse(res, 404, {
                     "message": "id_command not found"
                 });
-            }
-            else if (err) {
+            } else if (err) {
                 sendJsonResponse(res, 400, err);
                 return;
             } else {
@@ -215,15 +210,14 @@ module.exports.commandePageRender = (function (req, res) {
         }).populate('items.item');
 });
 //Toutes les commandes
-module.exports.allCommand = (function (req, res) {
+module.exports.allCommand = (function(req, res) {
     Commande
-        .find({}, function (err, command) {
+        .find({}, function(err, command) {
             if (!command) {
                 sendJsonResponse(res, 404, {
                     "message": "id_command not found"
                 });
-            }
-            else if (err) {
+            } else if (err) {
                 sendJsonResponse(res, 400, err);
                 return;
             } else {
@@ -233,11 +227,11 @@ module.exports.allCommand = (function (req, res) {
 });
 
 //Les commandes en fonction  des utilisateurs
-module.exports.allCommandByUser = (function (req, res) {
-    //17/07 à compléter
+module.exports.allCommandByUser = (function(req, res) {
+    //17/07 ï¿½ complï¿½ter
 });
 
-module.exports.MoneyInWithCardId = (function (req, res) {
+module.exports.MoneyInWithCardId = (function(req, res) {
     var postData = {
         "p": {
             "wlLogin": "society",
@@ -258,7 +252,7 @@ module.exports.MoneyInWithCardId = (function (req, res) {
         }
     };
     var methodName = "MoneyInWithCardId";
-    sendRequest(methodName, postData, function (error, response, body) {
+    sendRequest(methodName, postData, function(error, response, body) {
         if (error) {
             // Handle request error
             console.log(error);
@@ -276,65 +270,64 @@ module.exports.MoneyInWithCardId = (function (req, res) {
                 Cart
                     .find({ 'owner': req.params.id_user })
                     .exec(
-                    function (err, cart) {
-                        if (!cart) {
-                            sendJsonResponse(res, 404, {
-                                "message": "id_cart not found"
-                            });
-                            return;
-                        } else if (err) {
-                            console.log('api controller erreur');
-                            sendJsonResponse(res, 400, err);
-                            return;
-                        }
-                        var id_panier = cart[0]._id;
-                        var commande = new Commande();
-                        commande.owner = cart[0].owner;
-                        commande.card_used = cart[0].card_used;
-                        commande.total_price = cart[0].total_price;
-                        commande.paid = "true";
-                        var length = cart[0].items.length;
-                        for (var i = 0; i < length; i++) {
-                            commande.items.push({
-                                item: cart[0].items[i].item,
-                                price: cart[0].items[i].price,
-                                //quantity: parseInt(req.body.quantity)
-                            });
-                        }
-                        Cart.findByIdAndRemove({ "_id": id_panier })
-                        .exec(
-                            function (err, cart) {
-                                if (err) {
-                                    //sendJsonResponse(res, 404, err);
-                                    console.log(err);
-                                    return;
-                                }
-                                //sendJsonResponse(res, 204, null);
-                                console.log("Panier réinitialisé");
-                            }); //supprimer le panier 
-                        commande.save(function (err, command) {
-                            if (err) return next(err)
-                            //console.log(cart._id);
-
-                            var panier = new Cart(); // recréer le panier
-                            panier.owner = command.owner;
-                            panier.save(function (err) {
+                        function(err, cart) {
+                            if (!cart) {
+                                sendJsonResponse(res, 404, {
+                                    "message": "id_cart not found"
+                                });
+                                return;
+                            } else if (err) {
+                                console.log('api controller erreur');
+                                sendJsonResponse(res, 400, err);
+                                return;
+                            }
+                            var id_panier = cart[0]._id;
+                            var commande = new Commande();
+                            commande.owner = cart[0].owner;
+                            commande.card_used = cart[0].card_used;
+                            commande.total_price = cart[0].total_price;
+                            commande.paid = "true";
+                            var length = cart[0].items.length;
+                            for (var i = 0; i < length; i++) {
+                                commande.items.push({
+                                    item: cart[0].items[i].item,
+                                    price: cart[0].items[i].price,
+                                    //quantity: parseInt(req.body.quantity)
+                                });
+                            }
+                            Cart.findByIdAndRemove({ "_id": id_panier })
+                                .exec(
+                                    function(err, cart) {
+                                        if (err) {
+                                            //sendJsonResponse(res, 404, err);
+                                            console.log(err);
+                                            return;
+                                        }
+                                        //sendJsonResponse(res, 204, null);
+                                        console.log("Panier rï¿½initialisï¿½");
+                                    }); //supprimer le panier 
+                            commande.save(function(err, command) {
                                 if (err) return next(err);
+                                //console.log(cart._id);
 
+                                var panier = new Cart(); // recrï¿½er le panier
+                                panier.owner = command.owner;
+                                panier.save(function(err) {
+                                    if (err) return next(err);
+
+                                });
                             });
-                        })
-                        console.log("Paiement ACCEPTE");
-                    });
+                            console.log("Paiement ACCEPTE");
+                        });
                 //console.log("id a supprimer: " + id_panier);
-                
-                
+
+
             }
         }
-    }
-    );
+    });
 });
-//supprimer carte enregistrée
-module.exports.UnRegisterCard = (function (req, res) { 
+//supprimer carte enregistrï¿½e
+module.exports.UnRegisterCard = (function(req, res) {
     if (req.params && req.params.id_user) {
         // Method name
         var methodName = "UnregisterCard";
@@ -351,7 +344,7 @@ module.exports.UnRegisterCard = (function (req, res) {
                 "cardId": req.body.id_card,
             }
         };
-        sendRequest(methodName, postData, function (error, response, body) {
+        sendRequest(methodName, postData, function(error, response, body) {
             if (error) {
                 // Handle request error
                 console.log(error);
@@ -368,21 +361,19 @@ module.exports.UnRegisterCard = (function (req, res) {
                     sendJsonResponse(res, 200, body.d.CARD);
                 }
             }
-        }
-        );
+        });
     }
 
 });
-module.exports.ValidCommand = (function (req, res) {
+module.exports.ValidCommand = (function(req, res) {
     //if(!req.user) return res.redirect('/login');
     Cart
-        .find({ 'owner': req.params.id_user }, function (err, cart) {
+        .find({ 'owner': req.params.id_user }, function(err, cart) {
             if (!cart) {
                 sendJsonResponse(res, 404, {
                     "message": "id_cart not found"
                 });
-            }
-            else if (err) {
+            } else if (err) {
                 sendJsonResponse(res, 400, err);
                 return;
             }
@@ -390,36 +381,32 @@ module.exports.ValidCommand = (function (req, res) {
         }).populate('items.item');
 });
 
-module.exports.ValidCommandCard = (function (req, res) {
+module.exports.ValidCommandCard = (function(req, res) {
     //if (!req.user) return res.redirect('/login');
     Cart
-        .update(
-        { 'owner': req.params.id_user },
-        {
-            $set:
-            {
+        .update({ 'owner': req.params.id_user }, {
+            $set: {
                 'card_used': req.body.card_id,
             }
-        }
-        )
+        })
         .exec(
-        function (err, modif) {
-            if (!modif) {
-                sendJsonResponse(res, 404, {
-                    "message": "id_cart not found"
-                });
-                return;
-            } else if (err) {
-                console.log('api controller erreur');
-                sendJsonResponse(res, 400, err);
-                return;
-            }
-            sendJsonResponse(res, 200, modif);
-        });
+            function(err, modif) {
+                if (!modif) {
+                    sendJsonResponse(res, 404, {
+                        "message": "id_cart not found"
+                    });
+                    return;
+                } else if (err) {
+                    console.log('api controller erreur');
+                    sendJsonResponse(res, 400, err);
+                    return;
+                }
+                sendJsonResponse(res, 200, modif);
+            });
 });
 
 //RIB IBAN 16/07/2018
-module.exports.GetIBAN = (function (req, res) { // afficher les cartes qui existent
+module.exports.GetIBAN = (function(req, res) { // afficher les cartes qui existent
     console.log("GETIBAN: " + req.params.id_user);
     if (req.params.id_user) {
         // Method name
@@ -436,7 +423,7 @@ module.exports.GetIBAN = (function (req, res) { // afficher les cartes qui exist
                 "wallet": "101825062018"
             }
         };
-        sendRequest(methodName, postData, function (error, response, body) {
+        sendRequest(methodName, postData, function(error, response, body) {
             if (error) {
                 // Handle request error
                 console.log(error);
@@ -455,16 +442,14 @@ module.exports.GetIBAN = (function (req, res) { // afficher les cartes qui exist
                     sendJsonResponse(res, 200, body.d.WALLET.IBANS);
                 }
             }
-        }
-        );
+        });
     }
 
 });
 
-module.exports.RegisterRib = (function (req, res) { // afficher les cartes qui existent
+module.exports.RegisterRib = (function(req, res) { // afficher les cartes qui existent
     var id_user = req.body.id_user;
-    if (!id_user) { return res.redirect('login');}
-    else if (id_user) {
+    if (!id_user) { return res.redirect('login'); } else if (id_user) {
         // Method name
         var methodName = "RegisterIBAN";
         // Parameters
@@ -486,7 +471,7 @@ module.exports.RegisterRib = (function (req, res) { // afficher les cartes qui e
                 //"ignoreIbanFormat": "string",
             }
         };
-        sendRequest(methodName, postData, function (error, response, body) {
+        sendRequest(methodName, postData, function(error, response, body) {
             if (error) {
                 // Handle request error
                 console.log(error);
@@ -498,23 +483,22 @@ module.exports.RegisterRib = (function (req, res) { // afficher les cartes qui e
                     // Handle API error
                     console.log(body.d.E);
                     if (body.d.E.Code == 242) {
-                        sendJsonResponse(res, 242 , {
-                            "message" : "Mauvais Format, 11 charactères requis",
+                        sendJsonResponse(res, 242, {
+                            "message": "Mauvais Format, 11 charactï¿½res requis",
                         });
-                    }
-                    else if (body.d.E.Code == 221) {
+                    } else if (body.d.E.Code == 221) {
                         sendJsonResponse(res, 221, {
                             "message": "Mauvais Format, Verifier votre IBAN",
-                        });                        
+                        });
                     }
-                    
+
                 } else {
                     //console.log('id_user : ' + id_user);
                     //console.log("id-iban : " + body.d.IBAN_REGISTER.ID);
-                    User/*.update({ "_id": id_user }, { $push : { rib : body.d.IBAN_REGISTER.ID } });*/
+                    User /*.update({ "_id": id_user }, { $push : { rib : body.d.IBAN_REGISTER.ID } });*/
                     //sendJsonResponse(res, 200, body.d.IBAN);
                         .findById(id_user)
-                        .exec(function (err, user) {
+                        .exec(function(err, user) {
                             if (!user) {
                                 console.log("message : id_user not found");
                                 return;
@@ -526,7 +510,7 @@ module.exports.RegisterRib = (function (req, res) { // afficher les cartes qui e
                             user.rib.push({
                                 id_iban: body.d.IBAN_REGISTER.ID,
                             });
-                            user.save(function (err, user) {
+                            user.save(function(err, user) {
                                 if (err) {
                                     console.log(err);
                                     sendJsonResponse(res, 404, err);
@@ -534,8 +518,7 @@ module.exports.RegisterRib = (function (req, res) { // afficher les cartes qui e
                                     sendJsonResponse(res, 200, body.d.IBAN_REGISTER.ID);
                                 }
                             });
-                        }
-                        );
+                        });
                 }
             }
         });

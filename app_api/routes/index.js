@@ -1,4 +1,3 @@
-
 var express = require('express');
 var router = express.Router();
 
@@ -118,7 +117,7 @@ router.delete('/offers/:id_offer', offersCtrl.offersDeleteOne);
 var dmdsCtrl = require('../api_controllers/demands.controller');
 router.get('/demands', dmdsCtrl.demandsList);
 router.get('/demands/:id_demand', dmdsCtrl.demandsGetOne);
-router.put('/demands/approuve/:id_demand', dmdsCtrl.demandApprouve)
+router.put('/demands/approuve/:id_demand', dmdsCtrl.demandApprouve);
 router.post('/demands', dmdsCtrl.demandsCreate);
 router.get('/demands/author/:id_user', dmdsCtrl.demandsByAuthor);
 router.put('/demands/:id_demand', dmdsCtrl.demandsUpdateOne);
@@ -126,7 +125,7 @@ router.delete('/demands/:id_demand', dmdsCtrl.demandsDeleteOne);
 
 //Devis CRUD
 var devisCtrl = require('../api_controllers/devis.controller');
-router.post('/demands/:id_demand', devisCtrl.devisCreate);//demand car formulaire dans le view de demand-detail
+router.post('/demands/:id_demand', devisCtrl.devisCreate); //demand car formulaire dans le view de demand-detail
 router.get('/devis', devisCtrl.allDevis);
 router.get('/devis/u/:id_user', devisCtrl.allDevisForUser);
 router.get('/devis/:id_devis', devisCtrl.devisGetOne);
@@ -162,19 +161,19 @@ router.post('/notif/newDevis', notifCtrlr.newDevisNotif);
 
 // Card, Payment, RIB
 var payCtrlr = require('../api_controllers/payment.controller');
-router.get('/pay/cardRegistered/:id_user', payCtrlr.GetCard); //affichage des cartes enregistrées
+router.get('/pay/cardRegistered/:id_user', payCtrlr.GetCard); //affichage des cartes enregistrï¿½es
 router.post('/pay/cardRegistered/:id_user', payCtrlr.RegisterCard);
 router.delete('/pay/cardRegistered/:id_user', payCtrlr.UnRegisterCard);
 
 router.get('/pay/validation/:id_user', payCtrlr.ValidCommand);
-router.post('/pay/validation/:id_user', payCtrlr.ValidCommandCard);//enregistrer l'id carte choisi
+router.post('/pay/validation/:id_user', payCtrlr.ValidCommandCard); //enregistrer l'id carte choisi
 router.get('/pay/confirm/:id_user', payCtrlr.ValidCommand);
 
 router.get('/command/:id_user', payCtrlr.commandePageRender); //Mes commandes
 router.get('/command', payCtrlr.allCommand); //Toutes les commandes
 router.post('/pay/valider/:id_user', payCtrlr.MoneyInWithCardId);
 
-//router.get('/rib', payCtrlr.GetRib); //afficher les rib enregistrés sur LEMONWAY
+//router.get('/rib', payCtrlr.GetRib); //afficher les rib enregistrï¿½s sur LEMONWAY
 router.get('/rib/:id_user', payCtrlr.GetIBAN);
 router.post('/rib/registerRib', payCtrlr.RegisterRib); // Enregistrer ou modifier un rib
 

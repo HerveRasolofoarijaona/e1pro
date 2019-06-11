@@ -5,7 +5,7 @@ var Devis = require('../../app_api/models/devis.schema');
 var User = require('../../app_api/models/user.schema');
 var Demand = require('../../app_api/models/demand.schema');
 
-var sendJsonResponse = (function (res, status, content) {
+var sendJsonResponse = (function(res, status, content) {
     res.status(status);
     res.send(content);
 });
@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // error handling function
-var _showError = function (req, res, status) {
+var _showError = function(req, res, status) {
     var errTitle, content;
     if (status === 404) {
         errTitle = "404, page not found";
@@ -34,7 +34,7 @@ var _showError = function (req, res, status) {
     });
 };
 
-module.exports.devisCreate = (function (req, res) {
+module.exports.devisCreate = (function(req, res) {
     /*var requestOptions, path, postData;
     path = '/api/devis';
     postData = {
@@ -65,8 +65,8 @@ module.exports.devisCreate = (function (req, res) {
             }
         }
     );*/
-    Devis.findOne({}, function (err, dev) {
-        if (err) return err
+    Devis.findOne({}, function(err, dev) {
+        if (err) return err;
         if (!req.user) return res.redirect('/login');
         var devis = new Devis();
         devis.mission_title = req.body.mission;
@@ -78,27 +78,27 @@ module.exports.devisCreate = (function (req, res) {
         devis.quantity = req.body.quantity;
         devis.tarif_unit = req.body.tf_u;
         devis.unit = req.body.unit;
-        devis.total_price= req.body.total;
+        devis.total_price = req.body.total;
         devis.devis_author = req.body.devis_authr;
         devis.commentaire = req.body.commentaire;
 
-        devis.save(function (err) {
-            if (err) return err
+        devis.save(function(err) {
+            if (err) return err;
             req.flash("success", "DEVIS PRIS EN COMPTE");
             res.redirect('/demands/' + req.params.id_demand);
         });
     });
 });
 
-//tous les devis (pour la partie modérateur)
-var renderDevis = function (req, res, devis) {
+//tous les devis (pour la partie modï¿½rateur)
+var renderDevis = function(req, res, devis) {
     //if (!req.user) return res.redirect('/login');
     res.render('dashboard/devis-table', {
         title: 'Dashboard - Devis | Emploi1pro',
         devis_all: devis
     });
 };
-module.exports.allDevis = function (req, res) {
+module.exports.allDevis = function(req, res) {
     var requestOptions, path;
     path = '/api/devis';
     requestOptions = {
@@ -106,22 +106,21 @@ module.exports.allDevis = function (req, res) {
         method: "GET",
         json: {}
     };
-    request(requestOptions, function (err, response, body) {
+    request(requestOptions, function(err, response, body) {
         renderDevis(req, res, body);
-    }
-    );
+    });
 
 };
 
-// tous les devis liés à l'utilisateur'
-var renderDevisUser = function (req, res, devis) {
+// tous les devis liï¿½s ï¿½ l'utilisateur'
+var renderDevisUser = function(req, res, devis) {
     //if (!req.user) return res.redirect('/login');
     res.render('dashboard/devis-table', {
         title: 'Dashboard - Devis | Emploi1pro',
         devis_all: devis
     });
 };
-module.exports.allDevisForUser = function (req, res) {
+module.exports.allDevisForUser = function(req, res) {
     var requestOptions, path;
     path = '/api/devis/u/' + req.params.id_user;
     requestOptions = {
@@ -129,21 +128,20 @@ module.exports.allDevisForUser = function (req, res) {
         method: "GET",
         json: {}
     };
-    request(requestOptions, function (err, response, body) {
+    request(requestOptions, function(err, response, body) {
         renderDevisUser(req, res, body);
-        }
-    );
-    
+    });
+
 };
-//La page pour afficher les détails du devis
-var renderDevisDetail = function (req, res, devis) {
+//La page pour afficher les dï¿½tails du devis
+var renderDevisDetail = function(req, res, devis) {
     if (!req.user) return res.redirect('/login');
     res.render('dashboard/devis-details', {
         title: 'Dashboard - Devis | Emploi1pro',
         devis: devis
     });
 };
-module.exports.detailsDevis = function (req, res) {
+module.exports.detailsDevis = function(req, res) {
     var requestOptions, path;
     path = '/api/devis/' + req.params.id_devis;
     requestOptions = {
@@ -153,7 +151,7 @@ module.exports.detailsDevis = function (req, res) {
     };
     request(
         requestOptions,
-        function (err, response, body) {
+        function(err, response, body) {
             renderDevisDetail(req, res, body);
         }
     );
@@ -170,8 +168,8 @@ module.exports.detailsDevis = function (req, res) {
 
     });*/
 };
-// intéraction avec les boutons pour le devis
-module.exports.returnDevis = function (req, res) {
+// intï¿½raction avec les boutons pour le devis
+module.exports.returnDevis = function(req, res) {
     if (!req.user) return res.redirect('/login');
     else if (req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64' && req.user.user_role != '57b2e3f36a0c14cc080d2f63' && req.user.user_role != '57b2e3f36a0c14cc080d2f62') return res.redirect('/denied');
     var requestOptions, path, postData;
@@ -188,17 +186,16 @@ module.exports.returnDevis = function (req, res) {
     };
     request(
         requestOptions,
-        function (err, response, body) {
+        function(err, response, body) {
             if (response.statusCode === 200) {
                 if (putData.negociate == "true") {
                     res.redirect('/dashboard/conversations/' + req.params.id_devis);
                 } else {
                     res.redirect('/dashboard/devis/' + req.params.id_devis);
                 }
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
-            }  
+            }
         }
     );
 };
@@ -208,7 +205,7 @@ module.exports.returnDevis = function (req, res) {
         title: 'Dashboard - Devis | Emploi1pro',
     });
 });*/
-module.exports.deleteDevis = (function (req, res) {
+module.exports.deleteDevis = (function(req, res) {
     var requestOptions, path;
     path = '/api/devis/' + req.params.id_devis;
     requestOptions = {
@@ -218,8 +215,8 @@ module.exports.deleteDevis = (function (req, res) {
     };
     request(
         requestOptions,
-        function (err, response, body) {
+        function(err, response, body) {
             res.redirect('/dashboard/devis/u/' + req.params.id_user);
         }
-    )
+    );
 });

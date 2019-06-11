@@ -1,7 +1,7 @@
 //Lemonway paiement
 var request = require('request');
 //const methods = require('./methods.js');
-var urlDirectkit = "https://sandbox-api.lemonway.fr/mb/demo/dev/directkitjson2/Service.asmx/"
+var urlDirectkit = "https://sandbox-api.lemonway.fr/mb/demo/dev/directkitjson2/Service.asmx/";
 // Parameters
 var postData = {
     "p": {
@@ -12,11 +12,11 @@ var postData = {
         "walletIp": "1.1.1.1",
         "walletUa": "Node.js Tutorial",
         "walletIdStart": "101825062018",
-        "walletIdEnd" : "101825062018",
+        "walletIdEnd": "101825062018",
         //"cardId": '15897',
         //"amountTot": "900.00",
         //"amountCom": "0.00",
-        //"comment": "(Node.js tuto 2018) MoneyInWithCardId 100.00€ to Payer"
+        //"comment": "(Node.js tuto 2018) MoneyInWithCardId 100.00ï¿½ to Payer"
         //"cardType": "0",
         //"cardNumber": "4978210033328381",
         //"cardCode": "123",
@@ -31,9 +31,9 @@ var postData = {
             "cardId": cardId,
             "amountTot": "100.00",
             "amountCom": "10.00",
-            "comment": "(Node.js tuto) MoneyInWithCardId 100.00€ to Payer"
+            "comment": "(Node.js tuto) MoneyInWithCardId 100.00ï¿½ to Payer"
         }).then(function (MoneyInWithCardIdResult) {
-            console.log("\n---------- MoneyInWithCardId: 100.00€ to Payer " + payerWallet + " ----------");
+            console.log("\n---------- MoneyInWithCardId: 100.00ï¿½ to Payer " + payerWallet + " ----------");
             console.log(MoneyInWithCardIdResult.TRANS);
             resolve("Done.");
         });
@@ -75,7 +75,7 @@ function GetWalletDetailsResult(error, response, body) {
             console.log(body.d.WALLETS.WALLET);
         }
     }
-};
+}
 
 // Request
 sendRequest(methodName, postData, GetWalletDetailsResult);
@@ -196,16 +196,16 @@ var promiseMoneyInWithCardId = new Promise(function (resolve, reject) {
             "cardId": cardId,
             "amountTot": "100.00",
             "amountCom": "10.00",
-            "comment": "(Node.js tuto) MoneyInWithCardId 100.00€ to Payer"
+            "comment": "(Node.js tuto) MoneyInWithCardId 100.00ï¿½ to Payer"
         }).then(function (MoneyInWithCardIdResult) {
-            console.log("\n---------- MoneyInWithCardId: 100.00€ to Payer " + payerWallet + " ----------");
+            console.log("\n---------- MoneyInWithCardId: 100.00ï¿½ to Payer " + payerWallet + " ----------");
             console.log(MoneyInWithCardIdResult.TRANS);
             resolve("Done.");
         });
     });
 });
 
-// Payer Wallet after the payment with card: 100.00 - 10.00 = 90.00 (€)
+// Payer Wallet after the payment with card: 100.00 - 10.00 = 90.00 (ï¿½)
 var promiseGetWalletDetailsPayerWalletCredited = new Promise(function (resolve, reject) {
     promiseMoneyInWithCardId.then(function (value) {
         methods.GetWalletDetails({
@@ -218,23 +218,23 @@ var promiseGetWalletDetailsPayerWalletCredited = new Promise(function (resolve, 
     });
 });
 
-// Payer send 10.00€ to Receiver
+// Payer send 10.00ï¿½ to Receiver
 var promiseSendPayment = new Promise(function (resolve, reject) {
     promiseGetWalletDetailsPayerWalletCredited.then(function (value) {
         methods.SendPayment({
             "debitWallet": payerWallet,
             "creditWallet": receiverWallet,
             "amount": "10.00",
-            "message": "(Node.js tuto) SendPayment 10.00€ from Payer to Receiver"
+            "message": "(Node.js tuto) SendPayment 10.00ï¿½ from Payer to Receiver"
         }).then(function (SendPaymentResult) {
-            console.log("\n---------- SendPayment: 10.00€ from Payer " + payerWallet + " to Receiver " + receiverWallet + " ----------");
+            console.log("\n---------- SendPayment: 10.00ï¿½ from Payer " + payerWallet + " to Receiver " + receiverWallet + " ----------");
             console.log(SendPaymentResult.TRANS_SENDPAYMENT);
             resolve("Done.");
         });
     });
 });
 
-// Payer Wallet after the transaction: 80.00€
+// Payer Wallet after the transaction: 80.00ï¿½
 var promiseGetWalletDetailsPayerDebited = new Promise(function (resolve, reject) {
     promiseSendPayment.then(function (value) {
         methods.GetWalletDetails({
@@ -247,7 +247,7 @@ var promiseGetWalletDetailsPayerDebited = new Promise(function (resolve, reject)
     });
 });
 
-// Receiver Wallet after the transaction: 10.00€
+// Receiver Wallet after the transaction: 10.00ï¿½
 var promiseGetWalletDetailsReceiverCredited = new Promise(function (resolve, reject) {
     promiseGetWalletDetailsPayerDebited.then(function (value) {
         methods.GetWalletDetails({
@@ -298,18 +298,18 @@ var promiseMoneyOut = new Promise(function (resolve, reject) {
         methods.MoneyOut({
             "wallet": receiverWallet,
             "amountTot": "10.00",
-            "message": "(Node.js tuto) Money Out 10.00€",
+            "message": "(Node.js tuto) Money Out 10.00ï¿½",
             "ibanId": ibanId,
             "autoCommission": "1"
         }).then(function (MoneyOutResult) {
-            console.log("\n---------- Money Out: Receiver takes 10.00 € from Receiver Wallet " + receiverWallet + " ----------");
+            console.log("\n---------- Money Out: Receiver takes 10.00 ï¿½ from Receiver Wallet " + receiverWallet + " ----------");
             console.log(MoneyOutResult.TRANS);
             resolve("Done.");
         });
     });
 });
 
-// Receiver Wallet after the Money Out: 0.00€
+// Receiver Wallet after the Money Out: 0.00ï¿½
 promiseMoneyOut.then(function (value) {
     methods.GetWalletDetails({
         "wallet": receiverWallet
@@ -322,4 +322,3 @@ promiseMoneyOut.then(function (value) {
 
 
 //--------------------------SEPARATION---------------------------------------//
-

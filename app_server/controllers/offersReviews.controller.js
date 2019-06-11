@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // error handling function
-var _showError = function (req, res, status) {
+var _showError = function(req, res, status) {
     var errTitle, content;
     if (status === 404) {
         errTitle = "404, page not found";
@@ -27,30 +27,30 @@ var _showError = function (req, res, status) {
     }
     res.status(status);
     res.render('index', {
-        errTitle : errTitle,
-        content : content
+        errTitle: errTitle,
+        content: content
     });
 };
 
 
 // Offers list page renderer
-var renderOffersReviewsPage = function (req, res, responseBody) {
-    if(!req.user) return res.redirect('/login');
-    else if(req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64' && req.user.user_role!='57b2eab1601665dc05e659af') return res.redirect('/denied');
+var renderOffersReviewsPage = function(req, res, responseBody) {
+    if (!req.user) return res.redirect('/login');
+    else if (req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64' && req.user.user_role != '57b2eab1601665dc05e659af') return res.redirect('/denied');
     return res.render('dashboard/offers-reviews-table', {
         title: 'Dashboard - Avis Offres | Emploi1pro',
         offersReviewsList: responseBody
-    })
+    });
 };
 
 // All offers reviews request
-module.exports.allOffersReviews = (function (req, res) {
+module.exports.allOffersReviews = (function(req, res) {
     var requestOptions, path;
     path = '/api/reviews';
     requestOptions = {
-        url : apiOptions.server + path,
-        method : "GET",
-        json : {}
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
         //qs : {}
     };
     request(
@@ -162,9 +162,9 @@ module.exports.addReview = (function (req, res) {
 });
 */
 
-module.exports.updateReview = (function (req, res) {
+module.exports.updateReview = (function(req, res) {
     var requestOptions, path, putData;
-    path='/api/reviews/'+ req.params.id_offer_review;
+    path = '/api/reviews/' + req.params.id_offer_review;
     putData = {
         reviewBody: req.body.review,
         reviewRating: req.body.reviewRate,
@@ -172,39 +172,37 @@ module.exports.updateReview = (function (req, res) {
     };
     requestOptions = {
         url: apiOptions.server + path,
-        method:"PUT",
+        method: "PUT",
         json: putData
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 200) {
+        function(err, response, body) {
+            if (response.statusCode === 200) {
                 res.redirect('/dashboard/o/reviews');
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });
 
-module.exports.deleteReview = (function (req, res) {
+module.exports.deleteReview = (function(req, res) {
     var requestOptions, path;
-    path='/api/reviews/'+ req.params.id_offer_review;
+    path = '/api/reviews/' + req.params.id_offer_review;
     requestOptions = {
         url: apiOptions.server + path,
-        method:"DELETE",
+        method: "DELETE",
         json: {}
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 204) {
-                return res.redirect('/dashboard/o/reviews')
-            }
-            else {
+        function(err, response, body) {
+            if (response.statusCode === 204) {
+                return res.redirect('/dashboard/o/reviews');
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });

@@ -18,16 +18,16 @@ var User = mongoose.model('User');
 });*/
 
 
-module.exports.searchRequest = (function (req, res, next) {
+module.exports.searchRequest = (function(req, res, next) {
     res.redirect('/search?q=' + req.body.q + '&section=' + req.body.section);
 });
 
 //fonction escapeRegExp
 function escapeRegex(string) {
     return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
-};
+}
 
-module.exports.offersSearch = (function (req, res, next) {
+module.exports.offersSearch = (function(req, res, next) {
     var noMatch = null;
     if (req.query.q && req.query.section == 0) {
         /*Demand.search({
@@ -46,7 +46,7 @@ module.exports.offersSearch = (function (req, res, next) {
         });*/
         //sans Elasticsearch (E-S)
         const regex = new RegExp(escapeRegex(req.query.q), 'gi');
-        Demand.find({ dmd_title: regex }, function (err, allDemands) {
+        Demand.find({ dmd_title: regex }, function(err, allDemands) {
             if (err) {
                 console.log(err);
             } else {
@@ -74,25 +74,25 @@ module.exports.offersSearch = (function (req, res, next) {
         });*/
         //sans E-S 
         const regex = new RegExp(escapeRegex(req.query.q), 'gi');
-        User.find({ $or: [{ first_name: regex }, { last_name: regex }], user_role : "57b2e3f36a0c14cc080d2f62" }, function (err, user) {
+        User.find({ $or: [{ first_name: regex }, { last_name: regex }], user_role: "57b2e3f36a0c14cc080d2f62" }, function(err, user) {
             if (!user) {
-                req.flash("errors", "Aucun consultant trouvé");
+                req.flash("errors", "Aucun consultant trouvï¿½");
             }
             if (err) {
                 console.log(err);
             }
-            
-            res.render("search-in-consultants", { data: user/*, noMatch: noMatch */ });
 
-        
+            res.render("search-in-consultants", { data: user /*, noMatch: noMatch */ });
+
+
         });
         /*Consultant.find({}, function (err, allConsultants) {
             User.find({ $or: [{ first_name: regex }, { last_name: regex }] }, function (err, user) {
             });
         });*/
 
-        
-    } else if(req.query.q && req.query.section == 2){
+
+    } else if (req.query.q && req.query.section == 2) {
         /*Offer.search({
             query_string: {query: req.query.q}
         }, function (err, results) {
@@ -109,7 +109,7 @@ module.exports.offersSearch = (function (req, res, next) {
         });*/
         //sans E-S
         const regex = new RegExp(escapeRegex(req.query.q), 'gi');
-        Offer.find({ offer_title: regex }, function (err, allOffers) {
+        Offer.find({ offer_title: regex }, function(err, allOffers) {
             if (err) {
                 console.log(err);
             } else {
@@ -119,8 +119,7 @@ module.exports.offersSearch = (function (req, res, next) {
                 res.render("search-in-offers", { data: allOffers, noMatch: noMatch });
             }
         });
-    }
-    else{
+    } else {
         res.redirect('/');
     }
 });

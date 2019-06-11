@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // error handling function
-var _showError = function (req, res, status) {
+var _showError = function(req, res, status) {
     var errTitle, content;
     if (status === 404) {
         errTitle = "404, page not found";
@@ -24,16 +24,16 @@ var _showError = function (req, res, status) {
     }
     res.status(status);
     res.render('index', {
-        errTitle : errTitle,
-        content : content
+        errTitle: errTitle,
+        content: content
     });
 };
 
 
 // fields page list renderer function
-var renderFieldsPage = function (req, res, responseBody) {
-    if(!req.user) return res.redirect('/login');
-    else if(req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64') return res.redirect('/denied');
+var renderFieldsPage = function(req, res, responseBody) {
+    if (!req.user) return res.redirect('/login');
+    else if (req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64') return res.redirect('/denied');
     res.render('dashboard/fields-form', {
         title: 'Domaines d\'activité | Emploi1pro',
         fields: responseBody
@@ -41,13 +41,13 @@ var renderFieldsPage = function (req, res, responseBody) {
 };
 
 // Get all fields controller
-module.exports.allfields = (function (req, res) {
+module.exports.allfields = (function(req, res) {
     var requestOptions, path;
     path = '/api/fields';
     requestOptions = {
-        url : apiOptions.server + path,
-        method : "GET",
-        json : {}
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
         //qs : {}
     };
     request(
@@ -60,25 +60,25 @@ module.exports.allfields = (function (req, res) {
 });
 
 // add field renderer function for test
-var renderFieldDetail = function (req, res, responseBody) {
-    if(!req.user) return res.redirect('/login');
-    else if(req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64') return res.redirect('/denied');
+var renderFieldDetail = function(req, res, responseBody) {
+    if (!req.user) return res.redirect('/login');
+    else if (req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64') return res.redirect('/denied');
     res.render('dashboard/test-details', {
         title: 'Domaines d\'activité | Emploi1pro',
         field: responseBody
     });
 };
 // Get one field controller
-module.exports.getOneField = function (req, res) {
+module.exports.getOneField = function(req, res) {
     var requestOptions, path;
-    path = '/api/fields/'+ req.params.idfield;
+    path = '/api/fields/' + req.params.idfield;
     requestOptions = {
         url: apiOptions.server + path,
         method: "GET",
         json: {}
     };
-    request(requestOptions, 
-        function(err, response, body){
+    request(requestOptions,
+        function(err, response, body) {
             renderFieldDetail(req, res, body);
         }
     );
@@ -86,89 +86,86 @@ module.exports.getOneField = function (req, res) {
 
 
 // add field renderer function for test
-var renderNewFieldForm = function (req, res, responseBody) {
+var renderNewFieldForm = function(req, res, responseBody) {
     res.render('dashboard/test-form', {
         title: 'Domaines d\'activité | Emploi1pro'
     });
 };
 
-module.exports.newField = (function (req, res) {
+module.exports.newField = (function(req, res) {
     renderNewFieldForm(req, res);
 });
 
 // Create a field Controller method
-module.exports.addField = (function (req, res) {
+module.exports.addField = (function(req, res) {
     var requestOptions, path, postData;
-    path='/api/fields';
+    path = '/api/fields';
     postData = {
         fieldname: req.body.fieldname,
         fieldslug: req.body.fieldslug
     };
     requestOptions = {
         url: apiOptions.server + path,
-        method:"POST",
+        method: "POST",
         json: postData
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 201) {
+        function(err, response, body) {
+            if (response.statusCode === 201) {
                 res.redirect('fields');
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });
 
 
 // Update a field controller method
-module.exports.updateField = (function (req, res) {
+module.exports.updateField = (function(req, res) {
     var requestOptions, path, putData;
 
-    path='/api/fields/'+ req.params.idfield;
+    path = '/api/fields/' + req.params.idfield;
     putData = {
         fieldname: req.body.fieldname,
         fieldslug: req.body.fieldslug
     };
     requestOptions = {
         url: apiOptions.server + path,
-        method:"PUT",
+        method: "PUT",
         json: putData
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 200) {
+        function(err, response, body) {
+            if (response.statusCode === 200) {
                 res.redirect('/dashboard/fields');
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });
 
 
 // Delete a field controller method
-module.exports.deleteField = (function (req, res) {
+module.exports.deleteField = (function(req, res) {
     var requestOptions, path;
-    path='/api/fields/'+ req.params.idfield;
+    path = '/api/fields/' + req.params.idfield;
     requestOptions = {
         url: apiOptions.server + path,
-        method:"DELETE",
+        method: "DELETE",
         json: {}
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 204) {
+        function(err, response, body) {
+            if (response.statusCode === 204) {
                 res.redirect('/dashboard/fields');
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });

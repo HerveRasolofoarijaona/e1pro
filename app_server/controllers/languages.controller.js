@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // error handling function
-var _showError = function (req, res, status) {
+var _showError = function(req, res, status) {
     var errTitle, content;
     if (status === 404) {
         errTitle = "404, page not found";
@@ -27,16 +27,16 @@ var _showError = function (req, res, status) {
     }
     res.status(status);
     res.render('index', {
-        errTitle : errTitle,
-        content : content
+        errTitle: errTitle,
+        content: content
     });
 };
 
 
 // fields page list renderer function
-var renderLanguagesPage = function (req, res, responseBody) {
-    if(!req.user) return res.redirect('/login');
-    else if(req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64') return res.redirect('/denied');
+var renderLanguagesPage = function(req, res, responseBody) {
+    if (!req.user) return res.redirect('/login');
+    else if (req.user && req.user.user_role != '57b2e3f36a0c14cc080d2f64') return res.redirect('/denied');
     res.render('dashboard/languages-form', {
         title: 'Langues | Emploi1pro',
         languages: responseBody
@@ -44,13 +44,13 @@ var renderLanguagesPage = function (req, res, responseBody) {
 };
 
 // Get all languages controller
-module.exports.allLanguages = (function (req, res) {
+module.exports.allLanguages = (function(req, res) {
     var requestOptions, path;
     path = '/api/languages';
     requestOptions = {
-        url : apiOptions.server + path,
-        method : "GET",
-        json : {}
+        url: apiOptions.server + path,
+        method: "GET",
+        json: {}
         //qs : {}
     };
     request(
@@ -100,76 +100,73 @@ module.exports.newLanguage = (function (req, res) {
 */
 
 // Create a Language Controller method
-module.exports.addLanguage = (function (req, res) {
+module.exports.addLanguage = (function(req, res) {
     var requestOptions, path, postData;
-    path='/api/languages';
+    path = '/api/languages';
     postData = {
         language_lab: req.body.language
     };
     requestOptions = {
         url: apiOptions.server + path,
-        method:"POST",
+        method: "POST",
         json: postData
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 201) {
+        function(err, response, body) {
+            if (response.statusCode === 201) {
                 res.redirect('languages');
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });
 
 
 // Update a field controller method
-module.exports.updateLanguage = (function (req, res) {
+module.exports.updateLanguage = (function(req, res) {
     var requestOptions, path, putData;
 
-    path='/api/languages/'+ req.params.id_language;
+    path = '/api/languages/' + req.params.id_language;
     putData = {
         language_lab: req.body.language
     };
     requestOptions = {
         url: apiOptions.server + path,
-        method:"PUT",
+        method: "PUT",
         json: putData
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 200) {
+        function(err, response, body) {
+            if (response.statusCode === 200) {
                 res.redirect('/dashboard/languages');
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });
 
 
 // Delete a field controller method
-module.exports.deleteLanguage = (function (req, res) {
+module.exports.deleteLanguage = (function(req, res) {
     var requestOptions, path;
-    path='/api/languages/'+ req.params.id_language;
+    path = '/api/languages/' + req.params.id_language;
     requestOptions = {
         url: apiOptions.server + path,
-        method:"DELETE",
+        method: "DELETE",
         json: {}
     };
     request(
         requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 204) {
+        function(err, response, body) {
+            if (response.statusCode === 204) {
                 res.redirect('/dashboard/languages');
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
-    )
+    );
 });

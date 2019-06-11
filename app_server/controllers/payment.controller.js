@@ -1,7 +1,7 @@
 var request = require('request');
 //var methodOverride = require('method-override');
 //var async = require('async');
-var sendJsonResponse = (function (res, status, content) {
+var sendJsonResponse = (function(res, status, content) {
     res.status(status);
     res.send(content);
 });
@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // error handling function
-var _showError = function (req, res, status) {
+var _showError = function(req, res, status) {
     var errTitle, content;
     if (status === 404) {
         errTitle = "404, page not found";
@@ -31,14 +31,14 @@ var _showError = function (req, res, status) {
 };
 
 //render PAIEMENT
-var renderCardsPage = function (req, res, responseBody) {
+var renderCardsPage = function(req, res, responseBody) {
     return res.render('paiement', {
         title: 'Paiement | Emploi1pro',
         cards: responseBody,
-    })
+    });
 };
 
-module.exports.pay = (function (req, res) {
+module.exports.pay = (function(req, res) {
     if (!req.user && !req.params.id_user) return res.redirect('/login');
     var requestOptions, path;
     console.log("pay" + req.params.id_user);
@@ -51,13 +51,13 @@ module.exports.pay = (function (req, res) {
     };
     request(
         requestOptions,
-        function (err, response, body) {
+        function(err, response, body) {
             //console.log(body[0].ID);
             res.render('paiement', {
                 title: 'Paiement | Emploi1pro',
                 cards: body,
-            })
-            
+            });
+
         }
     );
 });
@@ -88,13 +88,13 @@ module.exports.pay = (function (req, res) {
 });*/
 
 //validation commande Page
-var renderValidationPage = function (req, res, responseBody) {
+var renderValidationPage = function(req, res, responseBody) {
     return res.render('paiement', {
         title: 'Validation Commande | Emploi1pro',
         cards: responseBody,
-    })
+    });
 };
-module.exports.validationPage = (function (req, res) {
+module.exports.validationPage = (function(req, res) {
     if (!req.user) return res.redirect('/login');
     var requestOptions, path;
     path = '/api/pay/validation/' + req.params.id_user;
@@ -106,7 +106,7 @@ module.exports.validationPage = (function (req, res) {
     };
     request(
         requestOptions,
-        function (err, response, body) {
+        function(err, response, body) {
             console.log('app_server :' + req.params.id_user);
             renderValidationPage(req, res, body);
         }
@@ -114,7 +114,7 @@ module.exports.validationPage = (function (req, res) {
 });
 
 //Page render Confirm paiment
-var renderConfirmPage = function (req, res, responseBody) {
+var renderConfirmPage = function(req, res, responseBody) {
     //console.log(responseBody);
     return res.render('validation-pay', {
         title: 'Validation Commande | Emploi1pro',
@@ -122,12 +122,12 @@ var renderConfirmPage = function (req, res, responseBody) {
     });
 };
 
-module.exports.validationCommande = (function (req, res) {
+module.exports.validationCommande = (function(req, res) {
     //if (!req.user) return res.redirect('/login');
     var requestOptions, path, postData;
     path = '/api/pay/validation/' + req.params.id_user;
     postData = {
-        card_id : req.body.id_card,
+        card_id: req.body.id_card,
     };
     requestOptions = {
         url: apiOptions.server + path,
@@ -137,14 +137,13 @@ module.exports.validationCommande = (function (req, res) {
     //console.log(postData);
     request(
         requestOptions,
-        function (err, response, body) {
+        function(err, response, body) {
             if (response.statusCode === 200) {
                 console.log('server paycontroller: ' + JSON.stringify(req.params.id_user));
                 res.redirect('/cart/pay/confirm/' + req.params.id_user);
                 //console.log(body);
                 //renderConfirmPage(err, res, body);
-            }
-            else {
+            } else {
                 _showError(req, res, response.statusCode);
             }
         }
@@ -152,7 +151,7 @@ module.exports.validationCommande = (function (req, res) {
 });
 
 
-module.exports.confirm = (function (req, res) {
+module.exports.confirm = (function(req, res) {
     /*res.render('validation-pay', {
         title: 'Validation Commande | Emploi1pro',
         //cards: responseBody,
@@ -168,13 +167,13 @@ module.exports.confirm = (function (req, res) {
     };
     request(
         requestOptions,
-        function (err, response, body) {
+        function(err, response, body) {
             //console.log("confirm: "+ body);
             renderConfirmPage(req, res, body);
         }
     );
 });
-//page render après validation du paiement
+//page render aprï¿½s validation du paiement
 /*var renderCommandPage = function (req, res, responseBody) {
     //console.log(responseBody);
     return res.render('dashboard/command', {
@@ -186,7 +185,7 @@ module.exports.confirm = (function (req, res) {
 };*/
 
 // Mes commandes
-module.exports.commandePageRender = (function (req, res) {
+module.exports.commandePageRender = (function(req, res) {
     if (!req.user) return res.redirect('/login');
     var requestOptions, path;
     path = '/api/command/' + req.params.id_user;
@@ -197,7 +196,7 @@ module.exports.commandePageRender = (function (req, res) {
     };
     request(
         requestOptions,
-        function (err, response, body) {
+        function(err, response, body) {
             //renderCommandPage(req, res, body);
             return res.render('dashboard/command', {
                 title: 'Mes Commandes | Emploi1pro',
@@ -209,9 +208,9 @@ module.exports.commandePageRender = (function (req, res) {
 });
 
 //toutes les commandes
-module.exports.allCommand = (function (req, res) {
+module.exports.allCommand = (function(req, res) {
     if (!req.user) return res.redirect('/login');
-    else if (req.user.user_role != '57b2e3f36a0c14cc080d2f64') return res.redirect('/denied'); 
+    else if (req.user.user_role != '57b2e3f36a0c14cc080d2f64') return res.redirect('/denied');
     var requestOptions, path;
     path = '/api/command';
     requestOptions = {
@@ -222,7 +221,7 @@ module.exports.allCommand = (function (req, res) {
     };
     request(
         requestOptions,
-        function (err, response, body) {
+        function(err, response, body) {
             if (response.statusCode === 200) {
                 //renderCommandPage(req, res, body);
                 return res.render('dashboard/command', {
@@ -237,7 +236,7 @@ module.exports.allCommand = (function (req, res) {
     );
 });
 
-module.exports.MoneyInWithCardId = (function (req, res) {
+module.exports.MoneyInWithCardId = (function(req, res) {
     if (!req.user) return res.redirect('/login');
     var requestOptions, path, postData;
     postData = {
@@ -251,18 +250,18 @@ module.exports.MoneyInWithCardId = (function (req, res) {
         url: apiOptions.server + path,
         method: "POST",
         json: postData
-        //qs : {}
+            //qs : {}
     };
     request(
         requestOptions,
-        function (err, response, body) {
+        function(err, response, body) {
             res.redirect("/dashboard/command/" + req.body.user);
         }
     );
 });
 
-//RIB, cartes enregistrées 16/07/2018
-var renderBankInfo = function (req, res, responseBody) {
+//RIB, cartes enregistrï¿½es 16/07/2018
+var renderBankInfo = function(req, res, responseBody) {
     //console.log(responseBody);
     return res.render('dashboard/rib', {
         title: 'Mon RIB | Emploi1pro',
@@ -274,8 +273,8 @@ var renderBankInfo = function (req, res, responseBody) {
     });
 };
 
-    //afficher les rib
-module.exports.GetRib = (function (req, res) { // 
+//afficher les rib
+module.exports.GetRib = (function(req, res) { // 
     if (!req.user) return res.redirect('/login');
     var requestOptions, path;
     path = '/api/rib/' + req.user._id;
@@ -287,7 +286,7 @@ module.exports.GetRib = (function (req, res) { //
     };
     request(
         requestOptions,
-        function (err, response, body) {
+        function(err, response, body) {
             if (response.statusCode === 200) {
                 renderBankInfo(req, res, body);
             } else {
@@ -298,8 +297,8 @@ module.exports.GetRib = (function (req, res) { //
     //renderBankInfo(req, res);
 });
 
-    //enregistrer les rib
-module.exports.RegisterRib = (function (req, res) {
+//enregistrer les rib
+module.exports.RegisterRib = (function(req, res) {
     var requestOptions, path, postData;
     path = '/api/rib/registerRib';
     postData = {
@@ -316,24 +315,22 @@ module.exports.RegisterRib = (function (req, res) {
     //console.log(postData);
     request(
         requestOptions,
-        function (err, response, body) {
+        function(err, response, body) {
             if (response.statusCode === 200) {
                 return res.render('dashboard/rib', {
                     title: 'Mon RIB | Emploi1pro',
-                    success: 'RIB bien ajouté',
+                    success: 'RIB bien ajoutï¿½',
                     error1: '',
                     error2: '',
                     rib: body,
                 });
-            }
-            else if (response.statusCode === 242) {
+            } else if (response.statusCode === 242) {
                 req.flash('error2', body.message);
                 return res.redirect('/dashboard/rib');
-            }
-            else if (response.statusCode === 221) {
-                req.flash('error1', body.message );
+            } else if (response.statusCode === 221) {
+                req.flash('error1', body.message);
                 return res.redirect('/dashboard/rib');
             }
         }
     );
-}); 
+});
