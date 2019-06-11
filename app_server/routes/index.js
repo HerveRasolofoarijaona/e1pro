@@ -20,7 +20,6 @@ var Cart = mongoose.model('Cart');
 var Consultant = mongoose.model('Consultant');
 var Enterprise = mongoose.model('Enterprise');
 
-
 /* GET accueil and static pages. */
 router.get('/', othersCrtlr.accueil);
 router.get('/mentions-legales', othersCrtlr.mention);
@@ -74,7 +73,7 @@ router.get('/logout', authCtrlr.logOut);
 router.get('/forgotten', authCtrlr.forgotten);
 router.post('/forgotten', authCtrlr.passEnvoie);
 router.get('/reset/:token', authCtrlr.passVerif);
-router.post('/reset/:token', authCtrlr.renewPwd);// :token
+router.post('/reset/:token', authCtrlr.renewPwd); // :token
 
 
 /* GET Catalogs pages */
@@ -90,7 +89,7 @@ router.get('/consultants/:id_user', catalogsCtrlr.consultantDetails);
 
 // test pour devis
 var devisCtrlr = require('../controllers/devis.controller');
-router.post('/demands/:id_demand', devisCtrlr.devisCreate);//envoyer les données du devis 15/05/2018
+router.post('/demands/:id_demand', devisCtrlr.devisCreate); //envoyer les données du devis 15/05/2018
 
 /* POST REVIEW */
 router.post('/offers/:id_offer', catalogsCtrlr.postReview);
@@ -105,10 +104,10 @@ router.get('/cart', cartCtrlr.getCart);
 
 // Get Paiement Page 21/06/18
 var payCtrlr = require('../controllers/payment.controller');
-router.get('/cart/pay/:id_user', payCtrlr.pay); 
-router.get('/cart/pay/validation/:id_user', payCtrlr.validationPage);//validation des infos bancaires
-router.get('/cart/pay/confirm/:id_user', payCtrlr.confirm);//page de confirmation de la commande et envoie du paiement avec la facture, etc...
-router.post('/cart/pay/validation/:id_user', payCtrlr.validationCommande);//validation des infos bancaires
+router.get('/cart/pay/:id_user', payCtrlr.pay);
+router.get('/cart/pay/validation/:id_user', payCtrlr.validationPage); //validation des infos bancaires
+router.get('/cart/pay/confirm/:id_user', payCtrlr.confirm); //page de confirmation de la commande et envoie du paiement avec la facture, etc...
+router.post('/cart/pay/validation/:id_user', payCtrlr.validationCommande); //validation des infos bancaires
 router.post('/cart/pay/valider', payCtrlr.MoneyInWithCardId);
 
 /* Get search pages */

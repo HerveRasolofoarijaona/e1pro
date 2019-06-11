@@ -14,6 +14,8 @@ var bcrypt = require('bcrypt-nodejs');
 var mongoose = require('mongoose');
 var mongoosastic = require('mongoosastic');
 mongoose.Promise = global.Promise;
+
+
 //require('./app_api/models/dbconfig');
 var db = require('./app_api/models/dbconfig'); //18/04
 var apiRoutes = require('./app_api/routes/index');
@@ -35,17 +37,19 @@ var http = require('http');
 var socket = require("socket.io");
 const PORT = process.env.PORT || 5000;
 
-var tpe = new cmcic.tpe({
-    CMCIC_TPE: 'tpeid',
-    CMCIC_CODESOCIETE: 'societykey',
-    CMCIC_CLE: '1234567890abcdef',
-    CMCIC_BANK: 'CIC',
-    CMCIC_LNG: 'FR',
-    CMCIC_CURRENCY: 'EUR',
-    CMCIC_URL_RETOUR: '/url/return',
-    CMCIC_URLOK: '/url/ok',
-    CMCIC_URLKO: '/url/ko'
-});
+// var tpe = new cmcic.tpe({
+//     CMCIC_TPE: 'tpeid',
+//     CMCIC_CODESOCIETE: 'societykey',
+//     CMCIC_CLE: '1234567890abcdef',
+//     CMCIC_BANK: 'CIC',
+//     CMCIC_LNG: 'FR',
+//     CMCIC_CURRENCY: 'EUR',
+//     CMCIC_URL_RETOUR: '/url/return',
+//     CMCIC_URLOK: '/url/ok',
+//     CMCIC_URLKO: '/url/ko'
+// });
+
+
 
 
 

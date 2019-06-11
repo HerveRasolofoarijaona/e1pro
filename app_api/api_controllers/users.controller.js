@@ -27,6 +27,7 @@ module.exports.usersImport = (function(req, res) {
             if (err) return console.log(err);
             return res.sendStatus(202);
         });
+    console.log('User Import');
 });
 
 module.exports.usersCreate = (function(req, res) {
