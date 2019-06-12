@@ -51,16 +51,6 @@ const PORT = process.env.PORT || 5000;
 
 
 
-
-
-// connection to the database through mongoose
-/*var db = mongoose.createConnection("mongodb://localhost/user");
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function(){
-  console.log("we are connected to the db");
-});*/
-
-
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'jade');
@@ -111,20 +101,20 @@ app.locals.moment = require('moment');
 
 var server = http.createServer(app);
 var serverS = server.listen(PORT);
-//var listener = socket.listen(server, { log: false });
+var listener = socket.listen(server, { log: false });
 var io = socket(serverS);
 // test 08/06
 //à modifier 06/06 
 //pour les notifications
-/*function start(socket) {
+function start(socket) {
     //if(user){
-      socket.broadcast.emit('notification','Test is connected');
-      socket.on('called', function () {
-          console.log("Request received");
-          io.sockets.emit('notification', 'broadcast notification');
-      });
+    socket.broadcast.emit('notification', 'Test is connected');
+    socket.on('called', function() {
+        console.log("Request received");
+        io.sockets.emit('notification', 'broadcast notification');
+    });
     //}
-}*/
+}
 
 
 

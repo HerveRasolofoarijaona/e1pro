@@ -10,15 +10,19 @@ mongoose.Promise = global.Promise;
 //     useMongoClient: true
 // });
 
+console.log(mongoose.connect("mongodb://epp:testepppdb@ds139645.mlab.com:39645/eappdb", {
+    useMongoClient: true
+}));
+
 
 
 
 //console.log(mongoose.connect("mongodb://epp:testepppdb@ds139645.mlab.com:39645/eappdb"));
-mongoose.connect("mongodb://localhost/eappdb", {
-        useMongoClient: true
-    }
+// mongoose.connect("mongodb://localhost/eappdb", {
+//         useMongoClient: true
+//     }
 
-); //en local
+// ); //en local
 /*
 var gracefulShutdown;
 var dbURI = 'mongodb://root:37tcMuuuq@127.0.0.1:28018/admin/eappDB';
