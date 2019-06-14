@@ -23,7 +23,7 @@ var devisCtrlr = require('../controllers/devis.controller');
 /* GET dashboard pages. */
 
 // Dashboard Home
-router.get('/',othersCrtlr.dashHomePage);
+router.get('/', othersCrtlr.dashHomePage);
 
 // GET post form pages
 router.get('/offers/new', catalogsCtrlr.createOffer);
@@ -91,7 +91,7 @@ router.put('/users/roles/:id_role', rolesCtrlr.updateRole);
 router.get('/offers', offersCtrlr.allOffers);
 router.get('/offers/u/:id_user', offersCtrlr.allOffersByAuthor);
 router.get('/offers/u/:id_user/offer/new', offersCtrlr.getOfferForm);
-router.post('/offers/u/:id_user/offer/new', offersCtrlr.addOffer);//modif 16/05
+router.post('/offers/u/:id_user/offer/new', offersCtrlr.addOffer); //modif 16/05
 router.get('/offers/:id_offer', offersCtrlr.getOneOffer);
 router.put('/offers/:id_offer', offersCtrlr.updateOffer);
 router.delete('/offers/:id_offer', offersCtrlr.deleteOffer);
@@ -107,14 +107,14 @@ router.delete('/demands/:id_demand', demandsCtrlr.deleteDemand);
 
 //DEVIS CRUD
 router.get('/devis', devisCtrlr.allDevis);
-router.get('/devis/u/:id_user', devisCtrlr.allDevisForUser);// afficher les devis liés à cet utilisateur
+router.get('/devis/u/:id_user', devisCtrlr.allDevisForUser); // afficher les devis liï¿½s ï¿½ cet utilisateur
 router.get('/devis/u/:id_user/:id_devis', devisCtrlr.allDevisForUser);
-router.get('/devis/:id_devis', devisCtrlr.detailsDevis);// afficher le devis détaillé
-router.get('/devis/:id_devis/status', devisCtrlr.detailsDevis);// page render pour le route du bas 
-router.put('/devis/:id_devis', devisCtrlr.returnDevis);// retourner la décision de l'entreprise, gère les boutons Accepter, refuser, negocier
-router.delete('/devis/u/:id_user/:id_devis', devisCtrlr.deleteDevis);// supprimer le devis
+router.get('/devis/:id_devis', devisCtrlr.detailsDevis); // afficher le devis dï¿½taillï¿½
+router.get('/devis/:id_devis/status', devisCtrlr.detailsDevis); // page render pour le route du bas 
+router.put('/devis/:id_devis', devisCtrlr.returnDevis); // retourner la dï¿½cision de l'entreprise, gï¿½re les boutons Accepter, refuser, negocier
+router.delete('/devis/u/:id_user/:id_devis', devisCtrlr.deleteDevis); // supprimer le devis
 
-//router.put('/devis/u/:id_user', demandsCtrlr.updateDevis);// pour mettre à jour si Devis accepter ou non
+// router.put('/devis/u/:id_user', demandsCtrlr.updateDevis); // pour mettre ï¿½ jour si Devis accepter ou non
 
 
 
@@ -134,8 +134,8 @@ router.get('/commandes/:id_user', payCtrlr.commandePageRender); // Mes Commandes
 router.get('/commandes', payCtrlr.allCommand); // toutes les commandes (mode administrateur)
 //router.get();
 
-//RIB, Cartes enregistrées
-router.get('/rib', payCtrlr.GetRib); //afficher les rib enregistrés sur LEMONWAY
+//RIB, Cartes enregistrï¿½es
+router.get('/rib', payCtrlr.GetRib); //afficher les rib enregistrï¿½s sur LEMONWAY
 router.post('/rib/register', payCtrlr.RegisterRib); // Enregistrer ou modifier un rib
 
 
