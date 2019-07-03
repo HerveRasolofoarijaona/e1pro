@@ -210,7 +210,7 @@ module.exports.signupEntreprise = (function(req, res, next) {
                             return res.redirect('signup');
                         } else { //Si mail valide on sauvegarde || envoie mail confirmation
 
-                            res.json({ succes: true, message: 'Compte a été créé! Vous allez reéevoir un e-mail de validdation' });
+                            //res.json({ succes: true, message: 'Compte a été créé! Vous allez reéevoir un e-mail de validdation' });
                             user.save(function(err, user) {
                                 //var token = user.temporarytoken;        /*jwt.sign({ foo: 'bar' }, 'shhhhh');*/
                                 var link = req.protocol + "://" + req.get('host') + "/verification/" + user.temporarytoken; //25/04
