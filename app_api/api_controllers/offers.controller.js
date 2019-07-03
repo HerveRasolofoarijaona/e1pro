@@ -11,15 +11,15 @@ var sendJsonResponse = (function(res, status, content) {
 });
 
 // Mapping offers to elastic search
-Offer.createMapping(function(err, mapping) {
-    if (err) {
-        console.log("error creating mapping on offers");
-        console.log(err);
-    } else {
-        console.log("Mapping created on offers");
-        console.log(mapping);
-    }
-});
+// Offer.createMapping(function(err, mapping) {
+//     if (err) {
+//         console.log("error creating mapping on offers");
+//         console.log(err);
+//     } else {
+//         console.log("Mapping created on offers");
+//         console.log(mapping);
+//     }
+// });
 
 var stream = Offer.synchronize();
 var count = 0;

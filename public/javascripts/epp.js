@@ -3,9 +3,9 @@
  */
 $(function() {
     $('a[href*="#"]:not([href="#"])').click(function() {
-        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
             var target = $(this.hash);
-            target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
             if (target.length) {
                 $('html, body').animate({
                     scrollTop: target.offset().top
@@ -29,8 +29,8 @@ $('input:radio[name="priceHidden"]').change(
         }
     });*/
 $(document).ready(function() {
-        $('.modal-dialog').show();
-    });
+    $('.modal-dialog').show();
+});
 
 
 
@@ -41,10 +41,10 @@ var accordion = document.getElementsByClassName("accordion");
 var i;
 
 for (i = 0; i < accordion.length; i++) {
-    accordion[i].onclick = function(){
+    accordion[i].onclick = function() {
         this.classList.toggle("active");
         this.nextElementSibling.classList.toggle("show");
-    }
+    };
 }
 
 /********* MENU SLIDES ********************************/
@@ -69,17 +69,17 @@ function closeSearch() {
     document.getElementById("mb-sideform").style.width = "0";
 }
 // supression du devis
-$('.test').on('click', function (event) {
+$('.test').on('click', function(event) {
     event.preventDefault(); // prevent form submit
     var form = event.target.form; // storing the form
     swal({
-        title: "Etes-vous sûr?",
-        text: "Cette action est irréversible!",
+        title: "Etes-vous sï¿½r?",
+        text: "Cette action est irrï¿½versible!",
         icon: "warning",
         buttons: true,
         dangerMode: true,
         html: true
-    }, function (getAction) {
+    }, function(getAction) {
         if (getAction.value === 'true') {
             form.submit();
             swal("Suppression du devis", {
@@ -90,19 +90,19 @@ $('.test').on('click', function (event) {
             swal("Annulation");
         }
     });
-})
-            /*.then((willDelete) => {
-                if (willDelete) {
-                    form.submit();
-                    swal("Suppression du devis", {
-                        icon: "success",
-                        html: true
-                    });
-                } else {
-                    swal("Annulation");
-                }
-            });*/
-    //});
+});
+/*.then((willDelete) => {
+    if (willDelete) {
+        form.submit();
+        swal("Suppression du devis", {
+            icon: "success",
+            html: true
+        });
+    } else {
+        swal("Annulation");
+    }
+});*/
+//});
 //})
 
 /*
@@ -120,10 +120,10 @@ $('.test').on('click', function (event) {
 /******** SCROLL TO TOP **************/
 /**************************************/
 
-$(document).ready(function(){
+$(document).ready(function() {
 
     //Check to see if the window is top if not then display button
-    $(window).scroll(function(){
+    $(window).scroll(function() {
         if ($(this).scrollTop() > 200) {
             $('.scrollToTop').fadeIn();
         } else {
@@ -132,11 +132,11 @@ $(document).ready(function(){
     });
 
     //Click event to scroll to top
-    $('.scrollToTop').click(function(){
-        $('html, body').animate({scrollTop : 0},500);
+    $('.scrollToTop').click(function() {
+        $('html, body').animate({ scrollTop: 0 }, 500);
         return false;
     });
-    $('.scrollToTop').click(function () {
+    $('.scrollToTop').click(function() {
         $('html, body').animate({ scrollTop: 0 }, 500);
         return false;
     });
@@ -145,20 +145,19 @@ $(document).ready(function(){
     /************** STICKY MENU ***************************/
 
     //var offset = $(".main-header").offset().top;
-    $(document).scroll(function(){
+    $(document).scroll(function() {
         var scrollTop = $(document).scrollTop();
-        if(scrollTop > 250){
+        if (scrollTop > 250) {
             $(".sticky").fadeIn(500);
-        }
-        else {
+        } else {
             $(".sticky").fadeOut();
         }
     });
 
     /************ STICKY SIDEBAR **************************/
-    $(document).scroll(function(){
+    $(document).scroll(function() {
         var scrollTop = $(document).scrollTop();
-        if(scrollTop > 250){
+        if (scrollTop > 250) {
             $(".sidebar-sticky").fadeIn(500);
         }
     });
@@ -171,14 +170,14 @@ $(document).ready(function(){
 
     var accordionsMenu = $('.side-menu-accordion');
 
-    if( accordionsMenu.length > 0 ) {
-        accordionsMenu.each(function(){
+    if (accordionsMenu.length > 0) {
+        accordionsMenu.each(function() {
             var accordion = $(this);
             //detect change in the input[type="checkbox"] value
-            accordion.on('change', 'input[type="checkbox"]', function(){
+            accordion.on('change', 'input[type="checkbox"]', function() {
                 var checkbox = $(this);
                 console.log(checkbox.prop('checked'));
-                ( checkbox.prop('checked') ) ? checkbox.siblings('ul').attr('style', 'display:none;').slideDown(300) : checkbox.siblings('ul').attr('style', 'display:block;').slideUp(300);
+                (checkbox.prop('checked')) ? checkbox.siblings('ul').attr('style', 'display:none;').slideDown(300): checkbox.siblings('ul').attr('style', 'display:block;').slideUp(300);
             });
         });
     }
@@ -189,7 +188,8 @@ $(document).ready(function(){
     });
 
     /*************** Phone inputs ***************************/
-    $(".phone").intlTelInput();$(".phone").intlTelInput({
+    $(".phone").intlTelInput();
+    $(".phone").intlTelInput({
         initialCountry: "auto",
         geoIpLookup: function(callback) {
             $.get('http://ipinfo.io', function() {}, "jsonp").always(function(resp) {
@@ -224,4 +224,3 @@ $(document).ready(function(){
         $('#total_quantity').html(quantity);
     });*/
 });
-

@@ -5,46 +5,46 @@
 var mongoose = require('mongoose');
 var Consultant = require('../models/consultant.schema');
 
-var sendJsonResponse = (function (res, status, content) {
+var sendJsonResponse = (function(res, status, content) {
     res.status(status);
     res.send(content);
 });
 
 
 // Mapping consultants to elastic search
-Consultant.createMapping(function(err, mapping){
-    if(err){
-        console.log("error creating mapping on Consultants");
-        console.log(err);
-    } else{
-        console.log("Mapping created on Consultants");
-        console.log(mapping);
-    }
-});
+// Consultant.createMapping(function(err, mapping){
+//     if(err){
+//         console.log("error creating mapping on Consultants");
+//         console.log(err);
+//     } else{
+//         console.log("Mapping created on Consultants");
+//         console.log(mapping);
+//     }
+// });
 
 var stream = Consultant.synchronize();
 var count = 0;
 
-stream.on('data', function () {
+stream.on('data', function() {
     count++;
 });
 
-stream.on('close', function () {
+stream.on('close', function() {
     console.log("Indexed " + count + " Consultants document(s)");
 });
 
-stream.on('error', function (err) {
+stream.on('error', function(err) {
     console.log(err);
 });
 
 
-module.exports.consultantsCreate = (function (req, res) {
+module.exports.consultantsCreate = (function(req, res) {
     Consultant.create({
-        first_name : req.body.firstName,
-        last_name : req.body.lastName,
-        email : req.body.email,
+        first_name: req.body.firstName,
+        last_name: req.body.lastName,
+        email: req.body.email,
         password: req.body.password,
-        user_role : req.body.role
+        user_role: req.body.role
     }, function(err, role) {
         if (err) {
             sendJsonResponse(res, 400, err);
@@ -55,15 +55,14 @@ module.exports.consultantsCreate = (function (req, res) {
 });
 
 
-module.exports.consultantsList = (function (req, res) {
+module.exports.consultantsList = (function(req, res) {
     //sendJsonResponse(res, 200, {"status": "success"});
-    Consultant.find(function(err, consultants_all){
+    Consultant.find(function(err, consultants_all) {
         if (!consultants_all) {
             sendJsonResponse(res, 404, {
                 "message": "No users found"
             });
-        }
-        else {
+        } else {
             sendJsonResponse(res, 200, consultants_all);
         }
     }).populate('related_user');
@@ -71,7 +70,7 @@ module.exports.consultantsList = (function (req, res) {
 
 
 
-module.exports.consultantsGetOne = (function (req, res) {
+module.exports.consultantsGetOne = (function(req, res) {
     if (req.params && req.params.id_consultant) {
         Consultant
             .findById(req.params.id_consultant)
@@ -96,10 +95,10 @@ module.exports.consultantsGetOne = (function (req, res) {
 });
 
 
-module.exports.getConsultantByUserId = (function (req, res) {
+module.exports.getConsultantByUserId = (function(req, res) {
     if (req.params && req.params.id_user) {
         Consultant
-            .find({'related_user': {$in :req.params.id_user}})
+            .find({ 'related_user': { $in: req.params.id_user } })
             .populate('related_user')
             .exec(function(err, consultant) {
                 if (!consultant) {
@@ -121,18 +120,17 @@ module.exports.getConsultantByUserId = (function (req, res) {
 });
 
 
-module.exports.offersByAuthor = (function (req, res) {
+module.exports.offersByAuthor = (function(req, res) {
     if (req.params && req.params.id_user) {
         Offer
-            .findOne({'offer_author': {$in :req.params.id_user}})
+            .findOne({ 'offer_author': { $in: req.params.id_user } })
             .populate('offer_field offer_author')
             .exec(function(err, offers_all) {
                 if (!offers_all) {
                     sendJsonResponse(res, 404, {
                         "message": "No offers found"
                     });
-                }
-                else {
+                } else {
                     sendJsonResponse(res, 200, offers_all);
                 }
             });

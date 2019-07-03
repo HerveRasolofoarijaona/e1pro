@@ -89,7 +89,7 @@ module.exports.signupConsultant = (function(req, res, next) {
             User.findOne({ email: req.body.email }, function(err, existingUser) {
 
                 if (existingUser) {
-                    req.flash('errors', 'Cet email existe déjé.');
+                    req.flash('errors', 'Cet email existe déja.');
                     return res.redirect('signup');
 
                 } else
@@ -106,7 +106,8 @@ module.exports.signupConsultant = (function(req, res, next) {
 
                             //Si mail valide on sauvegarde || envoie mail confirmation
 
-                            res.json({ succes: true, message: 'Compte a été crée! Vous allez recevoir un e-mail de validdation' });
+                            // res.json({ succes: true, message: 'Compte a été crée! Vous allez recevoir un e-mail de validdation' });
+                            // res.redirect('login');
                             user.save(function(err, user) {
                                 //var token = user.temporarytoken;        /*jwt.sign({ foo: 'bar' }, 'shhhhh');*/
                                 var link = req.protocol + "://" + req.get('host') + "/verification/" + user.temporarytoken; //25/04
@@ -131,7 +132,6 @@ module.exports.signupConsultant = (function(req, res, next) {
                                     });
                                 if (err) return next(err);
                                 callback(null, user);
-                                //return res.redirect('login');
                                 //res.json({ success: true, message: "Compte enregistré! verifier vos mails pour l'activation" });
                             });
                         }
@@ -151,7 +151,7 @@ module.exports.signupConsultant = (function(req, res, next) {
             cart.save(function(err) {
                 if (err) return next(err);
                 console.log("Panier créer");
-                //req.flash('errors', 'Un e-mail vous a été envoyé pour confirmer votre addresse e-mail');
+                req.flash('errors', 'Un e-mail vous a été envoyé !!');
                 res.redirect('login');
             });
         },
@@ -255,103 +255,11 @@ module.exports.signupEntreprise = (function(req, res, next) {
             cart.save(function(err) {
                 if (err) return next(err);
                 req.flash('success', 'Un e-mail vous a été envoyé pour confirmer votre addresse e-mail1');
-                res.redirect('/login');
+                res.redirect('login');
             });
         }
     ]);
 });
-
-
-/*
-module.exports.signUp = (function (req, res) {
-    var requestOptions, path, postData;
-    path='/api/users';
-    postData = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: req.body.password,
-        role: req.body.role
-    };
-    requestOptions = {
-        url: apiOptions.server + path,
-        method:"POST",
-        json: postData
-    };
-    request(
-        requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 201) {
-                res.redirect('login');
-            }
-
-            else {
-                ///_showError(req, res, response.statusCode, 'signup');
-                res.redirect('signup')
-            }
-        }
-    )
-});
-
-module.exports.signUpCs = (function (req, res) {
-    var requestOptions, path, postData;
-    path='/api/consultants';
-    postData = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: req.body.password,
-        role: req.body.role
-    };
-    requestOptions = {
-        url: apiOptions.server + path,
-        method:"POST",
-        json: postData
-    };
-    request(
-        requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 201) {
-                res.redirect('login');
-            }
-                
-            else {
-                ///_showError(req, res, response.statusCode, 'signup');
-                res.redirect('signup')
-            }
-        }
-    )
-});
-
-module.exports.signUpEn = (function (req, res) {
-    var requestOptions, path, postData;
-    path='/api/enterprises';
-    postData = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: req.body.password,
-        role: req.body.role
-    };
-    requestOptions = {
-        url: apiOptions.server + path,
-        method:"POST",
-        json: postData
-    };
-    request(
-        requestOptions,
-        function (err, response, body) {
-            if(response.statusCode === 201) {
-                res.redirect('/login');
-            }
-
-            else {
-                ///_showError(req, res, response.statusCode, 'signup');
-                res.redirect('signup')
-            }
-        }
-    )
-});*/
 
 // Request the Login page
 module.exports.loginPageRender = (function(req, res) {

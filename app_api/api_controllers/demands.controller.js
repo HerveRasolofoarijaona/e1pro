@@ -5,42 +5,42 @@ var mongoose = require('mongoose');
 var Demand = require('../models/demand.schema');
 var User = require('../models/user.schema');
 
-var sendJsonResponse = (function (res, status, content) {
+var sendJsonResponse = (function(res, status, content) {
     res.status(status);
     res.send(content);
 });
 
 // Mapping demands to elastic search
-Demand.createMapping(function(err, mapping){
-    if(err){
-        console.log("error creating mapping on Demands");
-        console.log(err);
-    } else{
-        console.log("Mapping created on demands");
-        console.log(mapping);
-    }
-});
+// Demand.createMapping(function(err, mapping){
+//     if(err){
+//         console.log("error creating mapping on Demands");
+//         console.log(err);
+//     } else{
+//         console.log("Mapping created on demands");
+//         console.log(mapping);
+//     }
+// });
 
 var stream = Demand.synchronize();
 var count = 0;
 
-stream.on('data', function () {
+stream.on('data', function() {
     count++;
 });
 
-stream.on('close', function () {
+stream.on('close', function() {
     console.log("Indexed " + count + " Demands document(s)");
 });
 
-stream.on('error', function (err) {
+stream.on('error', function(err) {
     console.log(err);
 });
 
 
-module.exports.demandsImport = (function (req, res) {
+module.exports.demandsImport = (function(req, res) {
     Demand.create(
         //  {"offer_title":"my offer", "offer_description":"Lorem ipsum dolor sit"},
-        function (err) {
+        function(err) {
             if (err) return console.log(err);
             return res.send(202);
         });
@@ -62,22 +62,21 @@ module.exports.demandsImport = (function (req, res) {
 });*/
 
 
-module.exports.demandsList = (function (req, res) {
+module.exports.demandsList = (function(req, res) {
     //sendJsonResponse(res, 200, {"status": "success"});
-    Demand.find({"dmd_approved" : "true"},function(err, demands_all) {
+    Demand.find({ "dmd_approved": "true" }, function(err, demands_all) {
         if (!demands_all) {
             sendJsonResponse(res, 404, {
                 "message": "No demands found"
             });
-        }
-        else {
+        } else {
             sendJsonResponse(res, 200, demands_all);
         }
     }).populate('dmd_field dmd_author');
 });
 
 
-module.exports.demandsGetOne = (function (req, res) {
+module.exports.demandsGetOne = (function(req, res) {
     if (req.params && req.params.id_demand) {
         Demand
             .findById(req.params.id_demand)
@@ -102,18 +101,17 @@ module.exports.demandsGetOne = (function (req, res) {
 });
 
 
-module.exports.demandsByAuthor = (function (req, res) {
+module.exports.demandsByAuthor = (function(req, res) {
     if (req.params && req.params.id_user) {
         Demand
-            .find({'dmd_author': {$in :req.params.id_user}}) // $in av modif
+            .find({ 'dmd_author': { $in: req.params.id_user } }) // $in av modif
             .populate('dmd_field dmd_author dmd_required_skills')
             .exec(function(err, demands_all) {
                 if (!demands_all) {
                     sendJsonResponse(res, 404, {
                         "message": "No demands found"
                     });
-                }
-                else {
+                } else {
                     sendJsonResponse(res, 200, demands_all);
                 }
             });
@@ -125,7 +123,7 @@ module.exports.demandsByAuthor = (function (req, res) {
 });
 
 
-module.exports.demandsCreate = (function (req, res) {
+module.exports.demandsCreate = (function(req, res) {
     Demand.create({
         dmd_title: req.body.dmdTitle,
         dmd_description: req.body.dmdDescription,
@@ -148,7 +146,7 @@ module.exports.demandsCreate = (function (req, res) {
 });
 
 
-module.exports.demandsUpdateOne = (function (req, res) {
+module.exports.demandsUpdateOne = (function(req, res) {
     if (!req.params.id_demand) {
         sendJsonResponse(res, 404, {
             "message": "Not found, id_demand is required"
@@ -168,16 +166,16 @@ module.exports.demandsUpdateOne = (function (req, res) {
                     sendJsonResponse(res, 400, err);
                     return;
                 }
-                demand.dmd_title= req.body.dmdTitle;
-                demand.dmd_description= req.body.dmdDescription;
-                demand.dmd_desired_start_date= req.body.dmdDStartDate;
-                demand.dmd_supposed_end_date= req.body.dmdSEndDate;
-                demand.dmd_conditions= req.body.dmdConditions;
-                demand.dmd_estimated_budget= req.body.dmdEstimatedBudget;
-                demand.dmd_location= req.body.dmdLocation;
-                demand.dmd_field= req.body.dmdField;
-                demand.dmd_required_skills= req.body.dmdRequiredSkills;
-                demand.dmd_author= req.body.dmdAuthor;
+                demand.dmd_title = req.body.dmdTitle;
+                demand.dmd_description = req.body.dmdDescription;
+                demand.dmd_desired_start_date = req.body.dmdDStartDate;
+                demand.dmd_supposed_end_date = req.body.dmdSEndDate;
+                demand.dmd_conditions = req.body.dmdConditions;
+                demand.dmd_estimated_budget = req.body.dmdEstimatedBudget;
+                demand.dmd_location = req.body.dmdLocation;
+                demand.dmd_field = req.body.dmdField;
+                demand.dmd_required_skills = req.body.dmdRequiredSkills;
+                demand.dmd_author = req.body.dmdAuthor;
                 demand.is_dmd_available = req.body.dmdAvailability;
                 demand.is_dmd_completed = req.body.dmdState;
                 demand.dmd_duree = req.body.dmdDuree;
@@ -193,7 +191,7 @@ module.exports.demandsUpdateOne = (function (req, res) {
 });
 
 //Approuver une demande
-module.exports.demandApprouve = (function (req, res) {
+module.exports.demandApprouve = (function(req, res) {
     if (!req.params.id_demand) {
         sendJsonResponse(res, 404, {
             "message": "Not found, id_demand is required"
@@ -203,30 +201,30 @@ module.exports.demandApprouve = (function (req, res) {
     Demand
         .findById(req.params.id_demand)
         .exec(
-        function (err, demand) {
-            if (!demand) {
-                sendJsonResponse(res, 404, {
-                    "message": "id_demand not found"
-                });
-                return;
-            } else if (err) {
-                sendJsonResponse(res, 400, err);
-                return;
-            }
-            demand.dmd_approved = "true" ;
-            demand.save(function (err, demand) {
-                if (err) {
-                    sendJsonResponse(res, 404, err);
-                } else {
-                    sendJsonResponse(res, 200, demand);
+            function(err, demand) {
+                if (!demand) {
+                    sendJsonResponse(res, 404, {
+                        "message": "id_demand not found"
+                    });
+                    return;
+                } else if (err) {
+                    sendJsonResponse(res, 400, err);
+                    return;
                 }
-            });
-        }
+                demand.dmd_approved = "true";
+                demand.save(function(err, demand) {
+                    if (err) {
+                        sendJsonResponse(res, 404, err);
+                    } else {
+                        sendJsonResponse(res, 200, demand);
+                    }
+                });
+            }
         );
 });
 
 
-module.exports.demandsDeleteOne = (function (req, res) {
+module.exports.demandsDeleteOne = (function(req, res) {
     var id_demand = req.params.id_demand;
     if (id_demand) {
         Demand

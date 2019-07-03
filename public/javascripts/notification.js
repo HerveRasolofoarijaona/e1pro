@@ -9,33 +9,33 @@ function menu() {
         $('[data-toggle="popover"]').popover();
     });*/
     //document.getElementById("myDropdown").classList.toggle("show");
-};
+}
 
 //AFFICHAGE DES NOTIFICATIONS
 function ajaxGet(id_user) {
     $.ajax({
         type: "GET",
-        url: "/api/notif/show/"+ id_user,
-        success: function (result) {
+        url: "/api/notif/show/" + id_user,
+        success: function(result) {
             $('#myDropdown ul').empty();
-            $.each(result, function (i, notification) {
+            $.each(result, function(i, notification) {
                 //console.log(notification.devis._id);
                 if (!notification.lu) {
                     if (notification.modif.devis_nego) {
-                        $('#myDropdown .menu').append('<li class="a"><div><a class="dropdown-item" href="/dashboard/conversations/' + notification.devis._id + '">Négociation de devis</a></div></li>')
+                        $('#myDropdown .menu').append('<li class="a"><div><a class="dropdown-item" href="/dashboard/conversations/' + notification.devis._id + '">NÃ©gociation de devis</a></div></li>');
                     }
                     if (notification.modif.new_devis) {
-                        $('#myDropdown .menu').append('<li class="a"><div><a class="dropdown-item" href="/dashboard/devis/' + notification.devis._id + '">Nouveau devis</a></div></li>')
+                        $('#myDropdown .menu').append('<li class="a"><div><a class="dropdown-item" href="/dashboard/devis/' + notification.devis._id + '">Nouveau devis</a></div></li>');
                     }
                     /*if (notification.) {
                         if (notification.modif.avis) {
-                            $('#myDropdown .menu').append('<li class="a"><div><a href="/dashboard/">Vous avez reçu un avis sur une offre</a></div></li>') // attendre l'approbation du moderateur pour l'avis                        }
+                            $('#myDropdown .menu').append('<li class="a"><div><a href="/dashboard/">Vous avez reÃ©u un avis sur une offre</a></div></li>') // attendre l'approbation du moderateur pour l'avis                        }
                     }*/
                 }
             });
             //console.log("Success: ", result);
         },
-        error: function (e) {
+        error: function(e) {
             $("#myDropdown").html("<strong>Auncune notification</strong>");
             console.log("ERROR: ", e);
         }
@@ -46,7 +46,7 @@ function ajaxGet(id_user) {
 
 
 //NOTIFICATION NOUVEAU AVIS
-$(".new_avis").submit(function (event) {//quand on clique sur accepter dans la discussion (chat)
+$(".new_avis").submit(function(event) { //quand on clique sur accepter dans la discussion (chat)
     // Prevent the form from submitting via the browser.
     event.preventDefault();
     new_avis();
@@ -67,12 +67,12 @@ function new_avis() {
         url: "/api/notif/avis",
         data: JSON.stringify(formData),
         dataType: 'json',
-        
+
     });
 }
 
 //NOTIFICATION NOUVEAU DEVIS
-$(".new_devis").submit(function (event) {//quand on clique sur accepter dans la discussion (chat)
+$(".new_devis").submit(function(event) { //quand on clique sur accepter dans la discussion (chat)
     // Prevent the form from submitting via the browser.
     event.preventDefault();
     new_devis();
@@ -93,22 +93,21 @@ function new_devis() {
         url: "/api/notif/newDevis",
         data: JSON.stringify(formData),
         dataType: 'json',
-        
+
     });
 }
+
 function luhn10Verif(num) {
     var i, k, c, d;
     var res = "";
     var e = 0;
     for (i = 0; i < num.length; i++) {
-        if (i%2 == 0) {
+        if (i % 2 == 0) {
             res += num[i];
-        }
-        else {
+        } else {
             if ((0 <= 2 * parseInt(num[i])) && (2 * parseInt(num[i]) <= 9)) {
                 res += (2 * parseInt(num[i])).toString();
-            }
-            else {
+            } else {
                 c = (2 * parseInt(num[i])).toString();
                 d = (parseInt(c[0]) + parseInt(c[1])).toString();
                 //console.log(d);
@@ -119,17 +118,16 @@ function luhn10Verif(num) {
     for (k = 0; k < res.length; k++) {
         e = e + parseInt(res[k]);
     }
-    if (e%10 == 0) {
+    if (e % 10 == 0) {
         console.log("Carte valide");
-    }
-    else {
+    } else {
         console.log(res);
         console.log("Carte invalide");
     }
 }
 //notification Carte bancaire
-    //Enregistrer une carte bancaire
-$('.registerCard').submit(function (event) {
+//Enregistrer une carte bancaire
+$('.registerCard').submit(function(event) {
     event.preventDefault();
     var formData = {
         num_card: $("input[name=card_num]").val(),
@@ -137,11 +135,11 @@ $('.registerCard').submit(function (event) {
         exp_date: $("input[name=month_exp]").val() + "/" + $("input[name=year_exp]").val(),
         cvc: $("input[name=cvc]").val(),
     };
-    var card_num = $("input[name=card_num]").val()
+    var card_num = $("input[name=card_num]").val();
     if (formData.num_card[0] == "4") {
-        luhn10Verif(formData.card_num);//modifier le code
+        luhn10Verif(formData.card_num); //modifier le code
     }
-    
+
     //console.log(formData);
     $.ajax({
         type: "POST",
@@ -149,20 +147,20 @@ $('.registerCard').submit(function (event) {
         url: '/api/pay/cardRegistered/' + $("input[name=user]").val(),
         data: JSON.stringify(formData),
         dataType: 'json',
-        success: function (result) {
+        success: function(result) {
             swal("Card Registered", "", "success");
             window.location.reload();
             //console.log("Success");
 
         },
-        error: function (e) {
+        error: function(e) {
             console.log("error:" + e);
         }
     });
 
     //this.submit();
 });
-$('.pay').submit(function (event) {
+$('.pay').submit(function(event) {
     event.preventDefault();
     var formData = {
         num_card: $("input[name=card_num]").val(),
@@ -170,9 +168,9 @@ $('.pay').submit(function (event) {
         exp_date: $("input[name=month_exp]").val() + "/" + $("input[name=year_exp]").val(),
         cvc: $("input[name=cvc]").val(),
     };
-    var card_num = $("input[name=card_num]").val()
+    var card_num = $("input[name=card_num]").val();
     if (formData.num_card[0] == "4") {
-        luhn10Verif(formData.card_num);//modifier le code
+        luhn10Verif(formData.card_num); //modifier le code
     }
 
     //console.log(formData);
@@ -182,13 +180,13 @@ $('.pay').submit(function (event) {
         url: '/api/pay/cardRegistered/' + $("input[name=user]").val(),
         data: JSON.stringify(formData),
         dataType: 'json',
-        success: function (result) {
+        success: function(result) {
             swal("Card Registered", "", "success");
             window.location.reload();
             //console.log("Success");
 
         },
-        error: function (e) {
+        error: function(e) {
             console.log("error:" + e);
         }
     });
@@ -202,12 +200,12 @@ function deleteCard(card_id) {
     };
     //console.log(formData.id_card);
     swal({
-        title: "Êtes-vous sûr?",
-        text: "",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-    })
+            title: "Ã©tes-vous sÃ©r?",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
         .then((willDelete) => {
             if (willDelete) {
                 $.ajax({
@@ -216,13 +214,13 @@ function deleteCard(card_id) {
                     url: '/api/pay/cardRegistered/' + $("input[name=user]").val(),
                     data: JSON.stringify(formData),
                     dataType: 'json',
-                    success: function (result) {
+                    success: function(result) {
                         swal("Card Registered", "", "success");
                         window.location.reload();
                         //console.log("Success");
 
                     },
-                    error: function (e) {
+                    error: function(e) {
                         console.log("error:" + e);
                     }
                 });
@@ -235,14 +233,13 @@ function deleteCard(card_id) {
         });
     //alert("Are you sure?");
 }
-$('.validerInfo').submit(function (event) {
+$('.validerInfo').submit(function(event) {
     event.preventDefault();
     if (!$("input[name=id_card]:checked").val()) {
         $('#error').empty();
-        $('#error').css('display','block');
+        $('#error').css('display', 'block');
         $('#error').append('<p>Choisir une carte</p>');
-    }
-    else {
+    } else {
         this.submit();
     }
-})
+});
