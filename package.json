@@ -7,8 +7,9 @@
     },
     "dependencies": {
         "@angular/common": "^4.4.7",
+        "@angular/core": "^4.4.7",
         "async": "^2.0.1",
-        "bcrypt-nodejs": "0.0.3",
+        "bcrypt": "^3.0.6",
         "body-parser": "^1.18.3",
         "bootstrap": "^4.3.1",
         "bootstrap-datepicker": "^1.6.4",
@@ -29,7 +30,6 @@
         "gulp": "^4.0.0",
         "gulp-install": "^0.6.0",
         "http": "0.0.0",
-        "jade": "^1.11.0",
         "jsonwebtoken": "^8.3.0",
         "kickbox": "^2.0.4",
         "lemonway": "^0.3.0",
@@ -47,19 +47,18 @@
         "passport-local": "^1.0.0",
         "popper.js": "^1.15.0",
         "promise": "^8.0.1",
+        "pug": "^2.0.4",
         "rand-token": "^0.4.0",
         "request": "^2.87.0",
+        "rxjs": "^5.0.1",
         "serve-favicon": "^2.5.0",
         "sib-api-v3-sdk": "^7.1.4",
         "socket.io": "^2.1.1",
         "stripe": "^6.1.1",
         "sweetalert": "^2.1.0",
         "sweetalert2": "^7.24.1",
-        "uuid": "^3.2.1"
-    },
-    "devDependencies": {
-        "mongoose": "^4.13.14",
-        "nodemon": "^1.9.2"
+        "uuid": "^3.2.1",
+        "zone.js": "^0.8.4"
     },
     "main": "app.js",
     "author": "",

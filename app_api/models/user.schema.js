@@ -1,54 +1,9 @@
-/**
- * Created by nokamojd on 08/07/2016.
- */
-
-/**
- * Created by nokamojd on 08/07/2016.
- */
-
 var mongoose = require('mongoose');
-var bcrypt = require('bcrypt-nodejs');
+var bcrypt = require('bcrypt');
 var crypto = require('crypto');
 var Schema = mongoose.Schema;
 var validate = require('mongoose-validator');
 
-/*var nameValidator = [
-    validate({
-        validator: 'matches',
-        arguments: /^(([a-zA-Z]{3,20})+[ ]+([a-zA-Z]{3,20})+)+$/,
-        message: 'Doit au moins avoir 2 charact�res, max 30, pas de charact�res sp�ciaux ni de nombres'
-    }),
-    validate({
-        validator: 'isLength',
-        arguments: [2, 20],
-        message: 'Le nom doit avoir entre {ARGS[0]} et {ARGS[1]} charact�res'
-    })
-];
-
-var emailValidator = [
-    validate({
-        validator: 'isEmail',
-        message: 'e-mail invalide'
-    }),
-    validate({
-        validator: 'isLength',
-        arguments: [3, 25],
-        message: 'L\'Email doit contenir entre {ARGS[0]} et {ARGS[1]} charact�res'
-    })
-];
-
-var passwordValidator = [
-    validate({
-        validator: 'matches',
-        arguments: /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d]).{8,35}$/, //(?=.*?[\W]) pour les tem sp�ciaux
-        message: 'Le mot de passe doit au moins contenir une minuscule, une majuscule, un chiffre, et doit comporter entre 8 et 35 charact�res.'
-    }),
-    validate({
-        validator: 'isLength',
-        arguments: [8, 35],
-        message: 'Mot de passe doit avoir entre {ARGS[0]} et {ARGS[1]} charact�res'
-    })
-];*/
 
 var uSkillSchema = new Schema({
     user_skill: { type: String }
@@ -136,3 +91,47 @@ userSchema
 
 // Export model...
 module.exports = mongoose.model('User', userSchema);
+
+
+
+/********************* Autre Commentaire en étude *****************************************************************************************************************************************************/
+
+/*var nameValidator = [
+    validate({
+        validator: 'matches',
+        arguments: /^(([a-zA-Z]{3,20})+[ ]+([a-zA-Z]{3,20})+)+$/,
+        message: 'Doit au moins avoir 2 charact�res, max 30, pas de charact�res sp�ciaux ni de nombres'
+    }),
+    validate({
+        validator: 'isLength',
+        arguments: [2, 20],
+        message: 'Le nom doit avoir entre {ARGS[0]} et {ARGS[1]} charact�res'
+    })
+];
+
+var emailValidator = [
+    validate({
+        validator: 'isEmail',
+        message: 'e-mail invalide'
+    }),
+    validate({
+        validator: 'isLength',
+        arguments: [3, 25],
+        message: 'L\'Email doit contenir entre {ARGS[0]} et {ARGS[1]} charact�res'
+    })
+];
+
+var passwordValidator = [
+    validate({
+        validator: 'matches',
+        arguments: /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d]).{8,35}$/, //(?=.*?[\W]) pour les tem sp�ciaux
+        message: 'Le mot de passe doit au moins contenir une minuscule, une majuscule, un chiffre, et doit comporter entre 8 et 35 charact�res.'
+    }),
+    validate({
+        validator: 'isLength',
+        arguments: [8, 35],
+        message: 'Mot de passe doit avoir entre {ARGS[0]} et {ARGS[1]} charact�res'
+    })
+];*/
+
+/********************* Autre Commentaire en étude *****************************************************************************************************************************************************/

@@ -15,14 +15,14 @@ router.put('/fields/:idfield', fieldsCtrl.fieldsUpdateOne);
 router.delete('/fields/:idfield', fieldsCtrl.fieldsDeleteOne);
 router.get('/import-fields', fieldsCtrl.import);
 
-// Inner Fields CRUD
-/*
-router.get('/fields/:idfield/innerfields/:idinnerfield', fieldsCtrl.innerFieldsGetOne);
-router.post('/fields/:idfield/innerfields', fieldsCtrl.innerFieldsCreate);
-router.put('/fields/:idfield/innerfields/:idinnerfield', fieldsCtrl.innerFieldsUpdateOne);
-router.delete('/fields/:idfield/innerfields/:idinnerfield', fieldsCtrl.innerFieldsDeleteOne);
-//router.get('/importinnerfields', fieldsCtrl.importinner);
-*/
+// // Inner Fields CRUD
+// /*
+// router.get('/fields/:idfield/innerfields/:idinnerfield', fieldsCtrl.innerFieldsGetOne);
+// router.post('/fields/:idfield/innerfields', fieldsCtrl.innerFieldsCreate);
+// router.put('/fields/:idfield/innerfields/:idinnerfield', fieldsCtrl.innerFieldsUpdateOne);
+// router.delete('/fields/:idfield/innerfields/:idinnerfield', fieldsCtrl.innerFieldsDeleteOne);
+// //router.get('/importinnerfields', fieldsCtrl.importinner);
+// */
 
 
 const rolesCtrl = require('../api_controllers/roles.controller');
@@ -87,15 +87,17 @@ router.post('/users/skill/:id_user', usersCtrl.usersAddOneSkill);
 router.delete('/users/skills/:id_user/skill/:id_user_skill', usersCtrl.usersDeleteOneSkill);
 
 
+// <-------------------------------------------------------------------------------------------------->
 /* User type CRUD Consultant */
 const csCtrl = require('../api_controllers/consultants.controller');
 router.get('/consultants', csCtrl.consultantsList);
 router.get('/consultants/:id_consultant', csCtrl.consultantsGetOne);
 router.post('/consultants', csCtrl.consultantsCreate);
 router.get('/consultants/consultant/:id_user', csCtrl.getConsultantByUserId);
+// <-------------------------------------------------------------------------------------------------->
 
-//router.put('/consultants/:id_user', csCtrl.consultantsUpdateOne);
-//router.delete('/consultants/:id_user', csCtrl.consultantsDeleteOne);
+// router.put('/consultants/:id_user', csCtrl.consultantsUpdateOne);
+// router.delete('/consultants/:id_user', csCtrl.consultantsDeleteOne);
 /*
 // Enterprise
 const enCtrl = require('../api_controllers/enterprises.controller');
@@ -105,6 +107,7 @@ router.post('/enterprises', enCtrl.enterprisesCreate);
 router.put('/enterprises/:id_user', enCtrl.enterprisesUpdateOne);
 router.delete('/enterprises/:id_user', enCtrl.enterprisesDeleteOne);*/
 
+// <-------------------------------------------------------------------------------------------------->
 // Offers CRUD
 const offersCtrl = require('../api_controllers/offers.controller');
 router.get('/offers', offersCtrl.offersList);
@@ -113,8 +116,10 @@ router.post('/offers', offersCtrl.offersCreate);
 router.get('/offers/author/:id_user', offersCtrl.offersByAuthor);
 router.put('/offers/:id_offer', offersCtrl.offersUpdateOne);
 router.delete('/offers/:id_offer', offersCtrl.offersDeleteOne);
+// <-------------------------------------------------------------------------------------------------->
 
-// Demands CRUD
+// <-------------------------------------------------------------------------------------------------->
+// // Demands CRUD
 const dmdsCtrl = require('../api_controllers/demands.controller');
 router.get('/demands', dmdsCtrl.demandsList);
 router.get('/demands/:id_demand', dmdsCtrl.demandsGetOne);
@@ -123,8 +128,9 @@ router.post('/demands', dmdsCtrl.demandsCreate);
 router.get('/demands/author/:id_user', dmdsCtrl.demandsByAuthor);
 router.put('/demands/:id_demand', dmdsCtrl.demandsUpdateOne);
 router.delete('/demands/:id_demand', dmdsCtrl.demandsDeleteOne);
+// <-------------------------------------------------------------------------------------------------->
 
-//Devis CRUD
+// //Devis CRUD
 const devisCtrl = require('../api_controllers/devis.controller');
 router.post('/demands/:id_demand', devisCtrl.devisCreate); //demand car formulaire dans le view de demand-detail
 router.get('/devis', devisCtrl.allDevis);
@@ -134,9 +140,6 @@ router.put('/devis/:id_devis', devisCtrl.devisUpdateStatus);
 router.put('/devis/approuved/:id_devis', devisCtrl.approuved); //Approuver le devis
 router.put('/conversation/update/:id_devis', devisCtrl.devisNegociation); //negociation depuis la conversation
 router.delete('/devis/:id_devis', devisCtrl.devisDeleteOne);
-
-
-
 
 // offerReview CRUD
 const offReviewCtrlr = require('../api_controllers/offerReview.controller');
@@ -149,20 +152,20 @@ router.put('/reviews/:id_offer_review', offReviewCtrlr.offerReviewsUpdateOne);
 router.delete('/reviews/:id_offer_review', offReviewCtrlr.offerReviewsDeleteOne);
 
 //Conversation CRUD
-const chatCtrlr = require('../api_controllers/chat.controller');
-//router.get('/conversation/:id_devis', chatCtrlr.getConv); //afficher la conversation
-//router.post('/conversation/save', chatCtrlr.saveConv);
+// const chatCtrlr = require('../api_controllers/chat.controller');
+// //router.get('/conversation/:id_devis', chatCtrlr.getConv); //afficher la conversation
+// //router.post('/conversation/save', chatCtrlr.saveConv);
 
-// notification CRUD
+// // notification CRUD
 const notifCtrlr = require('../api_controllers/notification.controller');
 router.get('/notif/show/:id_user', notifCtrlr.notifByAuthor); // affichage notif
 router.post('/notif/avis', notifCtrlr.AvisNotif);
 router.post('/notif/newDevis', notifCtrlr.newDevisNotif);
 //router.post('/notif/negoDevis/:id_devis', notifCtrlr.DevisNotif);
 
-// Card, Payment, RIB
+// // Card, Payment, RIB
 const payCtrlr = require('../api_controllers/payment.controller');
-router.get('/pay/cardRegistered/:id_user', payCtrlr.GetCard); //affichage des cartes enregistr�es
+router.get('/pay/cardRegistered/:id_user', payCtrlr.GetCard); //affichage des cartes enregistrees
 router.post('/pay/cardRegistered/:id_user', payCtrlr.RegisterCard);
 router.delete('/pay/cardRegistered/:id_user', payCtrlr.UnRegisterCard);
 
@@ -174,7 +177,7 @@ router.get('/command/:id_user', payCtrlr.commandePageRender); //Mes commandes
 router.get('/command', payCtrlr.allCommand); //Toutes les commandes
 router.post('/pay/valider/:id_user', payCtrlr.MoneyInWithCardId);
 
-//router.get('/rib', payCtrlr.GetRib); //afficher les rib enregistr�s sur LEMONWAY
+//router.get('/rib', payCtrlr.GetRib); //afficher les rib enregistrés sur LEMONWAY
 router.get('/rib/:id_user', payCtrlr.GetIBAN);
 router.post('/rib/registerRib', payCtrlr.RegisterRib); // Enregistrer ou modifier un rib
 

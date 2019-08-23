@@ -46,22 +46,6 @@ module.exports.demandsImport = (function(req, res) {
         });
 });
 
-// test 18/04 sortir tous les users
-/*module.exports.usersList = (function (req, res) {
-    //sendJsonResponse(res, 200, {"status": "success"});
-    User.find(function (err, users_all) {
-        if (!users_all) {
-            sendJsonResponse(res, 404, {
-                "message": "No users found"
-            });
-        }
-        else {
-            sendJsonResponse(res, 200, users_all);
-        }
-    }).populate('_id fisrt_name last_name');
-});*/
-
-
 module.exports.demandsList = (function(req, res) {
     //sendJsonResponse(res, 200, {"status": "success"});
     Demand.find({ "dmd_approved": "true" }, function(err, demands_all) {

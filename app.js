@@ -10,13 +10,13 @@ const passport = require('passport');
 const flash = require('express-flash');
 const expressValidator = ('express-validator');
 const methodOverride = require('method-override');
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const mongoosastic = require('mongoosastic');
 
 mongoose.Promise = global.Promise;
 
-//require('./app_api/models/dbconfig');
+require('./app_api/models/dbconfig');
 const db = require('./app_api/models/dbconfig'); //18/04
 const apiRoutes = require('./app_api/routes/index');
 const routes = require('./app_server/routes/index');
