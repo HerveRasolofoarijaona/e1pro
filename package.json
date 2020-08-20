@@ -9,7 +9,7 @@
         "@angular/common": "^4.4.7",
         "@angular/core": "^4.4.7",
         "async": "^2.0.1",
-        "bcrypt": "^3.0.6",
+        "bcrypt": "^5.0.0",
         "body-parser": "^1.18.3",
         "bootstrap": "^4.3.1",
         "bootstrap-datepicker": "^1.6.4",
