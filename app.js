@@ -35,7 +35,7 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const socket = require("socket.io");
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // const tpe = new cmcic.tpe({
 //     CMCIC_TPE: 'tpeid',
@@ -59,7 +59,7 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+app.use(logger('dev'));   v     
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -81,7 +81,10 @@ if (app.get('env') === 'production') { //Quand le projet est déployé
     }));
 }
 
-app.use(flash());
+app.use(flash());    
+
+n         
+ 
 
 app.use(methodOverride(function(req, res) {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
