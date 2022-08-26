@@ -36,7 +36,7 @@
         "method-override": "^3.0.0",
         "moment": "^2.29.1",
         "mongoosastic": "^4.6.0",
-        "mongoose": "^6.0.12",
+        "mongoose": "^6.4.6",
         "mongoose-schema-extend": "^0.2.2",
         "mongoose-validator": "^2.1.0",
         "morgan": "^1.10.0",
