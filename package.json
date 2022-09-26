@@ -40,7 +40,7 @@
         "mongoose-schema-extend": "^0.2.2",
         "mongoose-validator": "^2.1.0",
         "morgan": "^1.10.0",
-        "node-mailjet": "^3.3.4",
+        "node-mailjet": "^3.4.1",
         "nodemailer": "^6.7.0",
         "nodemon": "^2.0.14",
         "passport": "^0.5.0",
