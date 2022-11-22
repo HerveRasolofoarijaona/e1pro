@@ -53,7 +53,7 @@
         "rxjs": "^7.4.0",
         "serve-favicon": "^2.5.0",
         "sib-api-v3-sdk": "^8.2.1",
-        "socket.io": "^4.3.2",
+        "socket.io": "^4.5.3",
         "stripe": "^8.186.1",
         "sweetalert": "^2.1.2",
         "sweetalert2": "^11.1.9",
